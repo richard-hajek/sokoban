@@ -191,7 +191,7 @@ public class Evaluate {
 	}
 	
 	public static void main(String[] args) {
-		Class agentClass = DFSAgent.class;
+		Class agentClass = MyAgent.class;
 		
 		boolean visualize = true;
 		
