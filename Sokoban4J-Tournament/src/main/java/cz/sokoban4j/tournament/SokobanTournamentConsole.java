@@ -277,6 +277,10 @@ public class SokobanTournamentConsole {
 	// ==============
 	
 	public static String[] getTestArgs() {
+		String classPath =
+			("./target/classes;../Sokoban4J/target/classes;../Sokoban4J-Agents/target/classes;" +
+		     "./libs/jsap-2.1.jar;./libs/process-execution-3.7.0.jar;./libs/xstream-1.3.1.jar")
+			.replace(';', File.pathSeparatorChar);
 		return new String[] {
 				  "-l", "../Sokoban4J/levels/sokobano.de/Blazz.sok;all" // see {@link SokobanLevels} for details
 				, "-r", "./results/results.csv" // result file
@@ -284,7 +288,7 @@ public class SokobanTournamentConsole {
 				, "-a", "cz.sokoban4j.agents.HumanAgent"
 				, "-v", "true"  // visualization
 				, "-i", "human" // id of simulation	
-				, "-j", "-cp ./target/classes;../Sokoban4J/target/classes;../Sokoban4J-Agents/target/classes;./libs/jsap-2.1.jar;./libs/process-execution-3.7.0.jar;./libs/xstream-1.3.1.jar"
+				, "-j", "-cp " + classPath
 		};
 	}
 	
