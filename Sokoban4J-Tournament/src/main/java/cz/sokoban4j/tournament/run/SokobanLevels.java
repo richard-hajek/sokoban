@@ -1,8 +1,7 @@
 package cz.sokoban4j.tournament.run;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import cz.sokoban4j.SokobanConfig.ELevelFormat;
 
@@ -35,7 +34,9 @@ public class SokobanLevels {
 			
 			if (level.toLowerCase().equals("all")) {
 				if (file.isDirectory()) {
-					for (File childFile : file.listFiles()) {
+					File[] files = file.listFiles();
+					Arrays.sort(files);
+					for (File childFile : files) {
 						if (ELevelFormat.getExpectedLevelFormat(childFile) != null) {
 							int levelCount = SokobanLevel.getLevelCount(childFile);
 							for (int i = 0; i < levelCount; ++i) {
