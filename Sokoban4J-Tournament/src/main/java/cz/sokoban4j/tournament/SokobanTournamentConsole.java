@@ -43,6 +43,9 @@ public class SokobanTournamentConsole {
 	
 	private static final String ARG_EXTRA_JAVA_PARAMS_LONG = "extra-java-params";
 
+	private static final char ARG_KEEP_GOING_SHORT = 'k';
+	
+	private static final String ARG_KEEP_GOING_LONG = "keep-going";
 	
 	private static JSAP jsap;
 
@@ -67,6 +70,8 @@ public class SokobanTournamentConsole {
 	private static String resultFileString;
 	
 	private static File resultFile;
+	
+	private static boolean keepGoing;
 	
 	private static JSAPResult config;
 	
@@ -171,7 +176,18 @@ public class SokobanTournamentConsole {
 	    	.setLongFlag(ARG_EXTRA_JAVA_PARAMS_LONG);    
 	    opt42.setHelp("Extra JVM parameters to pass to execution of respective levels; ' ' separated values within single \"...\" param only");
 	    
-	    jsap.registerParameter(opt42);	    
+	    jsap.registerParameter(opt42);	  
+	    
+	    FlaggedOption opt5 = new FlaggedOption(ARG_KEEP_GOING_LONG)
+		    	.setStringParser(JSAP.BOOLEAN_PARSER)
+		    	.setRequired(false)
+		    	.setDefault("false")
+		    	.setShortFlag(ARG_KEEP_GOING_SHORT)
+		    	.setLongFlag(ARG_KEEP_GOING_LONG);    
+		    opt42.setHelp("Extra JVM parameters to pass to execution of respective levels; ' ' separated values within single \"...\" param only");
+		    
+		jsap.registerParameter(opt5);	 
+		
    	}
 
 	private static void readConfig(String[] args) {
@@ -212,6 +228,8 @@ public class SokobanTournamentConsole {
 		agentClassString = config.getString(ARG_AGENT_LONG);
 		
 		extraJavaArgsString = config.getString(ARG_EXTRA_JAVA_PARAMS_LONG);
+		
+		keepGoing = config.getBoolean(ARG_KEEP_GOING_LONG);
 	}
 	
 	private static void sanityChecks() {
@@ -267,7 +285,7 @@ public class SokobanTournamentConsole {
 		config.timeoutMillis = timeoutMillis;
 		config.visualization = visualiztion;
 		
-		RunSokobanLevels run = new RunSokobanLevels(config, agentClassString, levelList, resultFile, extraJavaArgs);
+		RunSokobanLevels run = new RunSokobanLevels(config, agentClassString, levelList, resultFile, extraJavaArgs, keepGoing);
 		
 		run.run();
 	}

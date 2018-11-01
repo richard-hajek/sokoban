@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.apache.commons.logging.impl.SimpleLog;
-
 import cz.cuni.amis.utils.process.ProcessExecution;
 import cz.cuni.amis.utils.process.ProcessExecutionConfig;
 import cz.cuni.amis.utils.simple_logging.SimpleLogging;
@@ -34,20 +32,32 @@ public class RunSokobanLevels {
 	
 	private String[] extraJavaArgs;
 	
-	public RunSokobanLevels(SokobanConfig config, String agentClass, SokobanLevels levels, File resultFile, String[] extraJavaArgs) {
+	private boolean keepGoing;
+	
+	public RunSokobanLevels(SokobanConfig config, String agentClass, SokobanLevels levels,
+			                File resultFile, String[] extraJavaArgs, boolean keepGoing) {
 		super();
 		this.config = config;
 		this.agentClass = agentClass;
 		this.levels = levels;
 		this.resultFile = resultFile;
 		this.extraJavaArgs = extraJavaArgs;
+		this.keepGoing = keepGoing;
 	}
 
 	public void run() {
-		
 		SimpleLogging.initLogging();
 		
+		File skip = null;
+		
 		for (int i = 0; i < levels.levels.size(); ++i) {			
+	    	SokobanLevel level = levels.levels.get(i);
+	    	
+	    	if (level.file.equals(skip))
+	    		continue;
+	    	else if (skip != null)
+	    		skip = null;  // done skipping
+			
 			ProcessExecutionConfig processConfig = new ProcessExecutionConfig();
 			
 			// ADD PROGRAM TO START
@@ -78,8 +88,6 @@ public class RunSokobanLevels {
 	    	args.add("cz.sokoban4j.SokobanConsole");
 	    	
 	    	// ADD SOKOBAN CONSOLE ARGUMENTS	    	
-	    	SokobanLevel level = levels.levels.get(i);
-			
 			config.level = level.file;
 			config.levelFormat = null;
 			config.levelNumber = level.levelNumber;
@@ -118,15 +126,15 @@ public class RunSokobanLevels {
 		    	System.out.println(level.file.getName() + " / " + level.levelNumber);
 		    	System.out.println("Exit code: " + execution.getExitValue() + " ~ " + SokobanResultType.getForExitValue(execution.getExitValue()));
 		    	System.out.println("========================================================");
-		    	break;
-	    	}
-	    	if (execution.isFailed()) {
+	    		if (keepGoing)
+	    			skip = level.file;
+	    		else break;
+	    	} else if (execution.isFailed()) {
 	    		System.out.println("==================");
 		    	System.out.println("EXECUTION FAILURE!");
 		    	System.out.println("==================");
 		    	break;
 	    	}
-
 		}
 		
 	}
