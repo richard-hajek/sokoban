@@ -1,5 +1,7 @@
 package cz.sokoban4j.playground;
 
+import java.io.File;
+
 import com.martiansoftware.jsap.JSAPException;
 
 import cz.sokoban4j.simulation.agent.IAgent;
@@ -157,20 +159,7 @@ public class Evaluate {
 	private static void evaluateLevels(Class<IAgent> agentClass, boolean visualize) {
 		String levels = getAllLevels();
 		
-		String ps = System.getProperty("path.separator");
-		if (ps == null) {
-			String os = System.getProperty("os.name");			
-			if (os == null) {
-				ps = ";";
-			} else {
-				os = os.toLowerCase();
-				if (os.indexOf("linux") >= 0 || os.indexOf("mac") >= 0) {
-					ps = ":";
-				} else {
-					ps = ";";
-				}
-			}
-		}
+		String ps = File.pathSeparator;
 		
 		try {
 			SokobanTournamentConsole.main(
@@ -181,7 +170,13 @@ public class Evaluate {
 					"-a", agentClass.getName(),
 					"-v", "" + visualize, 
 					"-i", agentClass.getSimpleName(),
-					"-j", "-cp ./target/classes"+ps+"../Sokoban4J-Tournament/target/classes"+ps+"../Sokoban4J/target/classes"+ps+"../Sokoban4J-Agents/target/classes"+ps+"../Sokoban4J-Tournament/libs/jsap-2.1.jar"+ps+"../Sokoban4J-Tournament/libs/process-execution-3.7.0.jar"+ps+"../Sokoban4J-Tournament/libs/xstream-1.3.1.jar"
+					"-j", "-cp ./target/classes"+ps+
+						  "../Sokoban4J-Tournament/target/classes"+ps+
+					      "../Sokoban4J/target/classes"+ps+
+					      "../Sokoban4J-Agents/target/classes"+ps+
+					      "../Sokoban4J-Tournament/libs/jsap-2.1.jar"+ps+
+					      "../Sokoban4J-Tournament/libs/process-execution-3.7.0.jar"+ps+
+					      "../Sokoban4J-Tournament/libs/xstream-1.3.1.jar"
 				}
 			);
 		} catch (JSAPException e) {
