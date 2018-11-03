@@ -32,32 +32,27 @@ public class RunSokobanLevels {
 	
 	private String[] extraJavaArgs;
 	
-	private boolean keepGoing;
+	private int maxFail;
 	
 	public RunSokobanLevels(SokobanConfig config, String agentClass, SokobanLevels levels,
-			                File resultFile, String[] extraJavaArgs, boolean keepGoing) {
+			                File resultFile, String[] extraJavaArgs, int maxFail) {
 		super();
 		this.config = config;
 		this.agentClass = agentClass;
 		this.levels = levels;
 		this.resultFile = resultFile;
 		this.extraJavaArgs = extraJavaArgs;
-		this.keepGoing = keepGoing;
+		this.maxFail = maxFail;
 	}
 
 	public void run() {
 		SimpleLogging.initLogging();
 		
-		File skip = null;
+		int failed = 0;
 		
 		for (int i = 0; i < levels.levels.size(); ++i) {			
 	    	SokobanLevel level = levels.levels.get(i);
 	    	
-	    	if (level.file.equals(skip))
-	    		continue;
-	    	else if (skip != null)
-	    		skip = null;  // done skipping
-			
 			ProcessExecutionConfig processConfig = new ProcessExecutionConfig();
 			
 			// ADD PROGRAM TO START
@@ -126,9 +121,8 @@ public class RunSokobanLevels {
 		    	System.out.println(level.file.getName() + " / " + level.levelNumber);
 		    	System.out.println("Exit code: " + execution.getExitValue() + " ~ " + SokobanResultType.getForExitValue(execution.getExitValue()));
 		    	System.out.println("========================================================");
-	    		if (keepGoing)
-	    			skip = level.file;
-	    		else break;
+	    		if (++failed == maxFail)
+	    		    break;
 	    	} else if (execution.isFailed()) {
 	    		System.out.println("==================");
 		    	System.out.println("EXECUTION FAILURE!");

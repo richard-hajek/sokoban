@@ -43,9 +43,9 @@ public class SokobanTournamentConsole {
 	
 	private static final String ARG_EXTRA_JAVA_PARAMS_LONG = "extra-java-params";
 
-	private static final char ARG_KEEP_GOING_SHORT = 'k';
+	private static final char ARG_MAX_FAIL_SHORT = 'f';
 	
-	private static final String ARG_KEEP_GOING_LONG = "keep-going";
+	private static final String ARG_MAX_FAIL_LONG = "max-fail";
 	
 	private static JSAP jsap;
 
@@ -71,7 +71,7 @@ public class SokobanTournamentConsole {
 	
 	private static File resultFile;
 	
-	private static boolean keepGoing;
+	private static int maxFail;
 	
 	private static JSAPResult config;
 	
@@ -178,13 +178,13 @@ public class SokobanTournamentConsole {
 	    
 	    jsap.registerParameter(opt42);	  
 	    
-	    FlaggedOption opt5 = new FlaggedOption(ARG_KEEP_GOING_LONG)
-		    	.setStringParser(JSAP.BOOLEAN_PARSER)
+	    FlaggedOption opt5 = new FlaggedOption(ARG_MAX_FAIL_LONG)
+		    	.setStringParser(JSAP.INTEGER_PARSER)
 		    	.setRequired(false)
-		    	.setDefault("false")
-		    	.setShortFlag(ARG_KEEP_GOING_SHORT)
-		    	.setLongFlag(ARG_KEEP_GOING_LONG);    
-		    opt42.setHelp("Extra JVM parameters to pass to execution of respective levels; ' ' separated values within single \"...\" param only");
+		    	.setDefault("1")
+		    	.setShortFlag(ARG_MAX_FAIL_SHORT)
+		    	.setLongFlag(ARG_MAX_FAIL_LONG);    
+		    opt42.setHelp("The number of levels that the agent can fail to solve before the evaluation is aborted.");
 		    
 		jsap.registerParameter(opt5);	 
 		
@@ -229,7 +229,7 @@ public class SokobanTournamentConsole {
 		
 		extraJavaArgsString = config.getString(ARG_EXTRA_JAVA_PARAMS_LONG);
 		
-		keepGoing = config.getBoolean(ARG_KEEP_GOING_LONG);
+		maxFail = config.getInt(ARG_MAX_FAIL_LONG);
 	}
 	
 	private static void sanityChecks() {
@@ -285,7 +285,7 @@ public class SokobanTournamentConsole {
 		config.timeoutMillis = timeoutMillis;
 		config.visualization = visualiztion;
 		
-		RunSokobanLevels run = new RunSokobanLevels(config, agentClassString, levelList, resultFile, extraJavaArgs, keepGoing);
+		RunSokobanLevels run = new RunSokobanLevels(config, agentClassString, levelList, resultFile, extraJavaArgs, maxFail);
 		
 		run.run();
 	}

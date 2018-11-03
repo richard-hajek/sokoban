@@ -156,7 +156,7 @@ public class Evaluate {
 	}
 
 	
-	private static void evaluateLevels(Class<IAgent> agentClass, boolean visualize, boolean keepGoing) {
+	private static void evaluateLevels(Class<IAgent> agentClass, boolean visualize, int maxFail) {
 		String levels = getAllLevels();
 		
 		String ps = File.pathSeparator;
@@ -169,7 +169,7 @@ public class Evaluate {
 					"-t", "" + (10*1000),
 					"-a", agentClass.getName(),
 					"-v", "" + visualize, 
-					"-k", "" + keepGoing,
+					"-f", "" + maxFail,
 					"-i", agentClass.getSimpleName(),
 					"-j", "-cp ./target/classes"+ps+
 						  "../Sokoban4J-Tournament/target/classes"+ps+
@@ -190,11 +190,11 @@ public class Evaluate {
 	public static void main(String[] args) {
 		Class agentClass = MyAgent.class;
 		
-		boolean visualize = true;
+		boolean visualize = false;
 		
-		boolean keepGoing = false;
+		int maxFail = 1;
 		
-		evaluateLevels((Class<IAgent>)agentClass, visualize, keepGoing);
+		evaluateLevels((Class<IAgent>)agentClass, visualize, maxFail);
 	}
 	
 }
