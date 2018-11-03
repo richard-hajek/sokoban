@@ -110,7 +110,8 @@ public class Evaluate {
 					"-v", "" + visualize, 
 					"-f", "" + maxFail,
 					"-i", agentClass.getSimpleName(),
-					"-j", "-cp ./target/classes"+ps+
+					"-j", "-Xmx2g " +  // 2 GB maximum heap size 
+					      "-cp ./target/classes"+ps+
 						  "../Sokoban4J-Tournament/target/classes"+ps+
 					      "../Sokoban4J/target/classes"+ps+
 					      "../Sokoban4J-Agents/target/classes"+ps+
