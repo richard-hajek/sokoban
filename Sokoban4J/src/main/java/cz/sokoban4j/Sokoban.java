@@ -760,7 +760,7 @@ public class Sokoban {
 	 * @return
 	 */
 	public static SokobanResult playHumanLevel(String levelFilePath, int levelNumber) {
-		return playAgentLevel(levelFilePath, new HumanAgent());
+		return playAgentLevel(levelFilePath, levelNumber, new HumanAgent());
 	}
 	
 	/**
