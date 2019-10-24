@@ -1,7 +1,5 @@
 package cz.sokoban4j.ui;
 
-import java.awt.geom.Rectangle2D;
-
 public class UICamera {
 	
 	public int x = 0;

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cz.sokoban4j.simulation.board.oop.Board;
-import cz.sokoban4j.simulation.board.oop.EEntity;
 import cz.sokoban4j.simulation.board.oop.Tile;
 import cz.sokoban4j.simulation.board.oop.entities.Entity;
 import cz.sokoban4j.ui.atlas.SpriteAtlas;

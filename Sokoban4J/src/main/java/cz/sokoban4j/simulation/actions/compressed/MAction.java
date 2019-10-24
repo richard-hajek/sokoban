@@ -3,9 +3,7 @@ package cz.sokoban4j.simulation.actions.compressed;
 import cz.sokoban4j.simulation.actions.EDirection;
 import cz.sokoban4j.simulation.actions.oop.EActionType;
 import cz.sokoban4j.simulation.actions.oop.IAction;
-import cz.sokoban4j.simulation.board.compact.BoardCompact;
 import cz.sokoban4j.simulation.board.compressed.BoardCompressed;
-import cz.sokoban4j.simulation.board.slim.BoardSlim;
 
 public abstract class MAction {
 	

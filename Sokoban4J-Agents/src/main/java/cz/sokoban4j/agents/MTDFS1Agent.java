@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import cz.sokoban4j.Sokoban;
-import cz.sokoban4j.SokobanConfig.ELevelFormat;
 import cz.sokoban4j.simulation.SokobanResult;
 import cz.sokoban4j.simulation.actions.EDirection;
 import cz.sokoban4j.simulation.actions.compact.CAction;

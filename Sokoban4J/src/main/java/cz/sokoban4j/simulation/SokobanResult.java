@@ -1,7 +1,5 @@
 package cz.sokoban4j.simulation;
 
-import java.io.File;
-
 import cz.sokoban4j.simulation.agent.IAgent;
 
 public class SokobanResult {

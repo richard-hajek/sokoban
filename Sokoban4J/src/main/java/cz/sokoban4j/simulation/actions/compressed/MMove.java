@@ -12,7 +12,6 @@ import cz.sokoban4j.simulation.board.compact.BoardCompact;
 import cz.sokoban4j.simulation.board.compressed.BoardCompressed;
 import cz.sokoban4j.simulation.board.compressed.MTile;
 import cz.sokoban4j.simulation.board.compressed.MTile.SubSlimTile;
-import cz.sokoban4j.simulation.board.slim.BoardSlim;
 
 /**
  * MOVE ONLY, if there is a box, an edge or no free space, then the action is considered "not possible".

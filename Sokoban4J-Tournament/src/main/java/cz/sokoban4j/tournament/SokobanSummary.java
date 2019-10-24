@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import cz.cuni.amis.utils.maps.LazyMap;
-import cz.sokoban4j.simulation.SokobanResult;
 import cz.sokoban4j.simulation.SokobanResult.SokobanResultType;
 import cz.sokoban4j.tournament.utils.CSV;
 import cz.sokoban4j.tournament.utils.CSV.CSVRow;

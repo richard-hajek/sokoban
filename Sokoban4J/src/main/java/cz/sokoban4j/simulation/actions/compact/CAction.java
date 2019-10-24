@@ -4,7 +4,6 @@ import cz.sokoban4j.simulation.actions.EDirection;
 import cz.sokoban4j.simulation.actions.oop.EActionType;
 import cz.sokoban4j.simulation.actions.oop.IAction;
 import cz.sokoban4j.simulation.board.compact.BoardCompact;
-import cz.sokoban4j.simulation.board.oop.Board;
 
 public abstract class CAction {
 	

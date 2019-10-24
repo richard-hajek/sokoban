@@ -1,10 +1,7 @@
 package cz.sokoban4j.ui.entities;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
 import cz.sokoban4j.simulation.actions.EDirection;
-import cz.sokoban4j.simulation.board.oop.EEntity;
 import cz.sokoban4j.simulation.board.oop.entities.Entity;
 import cz.sokoban4j.ui.atlas.SpriteAtlas;
 

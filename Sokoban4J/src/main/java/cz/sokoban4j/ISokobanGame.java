@@ -1,6 +1,5 @@
 package cz.sokoban4j;
 
-import cz.sokoban4j.ISokobanGame.SokobanGameState;
 import cz.sokoban4j.simulation.SokobanResult;
 
 public interface ISokobanGame {

@@ -6,7 +6,6 @@ import cz.sokoban4j.simulation.board.oop.EEntity;
 import cz.sokoban4j.simulation.board.oop.EPlace;
 import cz.sokoban4j.simulation.board.oop.ESpace;
 import cz.sokoban4j.simulation.board.slim.BoardSlim;
-import cz.sokoban4j.simulation.board.slim.STile;
 
 /**
  * Even more compact board than {@link BoardCompact}. Ignores colors of boxes and places.

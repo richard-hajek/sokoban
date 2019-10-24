@@ -2,12 +2,7 @@ package cz.sokoban4j.simulation.board.minimal;
 
 import cz.sokoban4j.simulation.board.compact.BoardCompact;
 import cz.sokoban4j.simulation.board.compact.CTile;
-import cz.sokoban4j.simulation.board.compressed.StateCompressed;
 import cz.sokoban4j.simulation.board.oop.Board;
-import cz.sokoban4j.simulation.board.oop.EEntity;
-import cz.sokoban4j.simulation.board.oop.EPlace;
-import cz.sokoban4j.simulation.board.oop.ESpace;
-import cz.sokoban4j.simulation.board.oop.entities.Entity;
 
 /**
  * Runtime-part of the Sokoban game state (excluding static board configuration, just positions).

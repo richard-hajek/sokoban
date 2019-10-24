@@ -2,7 +2,6 @@ package cz.sokoban4j.utils;
 
 import java.util.List;
 
-import cz.sokoban4j.simulation.board.oop.EEntity;
 import cz.sokoban4j.simulation.board.oop.ESpace;
 
 public class TextLevelS4JL {

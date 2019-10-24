@@ -9,11 +9,9 @@ import cz.sokoban4j.simulation.actions.oop.EActionType;
 import cz.sokoban4j.simulation.actions.oop.IAction;
 import cz.sokoban4j.simulation.actions.oop.MoveOrPush;
 import cz.sokoban4j.simulation.board.compact.BoardCompact;
-import cz.sokoban4j.simulation.board.compact.CTile;
 import cz.sokoban4j.simulation.board.compressed.BoardCompressed;
 import cz.sokoban4j.simulation.board.compressed.MTile;
 import cz.sokoban4j.simulation.board.compressed.MTile.SubSlimTile;
-import cz.sokoban4j.simulation.board.slim.BoardSlim;
 
 /**
  * PUSH ONLY. If the player is not next to the box or there is nowhere to push the box, than the action is considered as not possible.

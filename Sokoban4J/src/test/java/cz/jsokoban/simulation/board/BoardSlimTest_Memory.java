@@ -3,7 +3,6 @@ package cz.jsokoban.simulation.board;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.sokoban4j.simulation.board.compact.BoardCompact;
 import cz.sokoban4j.simulation.board.slim.BoardSlim;
 
 public class BoardSlimTest_Memory {
