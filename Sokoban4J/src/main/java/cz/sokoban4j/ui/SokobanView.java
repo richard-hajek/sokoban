@@ -16,8 +16,6 @@ import cz.sokoban4j.ui.atlas.SpriteAtlas;
 
 public class SokobanView extends JComponent {
 
-	private Board board;
-	private SpriteAtlas sprites;
 	private UIBoard uiBoard;
 	
 	private BufferedImage canvas;
@@ -25,15 +23,12 @@ public class SokobanView extends JComponent {
 	
 	private int scaleDown = 1;
 	private BufferedImage scaledDownCanvas;
-	private Graphics2D scaledDownCanvasGraphics;
 	private AffineTransform scaleDownAT;
 	private AffineTransformOp scaleDownOP;
 	
 	private boolean renderRequested = false;
 	
 	public SokobanView(Board board, SpriteAtlas sprites, UIBoard uiBoard) {
-		this.board = board;
-		this.sprites = sprites;
 		this.uiBoard = uiBoard;
 		canvas = new BufferedImage(board.width * sprites.getTileWidth(), board.height * sprites.getTileHeight(), BufferedImage.TYPE_INT_ARGB);
 		canvasGraphics = canvas.createGraphics();

@@ -13,8 +13,6 @@ public class SokobanFrame extends JFrame
 	 */
 	private static final long serialVersionUID = -4722654501777832707L;
 	
-	private SokobanView view;
-	
 	private String level;
 	
 	private int steps = 0;
@@ -25,7 +23,6 @@ public class SokobanFrame extends JFrame
 
 	public SokobanFrame(SokobanView view, String level)
     {		
-    	this.view = view;
         getContentPane().add(BorderLayout.CENTER, view);
         this.setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

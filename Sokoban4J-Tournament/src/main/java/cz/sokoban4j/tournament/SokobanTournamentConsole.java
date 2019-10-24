@@ -9,7 +9,6 @@ import com.martiansoftware.jsap.JSAPException;
 import com.martiansoftware.jsap.JSAPResult;
 
 import cz.sokoban4j.SokobanConfig;
-import cz.sokoban4j.simulation.agent.IAgent;
 import cz.sokoban4j.tournament.run.RunSokobanLevels;
 import cz.sokoban4j.tournament.run.SokobanLevels;
 
@@ -62,8 +61,6 @@ public class SokobanTournamentConsole {
 	private static boolean visualiztion;
 	
 	private static String agentClassString;
-	
-	private static IAgent agent;
 	
 	private static String id;
 	

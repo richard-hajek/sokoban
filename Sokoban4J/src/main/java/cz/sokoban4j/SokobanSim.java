@@ -37,8 +37,6 @@ public class SokobanSim implements ISokobanGame, Runnable {
 	
 	private int steps = 0;
 	
-	private long simMovesMillis = 0;
-	
 	/**
 	 * @param id
 	 * @param board
@@ -145,8 +143,6 @@ public class SokobanSim implements ISokobanGame, Runnable {
 				
 				if (whereToMove == null || whereToMove == EDirection.NONE) continue;
 				
-				long simMovesBegin = System.currentTimeMillis();
-							
 				agentAction = MoveOrPush.getMoveOrPush(whereToMove);
 	
 				// AGENT ACTION VALID?
@@ -164,8 +160,6 @@ public class SokobanSim implements ISokobanGame, Runnable {
 				}
 				
 				agentAction = null;
-				
-				simMovesMillis += System.currentTimeMillis() - simMovesBegin;				
 			}
 		} catch (Exception e) {
 			onSimulationException(e);

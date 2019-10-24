@@ -14,7 +14,6 @@ public class UIPush implements IUIAction {
 
 	private Board board;
 	private UIBoard uiBoard;
-	private SpriteAtlas sprites;
 	
 	private UIPlayer player;
 	private UIBox box;
@@ -26,10 +25,6 @@ public class UIPush implements IUIAction {
 	private int animFrame = -1;
 	
 	private double nextAnim;
-	
-	private double moveMillis;
-	
-	private int animFrameCount;
 	
 	private double oneFrameMillis;
 	
@@ -44,10 +39,7 @@ public class UIPush implements IUIAction {
 	public UIPush(Board board, UIBoard uiBoard, SpriteAtlas sprites, EDirection dir, double moveMillis, int animFrameCount) {
 		this.board = board;
 		this.uiBoard = uiBoard;
-		this.sprites = sprites;
 		this.dir = dir;
-		this.moveMillis = moveMillis;
-		this.animFrameCount = animFrameCount;
 		oneFrameMillis = moveMillis / ((double)animFrameCount);
 		this.moveSpeedX = dir.dX * ((double)sprites.getTileWidth()) / moveMillis;
 		this.moveSpeedY = dir.dY * ((double)sprites.getTileHeight()) / moveMillis;

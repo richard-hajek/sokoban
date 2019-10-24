@@ -286,8 +286,6 @@ public class Board implements Cloneable {
 	 * @return
 	 */
 	public static Board fromReaderS4JL(String levelName, Reader textReader, int levelNumber) {
-		Board board = null;
-		
 		// INIT READER
 		S4JLReader reader = new S4JLReader(levelName, textReader);
 		
@@ -324,8 +322,6 @@ public class Board implements Cloneable {
 	 * @return
 	 */
 	public static Board fromReaderSok(String levelName, Reader textReader, int levelNumber) {
-		Board board = null;
-		
 		// INIT READER
 		SokReader reader = new SokReader(levelName, textReader);
 		
