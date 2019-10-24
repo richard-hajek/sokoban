@@ -2,13 +2,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>cz.cuni.amis</groupId>
-		<artifactId>amis-pom</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../../Poms/AmisPom/pom.xml</relativePath>
-	</parent>
-
 	<groupId>cz.sokoban4j</groupId>
 	<artifactId>sokoban4j-agents</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
@@ -17,6 +10,11 @@
 	<name>sokoban4j-agents</name>
 	<url>https://github.com/kefik/Sokoban4J</url>
 	
+	<properties>
+			<maven.compiler.source>1.11</maven.compiler.source>
+			<maven.compiler.target>1.11</maven.compiler.target>
+	</properties>
+
 	<dependencies>
         <!--
            SOKOBAN DEPENDENCY
