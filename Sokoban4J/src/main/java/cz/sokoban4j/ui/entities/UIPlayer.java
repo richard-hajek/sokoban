@@ -60,8 +60,11 @@ public class UIPlayer extends UIEntity {
 			case UP: return EMove.MOVE_UP;
 			case LEFT: return EMove.MOVE_LEFT;
 			case RIGHT: return EMove.MOVE_RIGHT;
+			
+			case NONE:
+			default:
+			  return null;
 			}
-			return null;
 		}
 	}
 	

@@ -143,6 +143,7 @@ public class CircularArrayQueue<T> {
 	public void ensureCapacity(int newCapacity) {
 		if (newCapacity <= queue.length) return;
 		
+		@SuppressWarnings("unchecked")
 		T[] larger = (T[]) (new Object[newCapacity]);
 
 		for (int scan = 0; scan < count; scan++) {

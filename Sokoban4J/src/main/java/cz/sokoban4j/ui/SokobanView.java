@@ -15,6 +15,7 @@ import cz.sokoban4j.simulation.board.oop.Board;
 import cz.sokoban4j.ui.atlas.SpriteAtlas;
 
 public class SokobanView extends JComponent {
+	private static final long serialVersionUID = 1L;
 
 	private UIBoard uiBoard;
 	

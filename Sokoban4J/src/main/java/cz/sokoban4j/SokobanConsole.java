@@ -71,7 +71,7 @@ public class SokobanConsole {
 	
 	private static String agentClassString;
 	
-	private static Class agentClass;
+	private static Class<?> agentClass;
 	
 	private static IAgent agent;
 	
@@ -210,7 +210,8 @@ public class SokobanConsole {
 		
 		if (!config.success()) {
 			String error = "Invalid arguments specified.";
-			Iterator errorIter = config.getErrorMessageIterator();
+			@SuppressWarnings("unchecked")
+			Iterator<String> errorIter = config.getErrorMessageIterator();
 			if (!errorIter.hasNext()) {
 				error += "\n-- No details given.";
 			} else {
@@ -387,7 +388,7 @@ public class SokobanConsole {
 		return (String[]) args.toArray(new String[0]);
 	}
 	
-	public static String[] getArgs(SokobanConfig config, Class agentClass, File resultFile) {
+	public static String[] getArgs(SokobanConfig config, Class<?> agentClass, File resultFile) {
 		List<String> args = new ArrayList<String>();
 		
 		args.add("-f"); args.add(config.level.getAbsolutePath()); // level file to play

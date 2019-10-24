@@ -4,7 +4,6 @@ import java.io.File;
 
 import com.martiansoftware.jsap.JSAPException;
 
-import cz.sokoban4j.simulation.agent.IAgent;
 import cz.sokoban4j.tournament.SokobanTournamentConsole;
 
 public class Evaluate {
@@ -95,7 +94,7 @@ public class Evaluate {
 	}
 
 	
-	private static void evaluateLevels(Class<IAgent> agentClass, boolean visualize, int maxFail) {
+	private static void evaluateLevels(Class<?> agentClass, boolean visualize, int maxFail) {
 		String levels = getAllLevels();
 		
 		String ps = File.pathSeparator;
@@ -128,13 +127,13 @@ public class Evaluate {
 
 	
 	public static void main(String[] args) {
-		Class agentClass = MyAgent.class;
+		Class<?> agentClass = MyAgent.class;
 		
 		boolean visualize = false;
 		
 		int maxFail = 1;
 		
-		evaluateLevels((Class<IAgent>)agentClass, visualize, maxFail);
+		evaluateLevels(agentClass, visualize, maxFail);
 	}
 	
 }

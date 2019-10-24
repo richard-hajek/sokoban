@@ -102,10 +102,8 @@ public class SOK2S4JL {
 	private void transform(TextLevelS4JL level, File targetFile) {		
 		System.out.println("  +-- Writing: " + targetFile.getAbsolutePath());
 		
-		FileWriter fileWriter = null;
-		try {
-			fileWriter = new FileWriter(targetFile);
-			PrintWriter writer = new PrintWriter(fileWriter);
+		try (FileWriter fileWriter = new FileWriter(targetFile);
+			   PrintWriter writer = new PrintWriter(fileWriter)) {
 			
 			// COMMENTS
 			for (String comment : level.getComments()) {
@@ -122,15 +120,7 @@ public class SOK2S4JL {
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to save target file: " + targetFile.getAbsolutePath(), e);
-		} finally {
-			if (fileWriter != null) {
-				try {
-					fileWriter.close();
-				} catch (Exception e) {					
-				}
-			}
 		}
-		
 	}
 
 	public static void main(String[] args) {
