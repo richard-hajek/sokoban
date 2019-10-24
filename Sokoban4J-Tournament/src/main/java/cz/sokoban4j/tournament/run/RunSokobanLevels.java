@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import cz.cuni.amis.utils.process.ProcessExecution;
 import cz.cuni.amis.utils.process.ProcessExecutionConfig;
 import cz.cuni.amis.utils.simple_logging.SimpleLogging;
+import cz.sokoban4j.Sokoban;
 import cz.sokoban4j.SokobanConfig;
 import cz.sokoban4j.SokobanConsole;
 import cz.sokoban4j.simulation.SokobanResult.SokobanResultType;
@@ -95,8 +96,9 @@ public class RunSokobanLevels {
 	    	
 	    	processConfig.setArgs(args);
 	    	
-	    	// SET DIRECTORY	    	
-	    	processConfig.setExecutionDir(".");
+		// SET DIRECTORY
+	    	processConfig.setExecutionDir(Sokoban.projectRoot());
+
 	    	processConfig.setId("S4J");		
 	    	
 	    	processConfig.setRedirectStdOut(true);

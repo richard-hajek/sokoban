@@ -3,6 +3,7 @@ package cz.sokoban4j.tournament.run;
 import java.io.File;
 import java.util.*;
 
+import cz.sokoban4j.Sokoban;
 import cz.sokoban4j.SokobanConfig.ELevelFormat;
 
 public class SokobanLevels {
@@ -28,7 +29,7 @@ public class SokobanLevels {
 			
 			String fileString = parts[index];
 			
-			File file = new File(fileString);
+			File file = Sokoban.findFile(fileString);
 			
 			String level = parts[index + 1];
 			

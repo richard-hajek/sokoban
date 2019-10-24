@@ -8,6 +8,7 @@ import com.martiansoftware.jsap.JSAP;
 import com.martiansoftware.jsap.JSAPException;
 import com.martiansoftware.jsap.JSAPResult;
 
+import cz.sokoban4j.Sokoban;
 import cz.sokoban4j.SokobanConfig;
 import cz.sokoban4j.tournament.run.RunSokobanLevels;
 import cz.sokoban4j.tournament.run.SokobanLevels;
@@ -240,7 +241,7 @@ public class SokobanTournamentConsole {
 		
 		System.out.println("---- going to run at max: " + levelList.levels.size() + " levels");
 						
-		resultFile = new File(resultFileString);
+		resultFile = new File(Sokoban.projectRoot(), resultFileString);
 		System.out.println("-- result file: " + resultFileString + " --> " + resultFile.getAbsolutePath());
 		
 		if (!resultFile.exists()) {
@@ -294,12 +295,12 @@ public class SokobanTournamentConsole {
 	
 	public static String[] getTestArgs() {
 		String classPath =
-			("./target/classes;../Sokoban4J/target/classes;../Sokoban4J-Agents/target/classes;" +
-		     "./libs/jsap-2.1.jar;./libs/process-execution-3.7.0.jar;./libs/xstream-1.3.1.jar")
+			("Sokoban4J-Tournament/target/classes;Sokoban4J/target/classes;Sokoban4J-Agents/target/classes;" +
+		     "Sokoban4J-Tournament/libs/jsap-2.1.jar;Sokoban4J-Tournament/libs/process-execution-3.7.0.jar;Sokoban4J-Tournament/libs/xstream-1.3.1.jar")
 			.replace(';', File.pathSeparatorChar);
 		return new String[] {
-				  "-l", "../Sokoban4J/levels/sokobano.de/Blazz.sok;all" // see {@link SokobanLevels} for details
-				, "-r", "./results/results.csv" // result file
+				  "-l", "sokobano.de/Blazz.sok;all" // see {@link SokobanLevels} for details
+				, "-r", "Sokoban4J-Tournament/results/results.csv" // result file
 				, "-t", "20000" // timeout, -1 to disable
 				, "-a", "cz.sokoban4j.agents.HumanAgent"
 				, "-v", "true"  // visualization

@@ -374,6 +374,29 @@ public class Sokoban {
 	// STATIC METHODS FOR EASY START-UP 
 	// ================================
 	
+public static String projectRoot() {
+		String[] dirs = { ".", ".." };
+		String expected = "Sokoban4J-Agents";
+
+		for (String dir : dirs)
+			if (new File(dir, expected).exists())
+				return dir;
+	
+    throw new RuntimeException("can't find project root");
+	}
+
+public static File findFile(String path) {
+		String[] dirs = { ".", "levels", "Sokoban4J/levels", "../Sokoban4J/levels" };
+
+		for (String d : dirs) {
+			File f = new File(d, path);
+			if (f.exists())
+				return f;
+		}
+
+		return new File(path);
+	}
+
 	private static ELevelFormat determineLevelFormat(String pathToFile) {
 		ELevelFormat levelFormat = ELevelFormat.getExpectedLevelFormat(new File(pathToFile));
 		if (levelFormat == null) {
@@ -437,9 +460,10 @@ public class Sokoban {
 		if (id == null) id = determineId(agent);
 		config.id = id;
 		config.agent = agent;
-		config.level = new File(levelFilePath);
-		if (!config.level.exists() || !config.level.isFile()) throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
-		if (levelFormat == null) levelFormat = determineLevelFormat(levelFilePath);
+		config.level = findFile(levelFilePath);
+		if (!config.level.exists() || !config.level.isFile())
+			throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
+		if (levelFormat == null) levelFormat = determineLevelFormat(config.level.getName());
 		config.levelFormat = levelFormat;
 		config.levelNumber = levelNumber;		
 		config.visualization = false;
@@ -460,7 +484,7 @@ public class Sokoban {
 	 * @return
 	 */
 	public static SokobanResult simAgentLevel(String id, String levelFilePath, int levelNumber, int timeoutMillis, IAgent agent) {
-		return simAgentLevel(id, levelFilePath, determineLevelFormat(levelFilePath), levelNumber, timeoutMillis, agent);
+		return simAgentLevel(id, levelFilePath, null, levelNumber, timeoutMillis, agent);
 	}
 	
 	/**
@@ -482,9 +506,10 @@ public class Sokoban {
 		if (id == null) id = determineId(agent);
 		config.id = id;		
 		config.agent = agent;
-		config.level = new File(levelFilePath);
-		if (!config.level.exists() || !config.level.isFile()) throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
-		if (levelFormat == null) levelFormat = determineLevelFormat(levelFilePath);
+		config.level = findFile(levelFilePath);
+		if (!config.level.exists() || !config.level.isFile())
+			throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
+		if (levelFormat == null) levelFormat = determineLevelFormat(config.level.getName());
 		config.levelFormat = levelFormat;
 		config.visualization = false;
 		config.timeoutMillis = timeoutMillis;
@@ -505,7 +530,7 @@ public class Sokoban {
 	 * @return
 	 */
 	public static List<SokobanResult> simAgentFile(String id, String levelFilePath, int timeoutMillis, IAgent agent) {
-		return simAgentFile(id, levelFilePath, determineLevelFormat(levelFilePath), timeoutMillis, agent);
+		return simAgentFile(id, levelFilePath, null, timeoutMillis, agent);
 	}
 	
 	/**
@@ -527,8 +552,9 @@ public class Sokoban {
 		if (id == null) id = determineId(agent);
 		config.id = id;
 		config.agent = agent;
-		config.level = new File(levelDirPath);
-		if (!config.level.exists() || !config.level.isDirectory()) throw new RuntimeException("Not a directory at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelDirPath);
+		config.level = findFile(levelDirPath);
+		if (!config.level.exists() || !config.level.isDirectory())
+			throw new RuntimeException("Not a directory at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelDirPath);
 		config.visualization = false;
 		config.timeoutMillis = timeoutMillis;
 		
@@ -593,9 +619,10 @@ public class Sokoban {
 		if (id == null) id = determineId(agent);
 		config.id = id;
 		config.agent = agent;
-		config.level = new File(levelFilePath);
-		if (!config.level.exists() || !config.level.isFile()) throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
-		if (levelFormat == null) levelFormat = determineLevelFormat(levelFilePath);
+		config.level = findFile(levelFilePath);
+		if (!config.level.exists() || !config.level.isFile())
+			throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
+		if (levelFormat == null) levelFormat = determineLevelFormat(config.level.getName());
 		config.levelFormat = levelFormat;
 		config.levelNumber = levelNumber;		
 		config.visualization = true;
@@ -616,7 +643,7 @@ public class Sokoban {
 	 * @return
 	 */
 	public static SokobanResult playAgentLevel(String id, String levelFilePath, int levelNumber, int timeoutMillis, IAgent agent) {
-		return playAgentLevel(id, levelFilePath, determineLevelFormat(levelFilePath), levelNumber, timeoutMillis, agent);
+		return playAgentLevel(id, levelFilePath, null, levelNumber, timeoutMillis, agent);
 	}
 	
 	/**
@@ -638,9 +665,10 @@ public class Sokoban {
 		if (id == null) id = determineId(agent);
 		config.id = id;
 		config.agent = agent;
-		config.level = new File(levelFilePath);
-		if (!config.level.exists() || !config.level.isFile()) throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
-		if (levelFormat == null) levelFormat = determineLevelFormat(levelFilePath);
+		config.level = findFile(levelFilePath);
+		if (!config.level.exists() || !config.level.isFile())
+			throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
+		if (levelFormat == null) levelFormat = determineLevelFormat(config.level.getName());
 		config.levelFormat = levelFormat;
 		config.visualization = true;
 		config.timeoutMillis = timeoutMillis;
@@ -661,7 +689,7 @@ public class Sokoban {
 	 * @return
 	 */
 	public static List<SokobanResult> playAgentFile(String id, String levelFilePath, int timeoutMillis, IAgent agent) {
-		return playAgentFile(id, levelFilePath, determineLevelFormat(levelFilePath), timeoutMillis, agent);
+		return playAgentFile(id, levelFilePath, null, timeoutMillis, agent);
 	}
 	
 	/**
@@ -683,8 +711,9 @@ public class Sokoban {
 		if (id == null) id = determineId(agent);
 		config.id = id;
 		config.agent = agent;
-		config.level = new File(levelDirPath);
-		if (!config.level.exists() || !config.level.isDirectory()) throw new RuntimeException("Not a directory at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelDirPath);
+		config.level = findFile(levelDirPath);
+		if (!config.level.exists() || !config.level.isDirectory())
+			throw new RuntimeException("Not a directory at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelDirPath);
 		config.visualization = true;
 		config.timeoutMillis = timeoutMillis;
 		
@@ -790,23 +819,23 @@ public class Sokoban {
 	public static void main(String[] args) {
 		// PLAY SINGLE LEVEL
 		
-		//playHumanFile("levels/Easy/level0001.s4jl");
-		//playHumanFile("levels/Easy/level0002.1.s4jl");
-		//playHumanFile("levels/Easy/level0002.2.s4jl");
-		//playHumanFile("levels/Easy/level0002.3.s4jl");
-		//playHumanFile("levels/Easy/level0003.s4jl");
-		//playHumanFile("levels/Easy/level0004.s4jl");
-		//playHumanFile("levels/Easy/level0005.s4jl");
-		//playHumanFile("levels/Easy/level0006.s4jl");
-		//playHumanFile("levels/Easy/level0007.s4jl");
-		//playHumanFile("levels/Easy/level0008.s4jl");
-		//playHumanFile("levels/Easy/level0009.s4jl");
-		//playHumanFile("levels/MultiBox/level0001.s4jl");
+		//playHumanFile("Easy/level0001.s4jl");
+		//playHumanFile("Easy/level0002.1.s4jl");
+		//playHumanFile("Easy/level0002.2.s4jl");
+		//playHumanFile("Easy/level0002.3.s4jl");
+		//playHumanFile("Easy/level0003.s4jl");
+		//playHumanFile("Easy/level0004.s4jl");
+		//playHumanFile("Easy/level0005.s4jl");
+		//playHumanFile("Easy/level0006.s4jl");
+		//playHumanFile("Easy/level0007.s4jl");
+		//playHumanFile("Easy/level0008.s4jl");
+		//playHumanFile("Easy/level0009.s4jl");
+		//playHumanFile("MultiBox/level0001.s4jl");
 				
 		// PLAY ALL LEVELS
 		
-		playHumanDir("levels/Easy");
-		//playHumanFile("levels/sokobano.de/Blazz.sok");
+		playHumanDir("Easy");
+		//playHumanFile("sokobano.de/Blazz.sok");
 	}
 	
 }

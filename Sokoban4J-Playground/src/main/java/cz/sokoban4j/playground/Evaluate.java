@@ -86,8 +86,7 @@ public class Evaluate {
 	private static String getAllLevels() {
 		StringBuffer result = new StringBuffer();
 		for (String level : LEVELS) {
-			result.append(";");
-			result.append("../Sokoban4J/levels/" + level);
+			result.append(";" + level);
 		}
 		result.delete(0, 1);
 		return result.toString();
@@ -103,20 +102,20 @@ public class Evaluate {
 			SokobanTournamentConsole.main(
 				new String[] {
 					"-l", levels,
-					"-r", "results/results-" + System.currentTimeMillis() + ".csv",
+					"-r", "Sokoban4J-Playground/results/results-" + System.currentTimeMillis() + ".csv",
 					"-t", "" + (10*1000),
 					"-a", agentClass.getName(),
 					"-v", "" + visualize, 
 					"-f", "" + maxFail,
 					"-i", agentClass.getSimpleName(),
 					"-j", "-Xmx2g " +  // 2 GB maximum heap size 
-					      "-cp ./target/classes"+ps+
-						  "../Sokoban4J-Tournament/target/classes"+ps+
-					      "../Sokoban4J/target/classes"+ps+
-					      "../Sokoban4J-Agents/target/classes"+ps+
-					      "../Sokoban4J-Tournament/libs/jsap-2.1.jar"+ps+
-					      "../Sokoban4J-Tournament/libs/process-execution-3.7.0.jar"+ps+
-					      "../Sokoban4J-Tournament/libs/xstream-1.3.1.jar"
+					      "-cp Sokoban4J-Playground/target/classes"+ps+
+						    "Sokoban4J-Tournament/target/classes"+ps+
+					      "Sokoban4J/target/classes"+ps+
+					      "Sokoban4J-Agents/target/classes"+ps+
+					      "Sokoban4J-Tournament/libs/jsap-2.1.jar"+ps+
+					      "Sokoban4J-Tournament/libs/process-execution-3.7.0.jar"+ps+
+					      "Sokoban4J-Tournament/libs/xstream-1.3.1.jar"
 				}
 			);
 		} catch (JSAPException e) {
