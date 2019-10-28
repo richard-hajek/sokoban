@@ -1,5 +1,3 @@
-package cz.sokoban4j.playground;
-
 import java.io.File;
 
 import com.martiansoftware.jsap.JSAPException;

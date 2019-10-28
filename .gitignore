@@ -1,5 +1,6 @@
 .classpath
 .project
+results
 
 /.metadata
 /.recommenders
@@ -14,7 +15,6 @@
 /Sokoban4J-Playground/target
 
 /Sokoban4J-Tournament/.settings
-/Sokoban4J-Tournament/results
 /Sokoban4J-Tournament/target
 
 /Sokoban4J-Competition

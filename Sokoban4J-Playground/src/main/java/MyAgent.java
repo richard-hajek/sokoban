@@ -1,5 +1,3 @@
-package cz.sokoban4j.playground;
-
 import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.List;
