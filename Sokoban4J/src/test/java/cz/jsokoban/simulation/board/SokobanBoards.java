@@ -13,7 +13,7 @@ public class SokobanBoards {
 		
 		File sokFile = new File("Levels/Sokobano.de/A.K.K._Informatika.sok");
 		
-		int levelNumber = 0;
+		int levelNumber = 1;
 		while (true) {			
 			Board board;
 			

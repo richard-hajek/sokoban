@@ -39,7 +39,7 @@ public class SokobanLevel {
 	
 	public void validate() {
 		if (ELevelFormat.getExpectedLevelFormat(file) == null) throw new RuntimeException("Bad file format in " + this);
-		if (levelNumber < 0) throw new RuntimeException("Bad level number in " + this);
+		if (levelNumber < 1) throw new RuntimeException("Bad level number in " + this);
 	}
 	
 	@Override

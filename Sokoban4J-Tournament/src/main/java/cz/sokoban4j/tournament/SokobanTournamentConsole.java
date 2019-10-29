@@ -153,7 +153,7 @@ public class SokobanTournamentConsole {
 	    	.setRequired(true) 	    	
 	    	.setShortFlag(ARG_LEVEL_LIST_SHORT)
 	    	.setLongFlag(ARG_LEVEL_LIST_LONG);    
-	    opt31.setHelp("Level list to execute (in that order), format: level-file;level;level-file;level;... level can be a number (0-based) or 'all' (without apostrpohes)");
+	    opt31.setHelp("Level list to execute (in that order), format: level-file;level;level-file;level;... level can be a number (1-based) or 'all' (without apostrpohes)");
 	
 	    jsap.registerParameter(opt31);
 	    

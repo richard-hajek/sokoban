@@ -59,8 +59,8 @@ public class SokobanConfig {
 	public File level;
 	
 	/**
-	 * If {@link #level} is FILE, than this contains what number of the level to load; 0-based.
-	 * -1 == run all levels sequentially.
+	 * If {@link #level} is FILE, than this contains what number of the level to load; 1-based.
+	 * 0 == run all levels sequentially.
 	 */
 	public int levelNumber;
 	
@@ -94,7 +94,7 @@ public class SokobanConfig {
 		id = Sanitize.idify(id);
 		if (agent == null) throw new RuntimeException("Agent is null.");
 		if (level == null) throw new RuntimeException("Level is null.");
-		if (levelNumber < -1) throw new RuntimeException("LevelNumber < -1");
+		if (levelNumber < 0) throw new RuntimeException("LevelNumber < 0");
 		if (!level.exists()) throw new RuntimeException("Level '" + level.getAbsolutePath() + "' does not exist.");
 		if (!level.isFile() && !level.isDirectory()) throw new RuntimeException("Level '" + level.getAbsolutePath() + "' is neither a file nor a directory.");
 		if (level.isFile() && levelFormat == null) throw new RuntimeException("LevelFormat is null but Level points to a file '" + level.getAbsolutePath() + "'.");

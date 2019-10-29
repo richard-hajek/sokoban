@@ -163,7 +163,7 @@ public class SokobanConsole {
 	    	.setRequired(true) 	    	
 	    	.setShortFlag(ARG_LEVEL_SHORT)
 	    	.setLongFlag(ARG_LEVEL_LONG);    
-	    opt31.setHelp("Level number to run from the file, 0-based.");
+	    opt31.setHelp("Level number to run from the file, 1-based.");
 	
 	    jsap.registerParameter(opt31);
 	    
@@ -353,7 +353,7 @@ public class SokobanConsole {
 		return new String[] {
 				  "-f", "./levels/sokobano.de/Blazz.sok"
 				, "-r", "./results/human.csv" // result file
-				, "-l", "0" // level count (0-based)
+				, "-l", "0" // level count (1-based)
 		      //, "-m", "s4jl" // level file format
 				, "-t", "20000"   // timeout, -1 to disable
 				, "-a", "cz.sokoban4j.agents.HumanAgent"

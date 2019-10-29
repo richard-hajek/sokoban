@@ -267,7 +267,7 @@ public class Board implements Cloneable {
 	/**
 	 * Creates the board from file .s4jl.
 	 * @param file
-	 * @param levelNumber level number to load; 0-based
+	 * @param levelNumber level number to load; 1-based
 	 * @return
 	 */
 	public static Board fromFileS4JL(File file, int levelNumber) {
@@ -282,7 +282,7 @@ public class Board implements Cloneable {
 	 * Creates the board from the data given by reader (expects .s4jl format).
 	 * @param levelName 
 	 * @param textReader
-	 * @param levelNumber level number to load; 0-based
+	 * @param levelNumber level number to load; 1-based
 	 * @return
 	 */
 	public static Board fromReaderS4JL(String levelName, Reader textReader, int levelNumber) {
@@ -290,7 +290,7 @@ public class Board implements Cloneable {
 		S4JLReader reader = new S4JLReader(levelName, textReader);
 		
 		// FIND CORRECT LEVEL
-		for (int i = 0; i < levelNumber; ++i) {
+		for (int i = 1; i < levelNumber; ++i) {
 			reader.readNext();
 		}
 		// EXTRACT LEVEL DATA
@@ -301,9 +301,9 @@ public class Board implements Cloneable {
 	}
 	
 	/**
-	 * Creates the board from file .sok; reads 'levelNumber'-th level (0-based).
+	 * Creates the board from file .sok; reads 'levelNumber'-th level (1-based).
 	 * @param file
-	 * @param levelNumber level number to load; 0-based
+	 * @param levelNumber level number to load; 1-based
 	 * @return
 	 */
 	public static Board fromFileSok(File file, int levelNumber) {
@@ -318,7 +318,7 @@ public class Board implements Cloneable {
 	 * Creates the board from the data given by reader (expects .sok format).
 	 * @param levelName
 	 * @param textReader
-	 * @param levelNumber level number to load; 0-based
+	 * @param levelNumber level number to load; 1-based
 	 * @return
 	 */
 	public static Board fromReaderSok(String levelName, Reader textReader, int levelNumber) {
@@ -326,7 +326,7 @@ public class Board implements Cloneable {
 		SokReader reader = new SokReader(levelName, textReader);
 		
 		// FIND CORRECT LEVEL
-		for (int i = 0; i < levelNumber; ++i) {
+		for (int i = 1; i < levelNumber; ++i) {
 			reader.readNext();
 		}
 		// EXTRACT LEVEL DATA

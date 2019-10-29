@@ -229,7 +229,7 @@ public class Sokoban {
 		if (config.level.isDirectory()) {
 			runDir();			
 		} else 
-		if (config.level.isFile() && config.levelNumber == -1) {
+		if (config.level.isFile() && config.levelNumber == 0) {
 			runFile();
 		} else {
 			runLevel();			
@@ -266,7 +266,7 @@ public class Sokoban {
 				this.config = config;
 				this.config.level = level;	
 				this.config.levelFormat = ELevelFormat.getExpectedLevelFormat(level);
-				this.config.levelNumber = -1;
+				this.config.levelNumber = 0;
 				// RUN GAME
 				runFile();				
 			}	
@@ -280,13 +280,13 @@ public class Sokoban {
 	
 	private void runFile() {
 		// RUN ALL LEVELS WITHIN ONE FILE
-		if (config.levelNumber >= 0) {
+		if (config.levelNumber >= 1) {
 			// run particular level
 			runLevel();				
 		} else {
 			// run all levels
 			SokobanConfig config = this.config;
-			int levelNumber = 0;
+			int levelNumber = 1;
 			try {
 				while (true) {
 					// RESET INSTANCE (does not reset this.results)
@@ -297,7 +297,7 @@ public class Sokoban {
 					} catch (InterruptedException e) {
 						throw new RuntimeException("Interrupted on Thread.sleep(100) in between levels.");
 					}
-					if (levelNumber != 0 && (getLastResult() == null || getLastResult().getResult() != SokobanResultType.VICTORY)) {
+					if (levelNumber != 1 && (getLastResult() == null || getLastResult().getResult() != SokobanResultType.VICTORY)) {
 						// AGENT FAILED TO PASS THE LEVEL...
 						break;
 					}
@@ -315,7 +315,7 @@ public class Sokoban {
 					++levelNumber;
 				}
 			} finally {
-				config.levelNumber = -1;
+				config.levelNumber = 0;
 			}
 			
 		}
@@ -443,13 +443,13 @@ public static File findFile(String path) {
 	// --------------------
 	
 	/**
-	 * 'agent' will play (headless == simulation only) 'levelNumber' (0-based) level from file on 'levelFilePath' assuming 'levelFormat'.
+	 * 'agent' will play (headless == simulation only) 'levelNumber' (1-based) level from file on 'levelFilePath' assuming 'levelFormat'.
 	 * An agent will be given 'timeoutMillis' time to solve the level.
 	 * 
 	 * @param id id to be given to the config; may be null
 	 * @param levelFilePath file to load the level from
 	 * @param levelFormat expected format of the file (if it is null, it will be auto-determined)
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -473,12 +473,12 @@ public static File findFile(String path) {
 	}
 	
 	/**
-	 * 'agent' will play (headless == simulation only) 'levelNumber' (0-based) level from file on 'levelFilePath'.
+	 * 'agent' will play (headless == simulation only) 'levelNumber' (1-based) level from file on 'levelFilePath'.
 	 * An agent will be given 'timeoutMillis' time to solve the level.
 	 * 
 	 * @param id id to be given to the config; may be null
 	 * @param levelFilePath file to load the level from
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -495,7 +495,7 @@ public static File findFile(String path) {
 	 * @param id id to be given to the config; may be null
 	 * @param levelFilePath file to load the level from
 	 * @param levelFormat expected format of the file; if it is null, it will be auto-determined using {@link ELevelFormat#getExpectedLevelFormat(File)}
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -511,6 +511,7 @@ public static File findFile(String path) {
 			throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
 		if (levelFormat == null) levelFormat = determineLevelFormat(config.level.getName());
 		config.levelFormat = levelFormat;
+		config.levelNumber = 0;  // run all levels
 		config.visualization = false;
 		config.timeoutMillis = timeoutMillis;
 		
@@ -524,7 +525,7 @@ public static File findFile(String path) {
 	 * 
 	 * @param id id to be given to the config; may be null
 	 * @param levelFilePath file to load the level from
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -541,7 +542,7 @@ public static File findFile(String path) {
 	 * 
 	 * @param id id to be given to the config; may be null
 	 * @param levelDirPath directory to load level files from
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -569,7 +570,7 @@ public static File findFile(String path) {
 	 * @return
 	 */
 	public static SokobanResult simAgentLevel(String levelFilePath, IAgent agent) {
-		return simAgentLevel(determineId(agent), levelFilePath, null, 0, -1, agent);
+		return simAgentLevel(determineId(agent), levelFilePath, null, 0, 0, agent);
 	}
 	
 	/**
@@ -581,7 +582,7 @@ public static File findFile(String path) {
 	 * @return
 	 */
 	public static List<SokobanResult> simAgentFile(String levelFilePath, IAgent agent) {
-		return simAgentFile(null, levelFilePath, null, -1, agent);
+		return simAgentFile(null, levelFilePath, null, 0, agent);
 	}
 	
 	/**
@@ -594,7 +595,7 @@ public static File findFile(String path) {
 	 * @return
 	 */
 	public static List<SokobanResult> simAgentDir(String levelDirPath, IAgent agent) {
-		return simAgentDir(null, levelDirPath, -1, agent);
+		return simAgentDir(null, levelDirPath, 0, agent);
 	}
 	
 	// ----------------------
@@ -602,13 +603,13 @@ public static File findFile(String path) {
 	// ----------------------
 	
 	/**
-	 * 'agent' will play (visualized) 'levelNumber' (0-based) level from file on 'levelFilePath' assuming 'levelFormat'.
+	 * 'agent' will play (visualized) 'levelNumber' (1-based) level from file on 'levelFilePath' assuming 'levelFormat'.
 	 * An agent will be given 'timeoutMillis' time to solve the level.
 	 * 
 	 * @param id id to be given to the config; may be null
 	 * @param levelFilePath file to load the level from
 	 * @param levelFormat expected format of the file (if it is null, it will be auto-determined)
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -632,12 +633,12 @@ public static File findFile(String path) {
 	}
 	
 	/**
-	 * 'agent' will play (visualized) 'levelNumber' (0-based) level from file on 'levelFilePath'.
+	 * 'agent' will play (visualized) 'levelNumber' (1-based) level from file on 'levelFilePath'.
 	 * An agent will be given 'timeoutMillis' time to solve the level.
 	 * 
 	 * @param id id to be given to the config; may be null
 	 * @param levelFilePath file to load the level from
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -654,7 +655,7 @@ public static File findFile(String path) {
 	 * @param id id to be given to the config; may be null
 	 * @param levelFilePath file to load the level from
 	 * @param levelFormat expected format of the file; if it is null, it will be auto-determined using {@link ELevelFormat#getExpectedLevelFormat(File)}
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -683,7 +684,7 @@ public static File findFile(String path) {
 	 * 
 	 * @param id id to be given to the config; may be null
 	 * @param levelFilePath file to load the level from
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -700,7 +701,7 @@ public static File findFile(String path) {
 	 * 
 	 * @param id id to be given to the config; may be null
 	 * @param levelDirPath directory to load level files from
-	 * @param levelNumber 0-based; a level to be played
+	 * @param levelNumber 1-based; a level to be played
 	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
 	 * @param agent
 	 * @return
@@ -740,7 +741,7 @@ public static File findFile(String path) {
 	 * @return
 	 */
 	public static SokobanResult playAgentLevel(String levelFilePath, IAgent agent) {
-		return playAgentLevel(levelFilePath, 0, agent);
+		return playAgentLevel(levelFilePath, 1, agent);
 	}
 	
 	/**
@@ -765,7 +766,7 @@ public static File findFile(String path) {
 	 * @return
 	 */
 	public static List<SokobanResult> playAgentDir(String levelDirPath, IAgent agent) {
-		return playAgentDir(null, levelDirPath, -1, agent);
+		return playAgentDir(null, levelDirPath, 0, agent);
 	}
 	
 	// ----------------------
@@ -785,7 +786,7 @@ public static File findFile(String path) {
 	 * Human will play 'levelNumber' found within the file on 'levelFilePath'.
 	 * 
 	 * @param levelFilePath path to the level file to load
-	 * @param levelNumber level number to be played; 0-based
+	 * @param levelNumber level number to be played; 1-based
 	 * @return
 	 */
 	public static SokobanResult playHumanLevel(String levelFilePath, int levelNumber) {
