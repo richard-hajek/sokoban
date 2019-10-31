@@ -6,79 +6,15 @@ import cz.sokoban4j.tournament.SokobanTournamentConsole;
 
 public class Evaluate {
 
-	// A series of 80 levels in increasing order of difficulty.
-	
+	// A set of levels to run.
+	// You can replace "all" with a level number if you want to run only
+	// a single level from a level file, e.g.
+	//     "Easy/easy.sok;4"
+
 	public static String[] LEVELS = new String[] { 
-			// "Easy/;all",		// 11 easy levels
-			"sokobano.de/Aymeric_du_Peloux_3_Nabokosmos.sok;11",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;19",
-			"sokobano.de/Aymeric_du_Peloux_1_Minicosmos.sok;14",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;5",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;18",
-			"sokobano.de/Blazz2.sok;2",
-			"sokobano.de/Cosmonotes.sok;9",
-			"sokobano.de/Jacques_Duthen_Sokogen.sok;78",
-			"sokobano.de/Aymeric_du_Peloux_3_Nabokosmos.sok;4",
-			"sokobano.de/Jacques_Duthen_Sokogen.sok;76",
-			"sokobano.de/Aymeric_du_Peloux_1_Minicosmos.sok;24",
-			"sokobano.de/A.K.K._Informatika.sok;2",
-			"sokobano.de/Cosmonotes.sok;7",
-			"sokobano.de/Cosmonotes.sok;6",
-			"sokobano.de/Cosmonotes.sok;4",
-			"sokobano.de/Aymeric_du_Peloux_3_Nabokosmos.sok;3",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;20",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;21",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;15",
-			"sokobano.de/Blazz.sok;3",
-			"sokobano.de/Jacques_Duthen_Sokogen.sok;77",
-			"sokobano.de/Aymeric_du_Peloux_3_Nabokosmos.sok;12",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;14",
-			"sokobano.de/A.K.K._Informatika.sok;3",
-			"sokobano.de/Cosmonotes.sok;5",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;11",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;10",
-			"sokobano.de/Aymeric_du_Peloux_3_Nabokosmos.sok;9",
-			"sokobano.de/Aymeric_du_Peloux_3_Nabokosmos.sok;10",
-			"sokobano.de/Jacques_Duthen_Kids.sok;51",
-			"sokobano.de/Blazz2.sok;4",
-			"sokobano.de/Aymeric_du_Peloux_3_Nabokosmos.sok;2",
-			"sokobano.de/Aymeric_du_Peloux_3_Nabokosmos.sok;7",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;5",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;2",
-			"sokobano.de/Blazz.sok;2",
-			"sokobano.de/Blazz2.sok;5",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;6",
-			"sokobano.de/GRIGoRusha_Comet.sok;1",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;19",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;3",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;1",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;18",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;16",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;15",
-			"sokobano.de/Brian_Damgaard_YASGen.sok;1",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;20",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;8",
-			"sokobano.de/Flatland.sok;1",
-			"sokobano.de/Blazz2.sok;6",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;7",
-			"sokobano.de/Brian_Damgaard_YASGen.sok;2",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;22",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;12",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;3",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;4",
-			"sokobano.de/Aymeric_du_Peloux_5_Cosmopoly.sok;9",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;13",
-			"sokobano.de/Blazz.sok;6",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;11",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;17",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;8",
-			"sokobano.de/Flatland.sok;2",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;9",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;14",
-			"sokobano.de/Aymeric_du_Peloux_4_Picokosmos.sok;10",
-			"sokobano.de/Blazz2.sok;7",
-			"sokobano.de/A.K.K._Informatika.sok;6",
-			"sokobano.de/Blazz.sok;7"
+			"Easy/easy.sok;all",								    // 10 easy levels
+			"sokobano.de/Aymeric_Medium.sok;all",   // 10 medium levels
+			//"sokobano.de/Aymeric_Hard.sok;all"    // 20 difficult levels
 	};
 	
 	private static String getAllLevels() {
@@ -113,7 +49,9 @@ public class Evaluate {
 					      "Sokoban4J-Agents/target/classes"+ps+
 					      "Sokoban4J-Tournament/libs/jsap-2.1.jar"+ps+
 					      "Sokoban4J-Tournament/libs/process-execution-3.7.0.jar"+ps+
-					      "Sokoban4J-Tournament/libs/xstream-1.3.1.jar"
+								"Sokoban4J-Tournament/libs/xstream-1.3.1.jar"+ps+
+								"../ai_1/astar/target/classes"+ps+
+								"../ai_1/ucs/target/classes"
 				}
 			);
 		} catch (JSAPException e) {
