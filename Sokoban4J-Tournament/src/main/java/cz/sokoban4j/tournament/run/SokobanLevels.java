@@ -40,7 +40,7 @@ public class SokobanLevels {
 					for (File childFile : files) {
 						if (ELevelFormat.getExpectedLevelFormat(childFile) != null) {
 							int levelCount = SokobanLevel.getLevelCount(childFile);
-							for (int i = 0; i < levelCount; ++i) {
+							for (int i = 1; i <= levelCount; ++i) {
 								results.levels.add(new SokobanLevel(childFile, i));
 							}
 						}
@@ -48,7 +48,7 @@ public class SokobanLevels {
 				} else
 				if (file.isFile()) {
 					int levelCount = SokobanLevel.getLevelCount(file);
-					for (int i = 0; i < levelCount; ++i) {
+					for (int i = 1; i <= levelCount; ++i) {
 						results.levels.add(new SokobanLevel(file, i));
 					}
 				} else {
