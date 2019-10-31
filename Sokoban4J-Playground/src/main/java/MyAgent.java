@@ -9,6 +9,14 @@ import cz.sokoban4j.simulation.actions.EDirection;
 import cz.sokoban4j.simulation.actions.compact.*;
 import cz.sokoban4j.simulation.board.compact.BoardCompact;
 
+class DeadSquareDetector {
+	public static boolean[][] detect(BoardCompact board) {
+		// Write your dead square detector here.
+
+		return null;
+	}
+}
+
 /**
  * The simplest Tree-DFS agent. Feel free to fool around here! You're in the PLAYGROUND after all!
  * @author Jimmy
