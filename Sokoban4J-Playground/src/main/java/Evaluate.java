@@ -49,9 +49,7 @@ public class Evaluate {
 					      "Sokoban4J-Agents/target/classes"+ps+
 					      "Sokoban4J-Tournament/libs/jsap-2.1.jar"+ps+
 					      "Sokoban4J-Tournament/libs/process-execution-3.7.0.jar"+ps+
-								"Sokoban4J-Tournament/libs/xstream-1.3.1.jar"+ps+
-								"../ai_1/astar/target/classes"+ps+
-								"../ai_1/ucs/target/classes"
+							  "Sokoban4J-Tournament/libs/xstream-1.3.1.jar"
 				}
 			);
 		} catch (JSAPException e) {
