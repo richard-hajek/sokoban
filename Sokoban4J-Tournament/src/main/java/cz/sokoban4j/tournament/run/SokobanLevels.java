@@ -47,7 +47,7 @@ public class SokobanLevels {
 					}
 				} else
 				if (file.isFile()) {
-					int levelCount = SokobanLevel.getLevelCount(new File(fileString));
+					int levelCount = SokobanLevel.getLevelCount(file);
 					for (int i = 0; i < levelCount; ++i) {
 						results.levels.add(new SokobanLevel(file, i));
 					}
