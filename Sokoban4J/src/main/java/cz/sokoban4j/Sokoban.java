@@ -563,6 +563,18 @@ public static File findFile(String path) {
 	}
 	
 	/**
+	 * 'agent' will play (headless == simulation only) the given level number from the file on 'levelFilePath'.
+	 * 
+	 * @param levelFilePath file to load
+	 * @param levelNumber
+	 * @param agent
+	 * @return
+	 */
+	public static SokobanResult simAgentLevel(String levelFilePath, int levelNumber, IAgent agent) {
+		return simAgentLevel(determineId(agent), levelFilePath, null, levelNumber, 0, agent);
+	}
+	
+	/**
 	 * 'agent' will play (headless == simulation only) FIRST level from file on 'levelFilePath'.
 	 * 
 	 * @param levelFilePath file to load
@@ -570,7 +582,7 @@ public static File findFile(String path) {
 	 * @return
 	 */
 	public static SokobanResult simAgentLevel(String levelFilePath, IAgent agent) {
-		return simAgentLevel(determineId(agent), levelFilePath, null, 0, 0, agent);
+		return simAgentLevel(levelFilePath, 1, agent);
 	}
 	
 	/**
@@ -722,9 +734,10 @@ public static File findFile(String path) {
 	}
 	
 	/**
-	 * 'agent' will play (visualized) FIRST level from file on 'levelFilePath'.
+	 * 'agent' will play (visualized) the given level number from the file on 'levelFilePath'.
 	 * 
 	 * @param levelFilePath file to load
+	 * @param levelNumber
 	 * @param agent
 	 * @return
 	 */
@@ -736,7 +749,6 @@ public static File findFile(String path) {
 	 * 'agent' will play (visualized) FIRST level from file on 'levelFilePath'.
 	 * 
 	 * @param levelFilePath file to load
-	 * @param levelNumber
 	 * @param agent
 	 * @return
 	 */
