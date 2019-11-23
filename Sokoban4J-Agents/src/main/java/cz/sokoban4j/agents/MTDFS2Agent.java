@@ -244,7 +244,6 @@ public class MTDFS2Agent extends ArtificialAgent {
 		private boolean dfs(List<CAction> actions, int level) {
 			if (level <= 0) return false; // DEPTH-LIMITED
 			
-			// TODO: try commenting this out to see the full performance boost
 			MTDFS2Agent.this.searchedNodes.incrementAndGet();
 			
 			// TRY ACTIONS

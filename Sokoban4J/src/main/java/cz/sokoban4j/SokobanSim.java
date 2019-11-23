@@ -152,7 +152,6 @@ public class SokobanSim implements ISokobanGame, Runnable {
 					++steps;
 					observe = true;
 				} else {
-					// TODO: should we have "verbose" version of SokobanSim?
 					//System.out.println("!!!!!!!!!!!!!!!!!");
 					//System.out.println("SokobanSim: cannot perform the action '" + agentAction.getDirection() + "'; not possible in the following board...");
 					//board.debugPrint();

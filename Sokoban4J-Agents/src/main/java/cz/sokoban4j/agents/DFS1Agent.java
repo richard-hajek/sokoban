@@ -78,7 +78,6 @@ public class DFS1Agent extends ArtificialAgent {
 		
 		List<CAction> actions = new ArrayList<CAction>(4);
 		
-		// TODO: try to swap CMoves and CPushes => action ordering matters!
 		for (CMove move : CMove.getActions()) {
 			if (move.isPossible(board)) {
 				actions.add(move);
