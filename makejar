@@ -1,3 +1,3 @@
 #!/bin/bash
 
-jar cf sokoban.jar -C Sokoban4J/target/classes .
+jar cf sokoban.jar -C Sokoban4J/target/classes . -C Sokoban4J-Tournament/target/classes .
