@@ -240,8 +240,10 @@ public class SokobanTournamentConsole {
 		levelList.validate();
 		
 		System.out.println("---- going to run at max: " + levelList.levels.size() + " levels");
-						
-		resultFile = new File(Sokoban.projectRoot(), resultFileString);
+        
+        resultFile = new File(resultFileString);
+        if (!resultFile.isAbsolute())
+		    resultFile = new File(Sokoban.projectRoot(), resultFileString);
 		System.out.println("-- result file: " + resultFileString + " --> " + resultFile.getAbsolutePath());
 		
 		if (!resultFile.exists()) {
