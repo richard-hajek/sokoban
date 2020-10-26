@@ -127,7 +127,22 @@ public class SokobanVis implements ISokobanGame, Runnable {
 	}
 	
 	private boolean renderUpdating = false;
-	
+    
+    void requestPaint() {
+        if (!renderUpdating) {
+            renderUpdating = true;
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    view.render();
+                    view.repaint();
+                    frame.repaint();
+                    renderUpdating = false;
+                }
+            });
+        }
+    }
+
 	@Override
 	public void run() {
 		try {
@@ -145,7 +160,8 @@ public class SokobanVis implements ISokobanGame, Runnable {
 			timeDelta.reset();
 			
 			renderUpdating = false;
-			
+            requestPaint();
+            
 			while (shouldRun && !Thread.interrupted()) {
 				if (timeoutMillis > 0) {
 					// TIMEOUT?
@@ -172,19 +188,8 @@ public class SokobanVis implements ISokobanGame, Runnable {
 						observe = true;
 					}
 					
-					// UPDATE RENDER
-					if (!renderUpdating) {
-						renderUpdating = true;
-						SwingUtilities.invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								view.render();
-								view.repaint();
-								frame.repaint();
-								renderUpdating = false;
-							}
-						});
-					}
+                    // UPDATE RENDER
+                    requestPaint();
 				}
 							
 				if (board.isVictory()) {					

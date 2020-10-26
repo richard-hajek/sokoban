@@ -60,14 +60,6 @@ public class Sokoban {
 	}
 	
 	/**
-	 * Resets everything including {@link #sprites} and {@link #results}.
-	 */
-	public void resetAll() {
-		reset();
-		sprites = null;
-	}
-	
-	/**
 	 * Current config we're using for the {@link #getGame()}.
 	 * @return
 	 */
