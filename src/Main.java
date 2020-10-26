@@ -13,6 +13,7 @@ public class Main {
         out.println("options:");
         out.println("  -level <num> : level number to play");
         out.println("  -levelset <name> : set of levels to play");
+        out.println("  -maxfail <num> : maximum level failures allowed (default = 1)");
         out.println("  -resultfile <filename> : file to append results to");
         out.println("  -timeout <num> : maximum thinking time in milliseconds");
         System.exit(1);
@@ -22,6 +23,7 @@ public class Main {
         String agentName = null;
         String levelset = "easy.sok";
         int level = 0;
+        int maxFail = 1;
         String resultFile = null;
         int timeout = 0;
 
@@ -35,6 +37,9 @@ public class Main {
                     levelset = args[++i];
                     if (levelset.indexOf('.') == -1)
                         levelset += ".sok";
+                    break;
+                case "-maxfail":
+                    maxFail = Integer.parseInt(args[++i]);
                     break;
                 case "-resultfile":
                     resultFile = args[++i];
@@ -67,7 +72,7 @@ public class Main {
                 config.timeoutMillis = timeout;
                 RunSokobanLevels run = new RunSokobanLevels(
                     config, agentName, levels,
-                    resultFile == null ? null : new File(resultFile), null, 1);
+                    resultFile == null ? null : new File(resultFile), null, maxFail);
                 run.run();
             }
 	}
