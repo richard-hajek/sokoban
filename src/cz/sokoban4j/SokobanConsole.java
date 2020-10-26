@@ -1,10 +1,6 @@
 package cz.sokoban4j;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -318,31 +314,7 @@ public class SokobanConsole {
 	}
 	
 	private static void outputResult(SokobanResult result, File resultFile) {
-		System.out.println("Outputting result: " + result);
-		FileOutputStream output = null;		
-		boolean header = !resultFile.exists();
-		try {
-			output = new FileOutputStream(resultFile, true);
-		} catch (FileNotFoundException e) {
-			fail("Failed to append to the result file: " + resultFile.getAbsolutePath());
-		}
-		try {
-			PrintWriter writer = new PrintWriter(output);
-		
-			if (header) {
-				writer.println("id;levelFile;levelNumber;agent;result;steps;playTimeMillis");
-			}
-			writer.println(result.getId() + ";" + file.getName() + ";" + level + ";" + agentClassString + ";" + result.getResult() + ";" + result.getSteps() + ";" + result.getSimDurationMillis());
-			
-			writer.flush();
-			writer.close();
-			
-		} finally {
-			try {
-				output.close();
-			} catch (IOException e) {
-			}
-		}		
+        result.outputResult(resultFile, file.getName(), level, agentClassString);
 	}
 
 	// ==============

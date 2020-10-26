@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import cz.sokoban4j.Sokoban;
-import cz.sokoban4j.simulation.SokobanResult;
 import cz.sokoban4j.simulation.actions.EDirection;
 import cz.sokoban4j.simulation.actions.compact.CAction;
 import cz.sokoban4j.simulation.actions.compact.CMove;
@@ -84,7 +82,8 @@ public class MTDFS2Agent extends ArtificialAgent {
 		System.out.println("=================");
 		
 		if (result.size() == 0) {
-			throw new RuntimeException("FAILED TO SOLVE THE BOARD...");
+            System.out.println("FAILED TO SOLVE THE BOARD...");
+            return null;
 		}
 				
 		return result;
@@ -295,28 +294,6 @@ public class MTDFS2Agent extends ArtificialAgent {
 			}
 		}
 		
-	}
-		
-	public static void main(String[] args) {
-		SokobanResult result;
-		
-		// VISUALIZED GAME
-		
-		// WE CAN SOLVE FOLLOWING 4 LEVELS
-		//result = Sokoban.playAgentLevel("Easy/level0001.s4jl", new MTDFS2Agent());   //  5 steps required
-		//result = Sokoban.playAgentLevel("Easy/level0002.1.s4jl", new MTDFS2Agent()); // 13 steps required
-		//result = Sokoban.playAgentLevel("Easy/level0002.2.s4jl", new MTDFS2Agent()); // 25 steps required
-		result = Sokoban.playAgentLevel("Easy/level0002.3.s4jl", new MTDFS2Agent()); // 37 steps required
-		
-		// THIS LEVEL IS BIT TOO MUCH
-		//result = Sokoban.playAgentLevel("Easy/level0003.s4jl", new MTDFS2Agent()); // 60 steps required
-		
-		// HEADLESS == SIMULATED-ONLY GAME
-		//result = Sokoban.simAgentLevel("Easy/level0001.s4jl", new MTDFS2Agent());
-		
-		System.out.println("MTDFS2Agent result: " + result.getResult());
-		
-		System.exit(0);
 	}
 
 }

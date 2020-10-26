@@ -3,8 +3,6 @@ package cz.sokoban4j.agents;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.sokoban4j.Sokoban;
-import cz.sokoban4j.simulation.SokobanResult;
 import cz.sokoban4j.simulation.actions.EDirection;
 import cz.sokoban4j.simulation.actions.compact.CAction;
 import cz.sokoban4j.simulation.actions.compact.CMove;
@@ -63,7 +61,8 @@ public class DFS1Agent extends ArtificialAgent {
 		System.out.println("=================");
 		
 		if (result.size() == 0) {
-			throw new RuntimeException("FAILED TO SOLVE THE BOARD...");
+            System.out.println("FAILED TO SOLVE THE BOARD...");
+            return null;
 		}
 				
 		return result;
@@ -122,28 +121,5 @@ public class DFS1Agent extends ArtificialAgent {
 		
 		return false;
 	}
-		
-	public static void main(String[] args) {
-		SokobanResult result;
-		
-		// VISUALIZED GAME
-		
-		// WE CAN SOLVE FOLLOWING TWO LEVELS
-		result = Sokoban.playAgentLevel("Easy/level0001.s4jl", new DFS1Agent());   //  5 steps required
-		//result = Sokoban.playAgentLevel("Easy/level0002.1.s4jl", new DFS1Agent()); // 13 steps required
-		
-		// THESE ARE TOO MUCH FOR THIS IMPLEMENTATION
-		//result = Sokoban.playAgentLevel("Easy/level0002.2.s4jl", new DFS1Agent()); // 25 steps required
-		//result = Sokoban.playAgentLevel("Easy/level0002.3.s4jl", new DFS1Agent()); // 37 steps required
-		
-		// HEADLESS == SIMULATED-ONLY GAME
-		//result = Sokoban.simAgentLevel("Easy/level0001.s4jl", new DFS1Agent());
-		
-		System.out.println("DFS1Agent result: " + result.getResult());
-		
-		System.exit(0);
-	}
-
-	
 
 }

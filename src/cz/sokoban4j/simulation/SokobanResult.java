@@ -1,5 +1,7 @@
 package cz.sokoban4j.simulation;
 
+import java.io.*;
+
 import cz.sokoban4j.simulation.agent.IAgent;
 
 public class SokobanResult {
@@ -177,5 +179,32 @@ public class SokobanResult {
 	public String toString() {
 		return "SokobanResult[" + getResult() + "]";
 	}
-	
+    
+	public void outputResult(File resultFile, String levelFile, int level, String agentClassString) {
+		System.out.println("Outputting result: " + toString());
+		FileOutputStream output = null;		
+		boolean header = !resultFile.exists();
+		try {
+			output = new FileOutputStream(resultFile, true);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException("Failed to append to the result file: " + resultFile.getAbsolutePath());
+		}
+		try {
+			PrintWriter writer = new PrintWriter(output);
+		
+			if (header) {
+				writer.println("id;levelFile;levelNumber;agent;result;steps;playTimeMillis");
+			}
+			writer.println(getId() + ";" + levelFile + ";" + level + ";" + agentClassString + ";" + getResult() + ";" + getSteps() + ";" + getSimDurationMillis());
+			
+			writer.flush();
+			writer.close();
+			
+		} finally {
+			try {
+				output.close();
+			} catch (IOException e) {
+			}
+		}		
+	}
 }
