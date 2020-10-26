@@ -141,8 +141,13 @@ public class SokobanSim implements ISokobanGame, Runnable {
 				// GET AGENT ACTION
 				EDirection whereToMove = agent.act();
 				
-				if (whereToMove == null || whereToMove == EDirection.NONE) continue;
-				
+				if (whereToMove == null) continue;
+                
+                if (whereToMove == EDirection.NONE) {   // agent gave up
+                    stopSimulation(SokobanResultType.AGENT_FAILED, SokobanGameState.FAILED);
+                    break;
+                }
+
 				agentAction = MoveOrPush.getMoveOrPush(whereToMove);
 	
 				// AGENT ACTION VALID?
@@ -152,10 +157,8 @@ public class SokobanSim implements ISokobanGame, Runnable {
 					++steps;
 					observe = true;
 				} else {
-					//System.out.println("!!!!!!!!!!!!!!!!!");
-					//System.out.println("SokobanSim: cannot perform the action '" + agentAction.getDirection() + "'; not possible in the following board...");
-					//board.debugPrint();
-					//System.out.println("!!!!!!!!!!!!!!!!!");
+                    System.out.println("Agent returned an illegal move!");
+                    stopSimulation(SokobanResultType.AGENT_FAILED, SokobanGameState.FAILED);
 				}
 				
 				agentAction = null;
@@ -165,27 +168,24 @@ public class SokobanSim implements ISokobanGame, Runnable {
 		}
 	}
 
-	private void onSimulationException(Exception e) {
+    void stopSimulation(SokobanResultType resultType, SokobanGameState endState) {
 		result.setSimEndMillis(System.currentTimeMillis());
-		result.setResult(SokobanResultType.SIMULATION_EXCEPTION);
-		result.setExecption(e);
-		try {
-			agent.stop();
-		} catch (Exception e2) {						
-		}		
-		shouldRun = false;
-		state = SokobanGameState.FAILED;
-	}
-
-	private void onTermination() {
-		result.setSimEndMillis(System.currentTimeMillis());
-		result.setResult(SokobanResultType.TERMINATED);
+		result.setResult(resultType);
 		try {
 			agent.stop();
 		} catch (Exception e) {						
 		}
 		shouldRun = false;
-		state = SokobanGameState.TERMINATED;
+		state = endState;
+    }
+
+	private void onSimulationException(Exception e) {
+        result.setException(e);
+        stopSimulation(SokobanResultType.SIMULATION_EXCEPTION, SokobanGameState.FAILED);
+	}
+
+	private void onTermination() {
+        stopSimulation(SokobanResultType.TERMINATED, SokobanGameState.TERMINATED);
 	}
 
 	private void onVictory() {
@@ -206,26 +206,12 @@ public class SokobanSim implements ISokobanGame, Runnable {
 	}
 
 	private void onTimeout() {
-		result.setSimEndMillis(System.currentTimeMillis());		
-		result.setResult(SokobanResultType.TIMEOUT);		
-		try {
-			agent.stop();
-		} catch (Exception e) {						
-		}		
-		shouldRun = false;		
-		state = SokobanGameState.FINISHED;
+        stopSimulation(SokobanResultType.TIMEOUT, SokobanGameState.FINISHED);
 	}
 
 	private void onAgentException(Exception e) {
-		result.setSimEndMillis(System.currentTimeMillis());
-		result.setResult(SokobanResultType.AGENT_EXCEPTION);
-		result.setExecption(e);
-		try {
-			agent.stop();
-		} catch (Exception e2) {						
-		}		
-		shouldRun = false;
-		state = SokobanGameState.FAILED;
+        result.setException(e);
+        stopSimulation(SokobanResultType.AGENT_EXCEPTION, SokobanGameState.FAILED);
 	}
 
 	@Override

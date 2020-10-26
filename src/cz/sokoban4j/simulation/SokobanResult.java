@@ -29,7 +29,10 @@ public class SokobanResult {
 		/**
 		 * Simulation has been terminated from the outside.
 		 */
-		TERMINATED(4);
+        TERMINATED(4),
+        
+        /* The agent failed to return a solution or legal move. */
+        AGENT_FAILED(5);
 		
 		private int exitValue;
 
@@ -162,11 +165,11 @@ public class SokobanResult {
 	 * filled in case of {@link #getResult()} == {@link SokobanResultType#AGENT_EXCEPTION} or {@link SokobanResultType#SIMULATION_EXCEPTION}.  
 	 * @return
 	 */
-	public Throwable getExecption() {
+	public Throwable getException() {
 		return execption;
 	}
 
-	public void setExecption(Throwable execption) {
+	public void setException(Throwable execption) {
 		this.execption = execption;
 	}
 	

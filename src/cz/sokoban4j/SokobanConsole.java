@@ -418,9 +418,11 @@ public class SokobanConsole {
 		List<String> args = new ArrayList<String>();
 		
 		args.add("-f"); args.add(config.level.getAbsolutePath()); // level file to play
-		
-		args.add("-r"); args.add(resultFile.getAbsolutePath());   // result file
-		
+        
+        if (resultFile != null) {
+		    args.add("-r"); args.add(resultFile.getAbsolutePath());   // result file
+        }
+            
 		args.add("-l"); args.add(String.valueOf(config.levelNumber)); // level number
 		
 		if (config.levelFormat != null) {

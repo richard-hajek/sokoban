@@ -257,7 +257,7 @@ public class SokobanVis implements ISokobanGame, Runnable {
 	private void onSimulationException(Exception e) {
 		result.setSimEndMillis(System.currentTimeMillis());
 		result.setResult(SokobanResultType.SIMULATION_EXCEPTION);
-		result.setExecption(e);
+		result.setException(e);
 		try {
 			agent.stop();
 		} catch (Exception e2) {						
@@ -308,7 +308,7 @@ public class SokobanVis implements ISokobanGame, Runnable {
 	private void onAgentException(Exception e) {
 		result.setSimEndMillis(System.currentTimeMillis());
 		result.setResult(SokobanResultType.AGENT_EXCEPTION);
-		result.setExecption(e);
+		result.setException(e);
 		try {
 			agent.stop();
 		} catch (Exception e2) {						

@@ -21,7 +21,7 @@ public interface ISokobanGame {
 		FINISHED,
 		
 		/**
-		 * Sokoban game has ended with an exception, check {@link ISokobanGame#getResult()} and {@link SokobanResult#getExecption()} for more info.
+		 * Sokoban game has ended with an agent failure or exception.
 		 */
 		FAILED, 
 		

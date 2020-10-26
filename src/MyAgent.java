@@ -29,7 +29,6 @@ public class MyAgent extends ArtificialAgent {
 		this.board = board;
 		
 		// DEBUG
-		out.println("=================");
 		out.println("===== BOARD =====");
 		board.debugPrint();
 		out.println("=================");
@@ -60,7 +59,8 @@ public class MyAgent extends ArtificialAgent {
 		out.println("=================");
 		
 		if (result.size() == 0) {
-			throw new RuntimeException("FAILED TO SOLVE THE BOARD...");
+            out.println("FAILED TO SOLVE THE BOARD...");
+            return null;
 		}
 				
 		return result;

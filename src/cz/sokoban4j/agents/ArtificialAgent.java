@@ -1,6 +1,6 @@
 package cz.sokoban4j.agents;
 
-import java.util.List;
+import java.util.*;
 
 import cz.sokoban4j.simulation.actions.EDirection;
 import cz.sokoban4j.simulation.agent.IAgent;
@@ -111,7 +111,12 @@ public abstract class ArtificialAgent implements IAgent {
 					List<EDirection> thinkActions = think(board);
 					synchronized(mutex) {
 						if (ArtificialAgent.this.thread == this) {
-							actions = thinkActions;
+                            if (thinkActions != null)
+                                actions = thinkActions;
+                            else {
+                                actions = new ArrayList<EDirection>();
+                                actions.add(EDirection.NONE);
+                            }
 						}
 						think = false;
 					}

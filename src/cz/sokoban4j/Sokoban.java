@@ -357,7 +357,7 @@ public class Sokoban {
 			SokobanResult result = game.getResult();
 			results.add(result);
 			if (result.getResult() == SokobanResultType.SIMULATION_EXCEPTION) {
-				throw new RuntimeException("Game failed.", result.getExecption());
+				throw new RuntimeException("Game failed.", result.getException());
 			}
 		}	
 	}

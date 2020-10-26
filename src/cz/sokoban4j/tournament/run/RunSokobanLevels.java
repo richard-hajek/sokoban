@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import cz.cuni.amis.utils.process.ProcessExecution;
 import cz.cuni.amis.utils.process.ProcessExecutionConfig;
-import cz.cuni.amis.utils.simple_logging.SimpleLogging;
 import cz.sokoban4j.Sokoban;
 import cz.sokoban4j.SokobanConfig;
 import cz.sokoban4j.SokobanConsole;
@@ -47,7 +46,7 @@ public class RunSokobanLevels {
 	}
 
 	public void run() {
-		SimpleLogging.initLogging();
+        System.setProperty("java.util.logging.SimpleFormatter.format", "[%4$s] %1$tT.%1$tL %5$s%n");
 		
 		int failed = 0;
 		
