@@ -12,8 +12,6 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
-//import jdk.management.resource.internal.inst.FileInputStreamRMHooks;
-
 @XStreamAlias(value = "TextureAtlas")
 public class TextureAtlas {
 	
@@ -58,7 +56,10 @@ public class TextureAtlas {
 		if (xmlStream == null) {
 			throw new IllegalArgumentException("'xmlStream' can't be null!");
 		}		
-		XStream xstream = new XStream(new DomDriver());
+        XStream xstream = new XStream(new DomDriver());
+        Class<?>[] classes = new Class[] { TextureAtlas.class };
+        XStream.setupDefaultSecurity(xstream);
+        xstream.allowTypes(classes);
 		xstream.autodetectAnnotations(true);
 		xstream.alias(TextureAtlas.class.getAnnotation(XStreamAlias.class).value(), TextureAtlas.class);
 		Object obj = xstream.fromXML(xmlStream);
