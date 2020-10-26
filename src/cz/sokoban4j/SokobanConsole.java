@@ -441,11 +441,6 @@ public class SokobanConsole {
 	}
 	
 	public static void main(String[] args) throws JSAPException {
-		if (args == null || args.length == 0) {
-			Main.main(args);
-			return;
-		}
-		
 		// -----------
 		// FOR TESTING
 		// -----------
