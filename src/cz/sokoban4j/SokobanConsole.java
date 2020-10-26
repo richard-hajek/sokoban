@@ -351,7 +351,7 @@ public class SokobanConsole {
 	
 	public static String[] getTestArgs() {
 		return new String[] {
-				  "-f", "./levels/sokobano.de/Blazz.sok"
+				  "-f", "./levels/Blazz.sok"
 				, "-r", "./results/human.csv" // result file
 				, "-l", "0" // level count (1-based)
 		      //, "-m", "s4jl" // level file format

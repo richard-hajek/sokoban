@@ -124,7 +124,7 @@ public class SOK2S4JL {
 	}
 
 	public static void main(String[] args) {
-		String sourceDirPath = "levels/sokobano.de";
+		String sourceDirPath = "levels";
 		
 		String targetDirPath = "levels";
 		

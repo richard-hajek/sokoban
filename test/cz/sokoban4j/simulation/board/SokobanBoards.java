@@ -11,7 +11,7 @@ public class SokobanBoards {
 	public static List<Board> loadBoards() {
 		List<Board> boards = new ArrayList<Board>();
 		
-		File sokFile = new File("Levels/Sokobano.de/A.K.K._Informatika.sok");
+		File sokFile = new File("Levels/A.K.K._Informatika.sok");
 		
 		int levelNumber = 1;
 		while (true) {			

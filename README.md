@@ -6,7 +6,7 @@
 
 This is an implementation of the puzzle game [Sokoban](https://en.wikipedia.org/wiki/Sokoban) in Java (using Swing).  It is fully playable from the keyboard, but truly intended for programmers who want to develop Sokoban-playing agents in Java.
 
-Sokoban4J supports loading level files in the .sok format.  The levels/sokobano.de folder in this repository contains many .sok packages downloaded from [sokobano.de](http://sokobano.de/en/levels.php). Thank you for such a wonderful collection!
+Sokoban4J supports loading level files in the .sok format.  The levels folder in this repository contains many .sok packages downloaded from [sokobano.de](http://sokobano.de/en/levels.php). Thank you for such a wonderful collection!
 
 This project includes art created by 1001.com, downloaded from [OpenGameArt](http://opengameart.org/content/sokoban-pack) and used under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode); thank you!
 

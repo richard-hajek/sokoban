@@ -12,9 +12,9 @@ public class Evaluate {
 	//     "Easy/easy.sok;4"
 
 	public static String[] LEVELS = new String[] { 
-			"Easy/easy.sok;all",								    // 10 easy levels
-			"sokobano.de/Aymeric_Medium.sok;all",   // 10 medium levels
-			//"sokobano.de/Aymeric_Hard.sok;all"    // 20 difficult levels
+			"easy.sok;all",								    // 10 easy levels
+			"Aymeric_Medium.sok;all",   // 10 medium levels
+			//"Aymeric_Hard.sok;all"    // 20 difficult levels
 	};
 	
 	private static String getAllLevels() {

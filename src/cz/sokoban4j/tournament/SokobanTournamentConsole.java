@@ -301,7 +301,7 @@ public class SokobanTournamentConsole {
 		     "libs/jsap-2.1.jar;libs/process-execution-3.7.0.jar;libs/xstream-1.3.1.jar")
 			.replace(';', File.pathSeparatorChar);
 		return new String[] {
-				  "-l", "sokobano.de/Blazz.sok;all" // see {@link SokobanLevels} for details
+				  "-l", "Blazz.sok;all" // see {@link SokobanLevels} for details
 				, "-r", "results/results.csv" // result file
 				, "-t", "20000" // timeout, -1 to disable
 				, "-a", "cz.sokoban4j.agents.HumanAgent"

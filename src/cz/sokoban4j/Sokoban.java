@@ -843,12 +843,11 @@ public static File findFile(String path) {
 		//playHumanFile("Easy/level0007.s4jl");
 		//playHumanFile("Easy/level0008.s4jl");
 		//playHumanFile("Easy/level0009.s4jl");
-		//playHumanFile("MultiBox/level0001.s4jl");
 				
 		// PLAY ALL LEVELS
 		
 		playHumanDir("Easy");
-		//playHumanFile("sokobano.de/Blazz.sok");
+		//playHumanFile("Blazz.sok");
 	}
 	
 }
