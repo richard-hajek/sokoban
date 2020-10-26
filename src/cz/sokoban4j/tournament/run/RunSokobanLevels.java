@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.sokoban4j.SokobanConfig;
-import cz.sokoban4j.simulation.SokobanResult.SokobanResultType;
+import cz.sokoban4j.simulation.SokobanResultType;
 
 /**
  * Runs {@link SokobanLevels} executing SEPARATE JVM for every {@link SokobanLevels#levels} sequentially.
@@ -82,11 +82,13 @@ public class RunSokobanLevels {
 
             if (verbose)
                 args.add("-v");
-			
-	    	System.out.println("");
-	    	System.out.println("===============================================");
-	    	System.out.println("RUNNING " + (i+1) + " / " + levels.levels.size() + " FOR " + agentClass);
-	    	System.out.println("===============================================");
+            
+            if (verbose) {
+                System.out.println("");
+                System.out.println("===============================================");
+                System.out.println("RUNNING " + (i+1) + " / " + levels.levels.size() + " FOR " + agentClass);
+                System.out.println("===============================================");
+            }
             
             ProcessBuilder pb = new ProcessBuilder(args);
             pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
@@ -100,11 +102,13 @@ public class RunSokobanLevels {
             } catch (Exception e) { throw new RuntimeException(e); }
 			
 	    	if (p.exitValue() > 0) {
-	    		System.out.println("========================================================");
-		    	System.out.println("AGENT FAILED TO SOLVE THE LEVEL " + (i+1));
-		    	System.out.println(level.file.getName() + " / " + level.levelNumber);
-		    	System.out.println("Exit code: " + p.exitValue() + " ~ " + SokobanResultType.getForExitValue(p.exitValue()));
-		    	System.out.println("========================================================");
+                if (verbose) {
+                    System.out.println("========================================================");
+                    System.out.println("AGENT FAILED TO SOLVE LEVEL " + (i+1));
+                    System.out.println(level.file.getName() + " / " + level.levelNumber);
+                    System.out.println("Exit code: " + p.exitValue() + " ~ " + SokobanResultType.getForExitValue(p.exitValue()));
+                    System.out.println("========================================================");
+                }
 	    		if (++failed == maxFail)
 	    		    break;
 	    	}

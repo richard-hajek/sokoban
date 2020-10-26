@@ -1,7 +1,7 @@
 package cz.sokoban4j;
 
 import cz.sokoban4j.simulation.SokobanResult;
-import cz.sokoban4j.simulation.SokobanResult.SokobanResultType;
+import cz.sokoban4j.simulation.SokobanResultType;
 import cz.sokoban4j.simulation.actions.EDirection;
 import cz.sokoban4j.simulation.actions.oop.IAction;
 import cz.sokoban4j.simulation.actions.oop.MoveOrPush;

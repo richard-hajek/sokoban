@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
 import cz.sokoban4j.SokobanConfig.ELevelFormat;
 import cz.sokoban4j.agents.HumanAgent;
 import cz.sokoban4j.simulation.SokobanResult;
-import cz.sokoban4j.simulation.SokobanResult.SokobanResultType;
+import cz.sokoban4j.simulation.SokobanResultType;
 import cz.sokoban4j.simulation.agent.IAgent;
 import cz.sokoban4j.simulation.board.oop.Board;
 import cz.sokoban4j.ui.SokobanFrame;
