@@ -10,7 +10,10 @@ import cz.sokoban4j.simulation.board.compact.BoardCompact;
 public class HumanAgent implements IAgent, KeyListener {
 
 	EDirection direction = EDirection.NONE;
-	
+    
+    @Override
+    public void init(boolean verbose) { }
+
 	@Override
 	public void newLevel() {
 	}

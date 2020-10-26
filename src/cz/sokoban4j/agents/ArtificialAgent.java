@@ -16,7 +16,12 @@ public abstract class ArtificialAgent implements IAgent {
 	
 	private Object mutex = new Object();
 	
-	private RuntimeException agentException;
+    private RuntimeException agentException;
+    
+    protected boolean verbose;
+
+    @Override
+    public void init(boolean verbose) { this.verbose = verbose; }
 
 	@Override
 	public void newLevel() {

@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
 import cz.sokoban4j.SokobanConfig.ELevelFormat;
@@ -57,54 +56,6 @@ public class Sokoban {
 		uiBoard = null;
 		board = null;
 		config = null;
-	}
-	
-	/**
-	 * Current config we're using for the {@link #getGame()}.
-	 * @return
-	 */
-	public SokobanConfig getConfig() {
-		return config;
-	}
-
-	/**
-	 * Sprites we're currently using if any.
-	 * @return
-	 */
-	public SpriteAtlas getSprites() {
-		return sprites;
-	}
-
-	/**
-	 * Board we're currently using according to {@link #getConfig()} if any.
-	 * @return
-	 */
-	public Board getBoard() {
-		return board;
-	}
-
-	/**
-	 * UIBoard we're currently using for rendering of {@link #getBoard()} if any.
-	 * @return
-	 */
-	public UIBoard getUiBoard() {
-		return uiBoard;
-	}
-
-	/**
-	 * {@link JComponent} visualizing {@link #getUiBoard()}  if any.
-	 * @return
-	 */
-	public SokobanView getView() {
-		return view;
-	}
-
-	/**
-	 * Current {@link SokobanGame} if any.
-	 * @return
-	 */
-	public SokobanFrame getFrame() {
-		return frame;
 	}
 	
 	/**
@@ -366,17 +317,6 @@ public class Sokoban {
 	// STATIC METHODS FOR EASY START-UP 
 	// ================================
 	
-public static String projectRoot() {
-		String[] dirs = { ".", ".." };
-		String expected = "src";
-
-		for (String dir : dirs)
-			if (new File(dir, expected).exists())
-				return dir;
-	
-    throw new RuntimeException("can't find project root");
-	}
-
 public static File findFile(String path) {
 		String[] dirs = { ".", "levels" };
 

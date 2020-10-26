@@ -16,7 +16,7 @@ class DeadSquareDetector {
 }
 
 /**
- * The simplest Tree-DFS agent. Feel free to fool around here! You're in the PLAYGROUND after all!
+ * The simplest Tree-DFS agent. Feel free to fool around here!
  * @author Jimmy
  */
 public class MyAgent extends ArtificialAgent {
@@ -28,10 +28,12 @@ public class MyAgent extends ArtificialAgent {
 		// INIT SEARCH
 		this.board = board;
 		
-		// DEBUG
-		out.println("===== BOARD =====");
-		board.debugPrint();
-		out.println("=================");
+        // DEBUG
+        if (verbose) {
+            out.println("===== BOARD =====");
+            board.debugPrint();
+            out.println("=================");
+        }
 		
 		// FIRE THE SEARCH
 		
@@ -43,23 +45,25 @@ public class MyAgent extends ArtificialAgent {
 		dfs(5, result); // the number marks how deep we will search (the longest plan we will consider)
 
 		long searchTime = System.currentTimeMillis() - searchStartMillis;
-		
-		out.println("SEARCH TOOK:   " + searchTime + " ms");
-		out.println("NODES VISITED: " + searchedNodes);
-		out.println("PERFORMANCE:   " + ((double)searchedNodes / (double)searchTime * 1000) + " nodes/sec");
-		out.println("SOLUTION:      " + (result.size() == 0 ? "NOT FOUND" : "FOUND in " + result.size() + " steps"));
-		
-		if (result.size() > 0) {
-			out.print("STEPS:         ");
-			for (EDirection winDirection : result) {
-				out.print(winDirection + " -> ");
-			}
-			out.println("BOARD SOLVED!");
-		}
-		out.println("=================");
+        
+        if (verbose) {
+            out.println("SEARCH TOOK:   " + searchTime + " ms");
+            out.println("NODES VISITED: " + searchedNodes);
+            out.println("PERFORMANCE:   " + ((double)searchedNodes / (double)searchTime * 1000) + " nodes/sec");
+            out.println("SOLUTION:      " + (result.size() == 0 ? "NOT FOUND" : "FOUND in " + result.size() + " steps"));
+            if (result.size() > 0) {
+                out.print("STEPS:         ");
+                for (EDirection winDirection : result) {
+                    out.print(winDirection + " -> ");
+                }
+                out.println("BOARD SOLVED!");
+            }
+            out.println("=================");
+        }
 		
 		if (result.size() == 0) {
-            out.println("FAILED TO SOLVE THE BOARD...");
+            if (verbose)
+                out.println("FAILED TO SOLVE THE BOARD...");
             return null;
 		}
 				

@@ -18,26 +18,20 @@ import cz.sokoban4j.simulation.SokobanResult.SokobanResultType;
 public class RunSokobanLevels {
 	
 	private SokobanLevels levels;
-	
 	private String agentClass;
-	
 	private File resultFile;
-	
 	private SokobanConfig config;
-	
-	private String[] extraJavaArgs;
-	
-	private int maxFail;
+    private int maxFail;
+    private boolean verbose;
 	
 	public RunSokobanLevels(SokobanConfig config, String agentClass, SokobanLevels levels,
-			                File resultFile, String[] extraJavaArgs, int maxFail) {
-		super();
+			                File resultFile, int maxFail, boolean verbose) {
 		this.config = config;
 		this.agentClass = agentClass;
 		this.levels = levels;
 		this.resultFile = resultFile;
-		this.extraJavaArgs = extraJavaArgs;
-		this.maxFail = maxFail;
+        this.maxFail = maxFail;
+        this.verbose = verbose;
 	}
 
 	public void run() {
@@ -66,18 +60,8 @@ public class RunSokobanLevels {
 	    	    args.add(arg);
 	    	}
 	    	
-	    	// ADD EXTRA JAVA PARAMS
-	    	if (extraJavaArgs != null && extraJavaArgs.length > 0) {
-	    		for (String extraArg : extraJavaArgs) {
-	    			args.add(extraArg);
-	    		}
-	    	}
+	    	args.add("Main");       // class to run
 	    	
-	    	// ADD CLASS TO RUN	    	
-	    	args.add("Main");
-	    	
-            // ADD SOKOBAN CONSOLE ARGUMENTS
-            
             args.add(agentClass);
 
             args.add("-levelset");
@@ -95,6 +79,9 @@ public class RunSokobanLevels {
                 args.add("-timeout");
                 args.add("" + config.timeoutMillis);
             }
+
+            if (verbose)
+                args.add("-v");
 			
 	    	System.out.println("");
 	    	System.out.println("===============================================");

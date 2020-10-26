@@ -16,6 +16,7 @@ public class Main {
         out.println("  -maxfail <num> : maximum level failures allowed (default = 1)");
         out.println("  -resultfile <filename> : file to append results to");
         out.println("  -timeout <num> : maximum thinking time in milliseconds");
+        out.println("  -v : verbose output");
         System.exit(1);
     }
 
@@ -26,6 +27,7 @@ public class Main {
         int maxFail = 1;
         String resultFile = null;
         int timeout = 0;
+        boolean verbose = false;
 
         for (int i = 0 ; i < args.length ; ++i) {
             String s = args[i];
@@ -47,6 +49,9 @@ public class Main {
                 case "-timeout":
                     timeout = Integer.parseInt(args[++i]);
                     break;
+                case "-v":
+                    verbose = true;
+                    break;
                 default:
                     if (s.startsWith("-"))
                         usage();
@@ -62,6 +67,7 @@ public class Main {
         else
             if (level > 0) {
                 IAgent agent = (IAgent) Class.forName(agentName).getConstructor().newInstance();
+                agent.init(verbose);
                 SokobanResult result = Sokoban.simAgentLevel(null, levelset, level, timeout, agent);
                 if (resultFile != null)
                     result.outputResult(new File(resultFile), levelset, level, agentName);
@@ -72,7 +78,7 @@ public class Main {
                 config.timeoutMillis = timeout;
                 RunSokobanLevels run = new RunSokobanLevels(
                     config, agentName, levels,
-                    resultFile == null ? null : new File(resultFile), null, maxFail);
+                    resultFile == null ? null : new File(resultFile), maxFail, verbose);
                 run.run();
             }
 	}

@@ -43,11 +43,13 @@ public class MTDFS1Agent extends ArtificialAgent {
 		int spareThreads = 8;
 		int searchLevel = 15;
 		
-		// DEBUG
-		System.out.println("=================");
-		System.out.println("===== BOARD =====");
-		this.board.debugPrint();
-		System.out.println("=================");
+        // DEBUG
+        if (verbose) {
+            System.out.println("=================");
+            System.out.println("===== BOARD =====");
+            this.board.debugPrint();
+            System.out.println("=================");
+        }
 		
 		// FIRE THE SEARCH
 				
@@ -66,22 +68,25 @@ public class MTDFS1Agent extends ArtificialAgent {
 		else result = new ArrayList<EDirection>();
 				
 		long searchTime = System.currentTimeMillis() - searchStartMillis;
-		
-		System.out.println("SEARCH TOOK:   " + searchTime + " ms");
-		System.out.println("NODES VISITED: " + searchedNodes);
-		System.out.println("PERFORMANCE:   " + ((double)searchedNodes.get() / (double)searchTime * 1000) + " nodes/sec");
-		System.out.println("SOLUTION:      " + (result.size() == 0 ? "NOT FOUND" : "FOUND in " + result.size() + " steps"));
-		if (result.size() > 0) {
-			System.out.print("STEPS:         ");
-			for (EDirection winDirection : result) {
-				System.out.print(winDirection + " -> ");
-			}
-			System.out.println("BOARD SOLVED!");
-		}
-		System.out.println("=================");
+        
+        if (verbose) {
+            System.out.println("SEARCH TOOK:   " + searchTime + " ms");
+            System.out.println("NODES VISITED: " + searchedNodes);
+            System.out.println("PERFORMANCE:   " + ((double)searchedNodes.get() / (double)searchTime * 1000) + " nodes/sec");
+            System.out.println("SOLUTION:      " + (result.size() == 0 ? "NOT FOUND" : "FOUND in " + result.size() + " steps"));
+            if (result.size() > 0) {
+                System.out.print("STEPS:         ");
+                for (EDirection winDirection : result) {
+                    System.out.print(winDirection + " -> ");
+                }
+                System.out.println("BOARD SOLVED!");
+            }
+            System.out.println("=================");
+        }
 		
 		if (result.size() == 0) {
-            System.out.println("FAILED TO SOLVE THE BOARD...");
+            if (verbose)
+                System.out.println("FAILED TO SOLVE THE BOARD...");
             return null;
 		}
 				

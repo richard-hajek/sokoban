@@ -4,6 +4,7 @@ import cz.sokoban4j.simulation.actions.EDirection;
 import cz.sokoban4j.simulation.board.compact.BoardCompact;
 
 public interface IAgent {
+    public void init(boolean verbose);
 
 	/**
 	 * Agent got into a new level.
