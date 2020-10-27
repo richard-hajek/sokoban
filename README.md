@@ -18,7 +18,18 @@ This version of Sokoban4J works with Java 11 or higher, and possibly older Java 
 
 ## Playing the game
 
-To play the game from the keyboard, run the Main class in the src/cz/sokoban4j subdirectory.  Edit the code in the main() method to specify the level(s) that you wish to play.  You can choose any of the levels in the levels subdirectory.
+To play the game from the keyboard on Linux or macOS, run
+
+```
+$ ./sokoban
+```
+
+Or, on Windows:
+
+```
+> .\sokoban
+```
+By default, the game plays a set of 10 relatively easy levels, found in `levels/easy.sok`.  You can use the -levelset option to chooose a different level set.  Various other options are available; type './sokoban -help' to see them.
 
 Use the arrow keys or the W/S/A/D keys to move.
 
