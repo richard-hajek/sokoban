@@ -7,9 +7,7 @@ import game.actions.compact.CPush;
 import game.actions.compressed.MAction;
 import game.actions.compressed.MMove;
 import game.actions.compressed.MPush;
-import game.actions.oop.EActionType;
-import game.actions.oop.IAction;
-import game.actions.oop.MoveOrPush;
+import game.actions.oop.*;
 import game.actions.slim.SAction;
 import game.actions.slim.SMove;
 import game.actions.slim.SPush;
@@ -62,11 +60,11 @@ public class ValidatingAgent {
 	
 	private void testPlayerActions(Board board) {
 		for (EDirection direction : EDirection.arrows()) {
-			IAction action = MoveOrPush.getMoveOrPush(direction);
+			IAction action = Move.orPush(board, direction);
 			Board clone = board.clone();
 			if (!action.isPossible(board)) continue;
 			if (action.getType(board) == EActionType.MOVE) {
-				IAction opposite = MoveOrPush.getMoveOrPush(direction.opposite());
+				IAction opposite = Move.orPush(board, direction.opposite());
 				action.perform(clone);
 				opposite.perform(clone);
 				if (!board.equalsState(clone)) {

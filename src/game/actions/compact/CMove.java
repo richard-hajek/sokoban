@@ -6,8 +6,6 @@ import java.util.Map;
 
 import game.actions.EDirection;
 import game.actions.oop.EActionType;
-import game.actions.oop.IAction;
-import game.actions.oop.MoveOrPush;
 import game.board.compact.BoardCompact;
 import game.board.compact.CTile;
 
@@ -95,16 +93,6 @@ public class CMove extends CAction {
 	public void reverse(BoardCompact board) {
 		// REVERSE THE PLAYER
 		board.movePlayer(board.playerX, board.playerY, board.playerX - dir.dX, board.playerY - dir.dY);
-	}
-	
-	/**
-	 * Get OOP representation of given action.
-	 * @param dir
-	 * @return
-	 */
-	@Override
-	public IAction getAction() {
-		return MoveOrPush.getMoveOrPush(dir);
 	}
 	
 	@Override

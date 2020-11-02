@@ -2,7 +2,6 @@ package game.actions.compact;
 
 import game.actions.EDirection;
 import game.actions.oop.EActionType;
-import game.actions.oop.IAction;
 import game.board.compact.BoardCompact;
 
 public abstract class CAction {
@@ -32,8 +31,6 @@ public abstract class CAction {
 	public abstract void perform(BoardCompact board);
 	
 	public abstract void reverse(BoardCompact board);
-	
-	public abstract IAction getAction();
 	
 	/**
 	 * If we move 1 step in given 'dir', will we still be at board? 

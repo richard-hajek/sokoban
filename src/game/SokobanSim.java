@@ -1,8 +1,7 @@
 package game;
 
 import game.actions.EDirection;
-import game.actions.oop.IAction;
-import game.actions.oop.MoveOrPush;
+import game.actions.oop.*;
 import game.board.compact.BoardCompact;
 import game.board.oop.Board;
 
@@ -138,10 +137,10 @@ public class SokobanSim implements ISokobanGame, Runnable {
                     break;
                 }
 
-				agentAction = MoveOrPush.getMoveOrPush(whereToMove);
+                agentAction = Move.orPush(board, whereToMove);
 	
 				// AGENT ACTION VALID?
-				if (agentAction != null && agentAction.isPossible(board)) {
+				if (agentAction.isPossible(board)) {
 					// PERFORM THE ACTION
 					agentAction.perform(board);
 					++steps;

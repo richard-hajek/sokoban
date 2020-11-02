@@ -2,7 +2,6 @@ package game.actions.compressed;
 
 import game.actions.EDirection;
 import game.actions.oop.EActionType;
-import game.actions.oop.IAction;
 import game.board.compressed.BoardCompressed;
 
 public abstract class MAction {
@@ -16,8 +15,6 @@ public abstract class MAction {
 	public abstract void perform(BoardCompressed board);
 	
 	public abstract void reverse(BoardCompressed board);
-	
-	public abstract IAction getAction();
 	
 	/**
 	 * If we move 1 step in given 'dir', will we still be at board? 

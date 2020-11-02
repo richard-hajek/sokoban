@@ -76,11 +76,6 @@ public class CWalk extends CAction implements IAction {
 		}
 	}
 
-	@Override
-	public IAction getAction() {
-		return this;
-	}
-	
 	// =======
 	// IAction
 	// =======

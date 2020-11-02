@@ -2,7 +2,6 @@ package game.actions.slim;
 
 import game.actions.EDirection;
 import game.actions.oop.EActionType;
-import game.actions.oop.IAction;
 import game.board.slim.BoardSlim;
 
 public abstract class SAction {
@@ -16,8 +15,6 @@ public abstract class SAction {
 	public abstract void perform(BoardSlim board);
 	
 	public abstract void reverse(BoardSlim board);
-	
-	public abstract IAction getAction();
 	
 	/**
 	 * If we move 1 step in given 'dir', will we still be at board? 

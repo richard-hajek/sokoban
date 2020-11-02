@@ -5,8 +5,7 @@ import java.awt.event.KeyListener;
 import javax.swing.SwingUtilities;
 
 import game.actions.EDirection;
-import game.actions.oop.IAction;
-import game.actions.oop.MoveOrPush;
+import game.actions.oop.*;
 import game.board.compact.BoardCompact;
 import game.board.oop.Board;
 import ui.SokobanFrame;
@@ -222,11 +221,11 @@ public class SokobanVis implements ISokobanGame, Runnable {
 				EDirection whereToMove = agent.act();
 						
 				if (whereToMove == null || whereToMove == EDirection.NONE) continue;
-							
-				agentAction = MoveOrPush.getMoveOrPush(whereToMove);
+                
+                agentAction = Move.orPush(board, whereToMove);
 	
 				// AGENT ACTION VALID?
-				if (agentAction != null && agentAction.isPossible(board)) {
+				if (agentAction.isPossible(board)) {
 					// START PERFORMIING THE ACTION
 					uiAction = UIActionFactory.createUIAction(board, sprites, uiBoard, agentAction);
 					if (uiAction == null) {

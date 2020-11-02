@@ -6,8 +6,6 @@ import java.util.Map;
 
 import game.actions.EDirection;
 import game.actions.oop.EActionType;
-import game.actions.oop.IAction;
-import game.actions.oop.MoveOrPush;
 import game.board.compact.BoardCompact;
 import game.board.slim.BoardSlim;
 import game.board.slim.STile;
@@ -96,16 +94,6 @@ public class SPush extends SAction {
 		board.movePlayer(board.playerX, board.playerY, (byte)(board.playerX - dir.dX), (byte)(board.playerY - dir.dY));
 		// MOVE THE BOX
 		board.moveBox((byte)(playerX + dir.dX), (byte)(playerY + dir.dY), playerX, playerY);
-	}
-	
-	/**
-	 * Get OOP representation of given action.
-	 * @param dir
-	 * @return
-	 */
-	@Override
-	public IAction getAction() {
-		return MoveOrPush.getMoveOrPush(dir);
 	}
 	
 	@Override

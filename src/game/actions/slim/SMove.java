@@ -6,8 +6,6 @@ import java.util.Map;
 
 import game.actions.EDirection;
 import game.actions.oop.EActionType;
-import game.actions.oop.IAction;
-import game.actions.oop.MoveOrPush;
 import game.board.compact.BoardCompact;
 import game.board.slim.BoardSlim;
 import game.board.slim.STile;
@@ -83,16 +81,6 @@ public class SMove extends SAction {
 	public void reverse(BoardSlim board) {
 		// REVERSE THE PLAYER
 		board.movePlayer(board.playerX, board.playerY, (byte)(board.playerX - dir.dX), (byte)(board.playerY - dir.dY));
-	}
-	
-	/**
-	 * Get OOP representation of given action.
-	 * @param dir
-	 * @return
-	 */
-	@Override
-	public IAction getAction() {
-		return MoveOrPush.getMoveOrPush(dir);
 	}
 	
 	@Override

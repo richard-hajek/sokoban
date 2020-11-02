@@ -81,11 +81,6 @@ public class CWalkPush extends CAction implements IAction {
 	}
 
 	@Override
-	public IAction getAction() {
-		return this;
-	}
-
-	@Override
 	public EActionType getType(Board board) {
 		return EActionType.WALK_AND_PUSH;
 	}

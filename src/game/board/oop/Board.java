@@ -20,7 +20,6 @@ import utils.TextLevelS4JL;
 public class Board implements Cloneable {
 
 	public final int width;
-	
 	public final int height;
 	
 	public final Tile[][] tiles;
@@ -127,7 +126,11 @@ public class Board implements Cloneable {
 	 */
 	public Tile tile(int x, int y) {
 		return tiles[x][y];
-	}
+    }
+    
+    public boolean isPosValid(int x, int y) {
+        return 0 <= x && x < width && 0 <= y && y < height;
+    }
 	
 	/**
 	 * Turns {@link Tile} resp. {@link Board#tiles} descriptions into 'tileFlags' using {@link Tile#computeTileFlag()}.
