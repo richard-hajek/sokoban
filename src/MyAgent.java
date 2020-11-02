@@ -2,10 +2,10 @@ import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.sokoban4j.agents.ArtificialAgent;
-import cz.sokoban4j.simulation.actions.EDirection;
-import cz.sokoban4j.simulation.actions.compact.*;
-import cz.sokoban4j.simulation.board.compact.BoardCompact;
+import agents.ArtificialAgent;
+import game.actions.EDirection;
+import game.actions.compact.*;
+import game.board.compact.BoardCompact;
 
 class DeadSquareDetector {
 	public static boolean[][] detect(BoardCompact board) {

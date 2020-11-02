@@ -2,10 +2,8 @@ import static java.lang.System.out;
 
 import java.io.File;
 
-import cz.sokoban4j.*;
-import cz.sokoban4j.simulation.*;
-import cz.sokoban4j.simulation.agent.IAgent;
-import cz.sokoban4j.tournament.run.*;
+import game.*;
+import tournament.*;
 
 public class Main {
     static String describe(SokobanResultType type) {
