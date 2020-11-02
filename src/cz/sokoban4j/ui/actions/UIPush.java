@@ -28,13 +28,9 @@ public class UIPush implements IUIAction {
 	
 	private double oneFrameMillis;
 	
-	private double moveSpeedX;
+	private double moveSpeedX, moveSpeedY;
 	
-	private double moveSpeedY;
-	
-	private double offsetTargetX;
-	
-	private double offsetTargetY;
+	private double offsetTargetX, offsetTargetY;
 	
 	public UIPush(Board board, UIBoard uiBoard, SpriteAtlas sprites, EDirection dir, double moveMillis, int animFrameCount) {
 		this.board = board;
@@ -114,5 +110,4 @@ public class UIPush implements IUIAction {
 		
 		
 	}
-
 }

@@ -158,8 +158,6 @@ public class Sokoban {
 	 * Result of the game or games is going to be stored within {@link #getResults()}.
 	 * Use {@link #getResults()}, {@link #getResult()} and {@link #getLastResult()} to obtain it/them.
 	 * 
-	 * @param config
-	 * @return
 	 */
 	public void run(SokobanConfig config) {
 		if (game != null) {

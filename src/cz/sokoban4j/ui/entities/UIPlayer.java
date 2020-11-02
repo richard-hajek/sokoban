@@ -69,10 +69,8 @@ public class UIPlayer extends UIEntity {
 	}
 	
 	public static enum EState {
-		
 		STANDING,
 		MOVING
-		
 	}
 	
 	public EState state = EState.STANDING;
@@ -88,11 +86,5 @@ public class UIPlayer extends UIEntity {
 	@Override
 	public void renderEntity(Graphics2D g) {
 		super.renderEntity(g);
-		/*
-		double x = entity.getTileX() * sprites.getTileWidth() + sprites.getTileWidth() / 2 + offsetX;
-		double y = entity.getTileY() * sprites.getTileHeight() + sprites.getTileHeight() / 2 + offsetY;
-		System.out.println("PLAYER - " + x + " | " + y);
-		*/		
 	}
-
 }

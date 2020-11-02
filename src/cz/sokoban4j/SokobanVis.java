@@ -56,16 +56,12 @@ public class SokobanVis implements ISokobanGame, Runnable {
 	private SokobanResult result = new SokobanResult();
 	
 	/**
-	 * @param id
-	 * @param board
-	 * @param agent
-	 * @param sprites
-	 * @param uiBoard
-	 * @param view
-	 * @param frame
 	 * @param timeoutMillis negative number or zero == no time; in milliseconds
 	 */
-	public SokobanVis(String id, Board board, IAgent agent, SpriteAtlas sprites, UIBoard uiBoard, SokobanView view, SokobanFrame frame, long timeoutMillis) {
+	public SokobanVis(
+        String id, Board board, IAgent agent, SpriteAtlas sprites, UIBoard uiBoard,
+        SokobanView view, SokobanFrame frame, long timeoutMillis) {
+            
 		// SETUP
 		
 		if (id == null) id = "SokobanVis";		

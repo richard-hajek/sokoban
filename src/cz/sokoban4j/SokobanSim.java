@@ -38,13 +38,6 @@ public class SokobanSim implements ISokobanGame, Runnable {
 	private int steps = 0;
 	
 	/**
-	 * @param id
-	 * @param board
-	 * @param agent
-	 * @param sprites
-	 * @param uiBoard
-	 * @param view
-	 * @param frame
 	 * @param timeoutMillis negative number or zero == no time; in milliseconds
 	 */
 	public SokobanSim(String id, Board board, IAgent agent, long timeoutMillis) {

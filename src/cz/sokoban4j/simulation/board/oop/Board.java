@@ -157,9 +157,6 @@ public class Board implements Cloneable {
 	
 	/**
 	 * Moves 'entity' unconditionally.
-	 * @param entity
-	 * @param tileX
-	 * @param tileY
 	 */
 	public void move(Entity entity, int tileX, int tileY) {
 		Tile sourceTile = entity.getTile();
@@ -172,7 +169,6 @@ public class Board implements Cloneable {
 	
 	/**
 	 * Whether the board is in WIN-STATE == all boxes are in correct places.
-	 * @return
 	 */
 	public boolean isVictory() {
 		for (Entity box : boxes) {
