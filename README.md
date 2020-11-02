@@ -31,7 +31,7 @@ Or, on Windows:
 ```
 By default, the game plays a set of 10 relatively easy levels, found in `levels/easy.sok`.  You can use the -levelset option to chooose a different level set.  Various other options are available; type './sokoban -help' to see them.
 
-Use the arrow keys or the W/S/A/D keys to move.
+Use the arrow keys or the W/S/A/D keys to move.  Press Z to undo your last move.
 
 ## Writing an agent
 

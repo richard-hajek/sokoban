@@ -9,33 +9,30 @@ import ui.entities.UIPlayer.EMove;
 import ui.utils.TimeDelta;
 
 public class UIMove implements IUIAction {
-
 	private UIBoard uiBoard;
-	
 	private UIPlayer player;
 	
 	private EMove move;
-	
 	private EDirection dir;
 	
 	private int animFrame = -1;
-	
 	private double nextAnim;
-	
 	private double oneFrameMillis;
 	
 	private double moveSpeedX, moveSpeedY;
 	
 	private double offsetTargetX, offsetTargetY;
 	
-	public UIMove(Board board, UIBoard uiBoard, SpriteAtlas sprites, EDirection dir, double moveMillis, int animFrameCount) {
+    public UIMove(Board board, UIBoard uiBoard, SpriteAtlas sprites, EDirection dir,
+                  double moveMillis, int animFrameCount, boolean undo) {
 		this.uiBoard = uiBoard;
 		this.dir = dir;
-		this.oneFrameMillis = moveMillis / ((double)animFrameCount);
-		this.moveSpeedX = dir.dX * ((double)sprites.getTileWidth()) / moveMillis;
-		this.moveSpeedY = dir.dY * ((double)sprites.getTileHeight()) / moveMillis;
-		this.offsetTargetX = dir.dX * sprites.getTileWidth();
-		this.offsetTargetY = dir.dY * sprites.getTileHeight();
+        this.oneFrameMillis = moveMillis / ((double)animFrameCount);
+        int u = undo ? -1 : 1;
+		this.moveSpeedX = u * dir.dX * ((double)sprites.getTileWidth()) / moveMillis;
+		this.moveSpeedY = u * dir.dY * ((double)sprites.getTileHeight()) / moveMillis;
+		this.offsetTargetX = u * dir.dX * sprites.getTileWidth();
+		this.offsetTargetY = u * dir.dY * sprites.getTileHeight();
 	}
 	
 	public void start() {

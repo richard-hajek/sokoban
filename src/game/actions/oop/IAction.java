@@ -13,4 +13,5 @@ public interface IAction {
 	
 	public boolean perform(Board board);
 
+    public void undo(Board board);
 }

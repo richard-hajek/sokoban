@@ -2,16 +2,14 @@ package game.actions.compact;
 
 import game.actions.EDirection;
 import game.actions.oop.EActionType;
-import game.actions.oop.IAction;
 import game.board.compact.BoardCompact;
 import game.board.compact.CTile;
-import game.board.oop.Board;
 
 /**
  * Works more like a teleport, does not check whether the path to [x,y] actually exists.
  * @author Jimmy
  */
-public class CWalk extends CAction implements IAction {
+public class CWalk extends CAction {
 
 	private int x;
 	private int y;
@@ -76,30 +74,6 @@ public class CWalk extends CAction implements IAction {
 		}
 	}
 
-	// =======
-	// IAction
-	// =======
-
-	@Override
-	public EActionType getType(Board board) {
-		return EActionType.WALK;
-	}
-
-	@Override
-	public boolean isPossible(Board board) {
-		return board.tile(x, y).isWalkable();
-	}
-
-	@Override
-	public boolean perform(Board board) {
-		if (!isPossible(board)) return false;
-		this.fromX = board.player.getTileX();
-		this.fromY = board.player.getTileY();
-		board.move(board.player, x, y);
-		return true;
-	}
-	
-	// ======
 	// Object
 	// ======
 	

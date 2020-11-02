@@ -52,4 +52,10 @@ public class Move implements IAction {
 		return true;
     }
     
+    @Override
+    public void undo(Board board) {
+		Tile playerTile = board.player.getTile();
+		Entity player = board.player;
+        board.move(player, playerTile.tileX - dir.dX, playerTile.tileY - dir.dY);
+    }
 }

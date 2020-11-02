@@ -1,23 +1,22 @@
 package game;
 
 import java.awt.event.KeyListener;
+import java.util.*;
 
 import javax.swing.SwingUtilities;
 
+import agents.HumanAgent;
 import game.actions.EDirection;
 import game.actions.oop.*;
 import game.board.compact.BoardCompact;
 import game.board.oop.Board;
-import ui.SokobanFrame;
-import ui.SokobanView;
-import ui.UIBoard;
+import ui.*;
 import ui.actions.IUIAction;
 import ui.actions.UIActionFactory;
 import ui.atlas.SpriteAtlas;
 import ui.utils.TimeDelta;
 
 public class SokobanVis implements ISokobanGame, Runnable {
-
 	// SETUP
 	
 	private Board board;
@@ -137,6 +136,9 @@ public class SokobanVis implements ISokobanGame, Runnable {
 
 	@Override
 	public void run() {
+        Stack<IAction> actions = new Stack<IAction>();
+        boolean undo = false;
+
 		try {
 			frame.setVisible(true);
 		
@@ -170,14 +172,20 @@ public class SokobanVis implements ISokobanGame, Runnable {
 				
 				if (uiAction != null) {
 					// ADVANCE UI ACTION
-					if (!uiAction.isFinished()) uiAction.tick(timeDelta);
+                    if (!uiAction.isFinished()) uiAction.tick(timeDelta);
+                    
 					// HANDLE FINISHED ACTION
 					if (uiAction.isFinished()) {
-						agentAction.perform(board);
+                        if (undo)
+                            agentAction.undo(board);
+                        else
+                            agentAction.perform(board);
+                            
 						uiAction.finish();
 						uiAction = null;
 						agentAction = null;
-						observe = true;
+                        observe = true;
+                        undo = false;
 					}
 					
                     // UPDATE RENDER
@@ -217,23 +225,41 @@ public class SokobanVis implements ISokobanGame, Runnable {
 					observe = false;
 				}
 					
-				// GET AGENT ACTION
-				EDirection whereToMove = agent.act();
-						
-				if (whereToMove == null || whereToMove == EDirection.NONE) continue;
+                // GET AGENT ACTION
                 
-                agentAction = Move.orPush(board, whereToMove);
+                Command command = Command.None;
+
+                if (agent instanceof HumanAgent) {
+                    command = ((HumanAgent) agent).getCommand();
+                    if (command == Command.Undo) {
+                        if (actions.empty())
+                            continue;
+                        agentAction = actions.peek();
+                        undo = true;
+                    }
+                }
+
+                if (command == Command.None) {
+                    EDirection whereToMove = agent.act();
+                    if (whereToMove == null || whereToMove == EDirection.NONE) continue;
+                    agentAction = Move.orPush(board, whereToMove);
+                }
 	
 				// AGENT ACTION VALID?
-				if (agentAction.isPossible(board)) {
-					// START PERFORMIING THE ACTION
-					uiAction = UIActionFactory.createUIAction(board, sprites, uiBoard, agentAction);
+				if (agentAction.isPossible(board) || undo) {
+					// START PERFORMING THE ACTION
+					uiAction = UIActionFactory.createUIAction(
+                                    board, sprites, uiBoard, agentAction, undo);
 					if (uiAction == null) {
 						// INVALID ACTION
 						agentAction = null;					 
 					} else {
-						result.setSteps(result.getSteps()+1);
-						frame.setSteps(result.getSteps());
+						result.setSteps(result.getSteps() + (undo ? -1 : 1));
+                        if (undo)
+                            actions.pop();
+                        else
+                            actions.push(agentAction);
+                        frame.setSteps(result.getSteps());
 					}
 				} else {
 					agentAction = null;

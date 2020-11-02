@@ -2,15 +2,13 @@ package game.actions.compact;
 
 import game.actions.EDirection;
 import game.actions.oop.EActionType;
-import game.actions.oop.IAction;
 import game.board.compact.BoardCompact;
-import game.board.oop.Board;
 
 /**
  * Combines {@link CWalk} and {@link CPush} in the single macro action.
  * @author Jimmy
  */
-public class CWalkPush extends CAction implements IAction {
+public class CWalkPush extends CAction {
 
 	private CWalk walk;
 	private CPush push;
@@ -80,21 +78,6 @@ public class CWalkPush extends CAction implements IAction {
 		walk.reverse(board);
 	}
 
-	@Override
-	public EActionType getType(Board board) {
-		return EActionType.WALK_AND_PUSH;
-	}
-
-	@Override
-	public boolean isPossible(Board board) {
-		return walk.isPossible(board);
-	}
-
-	@Override
-	public boolean perform(Board board) {
-		throw new RuntimeException("NOT IMPLEMENTED!");
-	}
-	
 	@Override
 	public String toString() {
 		return "CWalkPush[\n  " + walk + "\n  " + push + "\n]";

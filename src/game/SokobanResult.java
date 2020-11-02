@@ -12,13 +12,11 @@ public class SokobanResult {
 	
 	private SokobanResultType result = null;
 	
-	private Throwable execption;
+	private Throwable exception;
 	
 	private int steps = 0;
 	
-	private long simStartMillis = 0;
-	
-	private long simEndMillis = 0;
+	private long simStartMillis = 0, simEndMillis = 0;
 	
 	public SokobanResult() {		
 	}
@@ -117,11 +115,11 @@ public class SokobanResult {
 	 * @return
 	 */
 	public Throwable getException() {
-		return execption;
+		return exception;
 	}
 
 	public void setException(Throwable execption) {
-		this.execption = execption;
+		this.exception = execption;
 	}
 	
 	@Override

@@ -60,4 +60,14 @@ public class Push implements IAction {
 		return true;
     }
     
+    @Override
+    public void undo(Board board) {
+		Tile playerTile = board.player.getTile();
+
+		Entity player = board.player;
+        Entity box = board.tile(playerTile.tileX+dir.dX, playerTile.tileY+dir.dY).entity;
+
+        board.move(player, playerTile.tileX - dir.dX, playerTile.tileY - dir.dY);
+        board.move(box, playerTile.tileX, playerTile.tileY);
+    }
 }

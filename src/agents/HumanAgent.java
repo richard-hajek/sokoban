@@ -6,9 +6,10 @@ import java.awt.event.KeyListener;
 import game.IAgent;
 import game.actions.EDirection;
 import game.board.compact.BoardCompact;
+import ui.Command;
 
 public class HumanAgent implements IAgent, KeyListener {
-
+    Command command = Command.None;
 	EDirection direction = EDirection.NONE;
     
     @Override
@@ -30,13 +31,21 @@ public class HumanAgent implements IAgent, KeyListener {
 	@Override
 	public void victory() {
 	}
-	
+    
+    public Command getCommand() {
+        Command c = command;
+        command = Command.None;
+        return c;
+    }
+
 	@Override
 	public void stop() {
 	}
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar() == 'z')
+            command = Command.Undo;
 	}
 
 	@Override
