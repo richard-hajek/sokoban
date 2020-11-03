@@ -7,16 +7,8 @@ import game.actions.EDirection;
 import game.actions.compact.*;
 import game.board.compact.BoardCompact;
 
-class DeadSquareDetector {
-	public static boolean[][] detect(BoardCompact board) {
-		// Write your dead square detector here.
-
-		return null;
-	}
-}
-
 /**
- * The simplest Tree-DFS agent. Feel free to fool around here!
+ * The simplest Tree-DFS agent.
  * @author Jimmy
  */
 public class MyAgent extends ArtificialAgent {
@@ -25,20 +17,8 @@ public class MyAgent extends ArtificialAgent {
 	
 	@Override
 	protected List<EDirection> think(BoardCompact board) {
-		// INIT SEARCH
 		this.board = board;
-		
-        // DEBUG
-        if (verbose) {
-            out.println("===== BOARD =====");
-            board.debugPrint();
-            out.println("=================");
-        }
-		
-		// FIRE THE SEARCH
-		
 		searchedNodes = 0;
-		
 		long searchStartMillis = System.currentTimeMillis();
 		
 		List<EDirection> result = new ArrayList<EDirection>();
@@ -47,27 +27,12 @@ public class MyAgent extends ArtificialAgent {
 		long searchTime = System.currentTimeMillis() - searchStartMillis;
         
         if (verbose) {
-            out.println("SEARCH TOOK:   " + searchTime + " ms");
-            out.println("NODES VISITED: " + searchedNodes);
-            out.println("PERFORMANCE:   " + ((double)searchedNodes / (double)searchTime * 1000) + " nodes/sec");
-            out.println("SOLUTION:      " + (result.size() == 0 ? "NOT FOUND" : "FOUND in " + result.size() + " steps"));
-            if (result.size() > 0) {
-                out.print("STEPS:         ");
-                for (EDirection winDirection : result) {
-                    out.print(winDirection + " -> ");
-                }
-                out.println("BOARD SOLVED!");
-            }
-            out.println("=================");
+            out.println("Nodes visited: " + searchedNodes);
+            out.println("Performance:   " +
+                        ((double)searchedNodes / (double)searchTime * 1000) + " nodes/sec");
         }
 		
-		if (result.size() == 0) {
-            if (verbose)
-                out.println("FAILED TO SOLVE THE BOARD...");
-            return null;
-		}
-				
-		return result;
+		return result.isEmpty() ? null : result;
 	}
 
 	private boolean dfs(int level, List<EDirection> result) {
