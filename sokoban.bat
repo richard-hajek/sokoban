@@ -1,1 +1,1 @@
-java -cp "target/classes;libs/*" Main %*
+java -cp "target/classes;libs/*" SokobanMain %*

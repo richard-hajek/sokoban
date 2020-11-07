@@ -56,7 +56,7 @@ public class RunSokobanLevels {
 	    	    args.add(arg);
 	    	}
 	    	
-	    	args.add("Main");       // class to run
+	    	args.add("SokobanMain");       // class to run
 	    	
             args.add(agentClass);
 

@@ -5,7 +5,7 @@ import java.io.File;
 import game.*;
 import tournament.*;
 
-public class Main {
+public class SokobanMain {
     static String describe(SokobanResultType type) {
         switch (type) {
             case VICTORY: return "solved";
@@ -14,11 +14,10 @@ public class Main {
         }
     }
 
-    static void runLevel(
-        String agentName, String levelset, int level, int maxFail,
-        String resultFile, int timeout, boolean verbose, boolean optimal) throws Exception {
+    public static SokobanResultType runLevel(
+        IAgent agent, String agentName, String levelset, int level,
+        String resultFile, int timeout, boolean verbose, boolean optimal) {
 
-        IAgent agent = (IAgent) Class.forName(agentName).getConstructor().newInstance();
         agent.init(optimal, verbose);
 
         if (verbose)
@@ -43,7 +42,8 @@ public class Main {
 
         if (resultFile != null)
             result.outputResult(new File(resultFile), levelset, level, agentName);
-        System.exit(resultType.getExitValue());	    	    
+
+        return resultType;
     }
 
     static void runLevelSet(String agentName, String levelset, int maxFail, String resultFile,
@@ -124,8 +124,12 @@ public class Main {
             else
                 Sokoban.playHumanFile(levelset);
         else
-            if (level > 0)
-                runLevel(agentName, levelset, level, maxFail, resultFile, timeout, verbose, optimal);
+            if (level > 0) {
+                IAgent agent = (IAgent) Class.forName(agentName).getConstructor().newInstance();
+                SokobanResultType resultType = runLevel(
+                    agent, agentName, levelset, level, resultFile, timeout, verbose, optimal);
+                System.exit(resultType.getExitValue());	    	    
+            }
             else
                 runLevelSet(agentName, levelset, maxFail, resultFile, timeout, verbose, optimal);
     }
