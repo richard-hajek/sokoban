@@ -11,32 +11,6 @@ order of difficulty.
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 1
-  #######
- ##  #  #
-##   $$ #
-#  #.#  #
-#  .+. ##
-#  #.#$##
-## $  $ #
- ####   #
-    #####
-Title: Nabokosmos 32
-Author: Aymeric du Peloux
-
-2
-  #####
-###   #
-#   #.##
-#  *$@ #
-## * **##
- # # #  #
- #      #
- ###  ###
-   ####
-Title: NABOKOSMOS 12 var. (Cosmopoly 14)
-Author: Aymeric du Peloux
-
-3
   #####
 ###   #
 #   # ##
@@ -48,6 +22,35 @@ Author: Aymeric du Peloux
    ####
 Title: Nabokosmos 12
 Author: Aymeric du Peloux
+Moves: 119
+
+2
+  #######
+ ##  #  #
+##   $$ #
+#  #.#  #
+#  .+. ##
+#  #.#$##
+## $  $ #
+ ####   #
+    #####
+Title: Nabokosmos 32
+Author: Aymeric du Peloux
+Moves: 262
+
+3
+  #####
+###   #
+#   #.##
+#  *$@ #
+## * **##
+ # # #  #
+ #      #
+ ###  ###
+   ####
+Title: NABOKOSMOS 12 var. (Cosmopoly 14)
+Author: Aymeric du Peloux
+Moves: 151
 
 4
   #####
@@ -61,6 +64,7 @@ Author: Aymeric du Peloux
   ####
 Title: Nabokosmos 21
 Author: Aymeric du Peloux
+Moves: 118
 
 5
     #####
@@ -74,6 +78,7 @@ Author: Aymeric du Peloux
  ####
 Title: Nabokosmos 26
 Author: Aymeric du Peloux
+Moves: 245
 
 6
  ####
@@ -86,6 +91,7 @@ Author: Aymeric du Peloux
 ##########
 Title: Nabokosmos 37
 Author: Aymeric du Peloux
+Moves: 201
 
 7
  #######
@@ -98,6 +104,7 @@ Author: Aymeric du Peloux
 #########
 Title: MICROCOSMOS 18 var. (Cosmopoly 10)
 Author: Aymeric du Peloux et Masato Hiramatsu
+Moves: 140
 
 8
 #####
@@ -111,6 +118,7 @@ Author: Aymeric du Peloux et Masato Hiramatsu
 #########
 Title: NABOKOSMOS 32 var. (Cosmopoly 11)
 Author: Aymeric du Peloux et Evgeny Grigoriev
+Moves: 302
 
 9
   ####
@@ -125,6 +133,7 @@ Author: Aymeric du Peloux et Evgeny Grigoriev
  ####
 Title: Nabokosmos 34
 Author: Aymeric du Peloux
+Moves: 158
 
 10
    ####
@@ -138,6 +147,7 @@ Author: Aymeric du Peloux
    ####
 Title: Nabokosmos 36
 Author: Aymeric du Peloux
+Moves: 132
 
 11
   ####
@@ -151,6 +161,7 @@ Author: Aymeric du Peloux
      ####
 Title: Nabokosmos 9
 Author: Aymeric du Peloux
+Moves: 146
 
 12
  ####
@@ -164,6 +175,7 @@ Author: Aymeric du Peloux
      ####
 Title: Nabokosmos 10
 Author: Aymeric du Peloux
+Moves: 211
 
 13
  ####
@@ -177,6 +189,7 @@ Author: Aymeric du Peloux
    ####
 Title: Nabokosmos 28
 Author: Aymeric du Peloux
+Moves: 147
 
 14
  ####
@@ -192,6 +205,7 @@ Author: Aymeric du Peloux
  ####
 Title: Nabokosmos 7
 Author: Aymeric du Peloux
+Moves: 156
 
 15
   ####
@@ -208,6 +222,7 @@ Author: Aymeric du Peloux
   #####
 Title: NABOKOSMOS 39 var. (Cosmopoly 3)
 Author: Aymeric du Peloux
+Moves: 139
 
 16
  #######
@@ -221,6 +236,7 @@ Author: Aymeric du Peloux
      ####
 Title: Nabokosmos 27
 Author: Aymeric du Peloux
+Moves: 387
 
 17
   ####
@@ -236,6 +252,7 @@ Author: Aymeric du Peloux
   ####
 Title: Nabokosmos 2
 Author: Aymeric du Peloux
+Moves: 120
 
 18
   ########
@@ -250,20 +267,9 @@ Author: Aymeric du Peloux
  #####
 Title: MICROCOSMOS 26 var. (Cosmopoly 8)
 Author: Aymeric du Peloux et Howard Abed
+Moves: 104
 
 19
-       ####
-######## @#
-#  $ $ $ $#
-# #*.  .# ##
-#    . #.  #
-##$### .   #
- #     #####
- #######
-Title: MICROCOSMOS 37 var. (Cosmopoly 9)
-Author: Aymeric du Peloux et Evgeny Grigoriev
-
-20
   ####
  ##  #
 ## $ ###
@@ -276,3 +282,17 @@ Author: Aymeric du Peloux et Evgeny Grigoriev
  #####
 Title: PICOKOSMOS 20 var. (Cosmopoly 22)
 Author: Evgeny Grigoriev (GRIGoRusha) et Aymeric du Peloux
+Moves: 314
+
+20
+       ####
+######## @#
+#  $ $ $ $#
+# #*.  .# ##
+#    . #.  #
+##$### .   #
+ #     #####
+ #######
+Title: MICROCOSMOS 37 var. (Cosmopoly 9)
+Author: Aymeric du Peloux et Evgeny Grigoriev
+Moves: 361
