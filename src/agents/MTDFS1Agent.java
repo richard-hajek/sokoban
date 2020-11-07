@@ -43,14 +43,6 @@ public class MTDFS1Agent extends ArtificialAgent {
 		int spareThreads = 8;
 		int searchLevel = 15;
 		
-        // DEBUG
-        if (verbose) {
-            System.out.println("=================");
-            System.out.println("===== BOARD =====");
-            this.board.debugPrint();
-            System.out.println("=================");
-        }
-		
 		// FIRE THE SEARCH
 				
 		long searchStartMillis = System.currentTimeMillis();
@@ -85,8 +77,6 @@ public class MTDFS1Agent extends ArtificialAgent {
         }
 		
 		if (result.size() == 0) {
-            if (verbose)
-                System.out.println("FAILED TO SOLVE THE BOARD...");
             return null;
 		}
 				

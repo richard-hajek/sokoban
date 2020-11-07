@@ -35,14 +35,6 @@ public class DFS2Agent extends ArtificialAgent {
 		this.result = new ArrayList<EDirection>();
 		this.solutionFound = false;
 		
-        // DEBUG
-        if (verbose) {
-            System.out.println("=================");
-            System.out.println("===== BOARD =====");
-            this.board.debugPrint();
-            System.out.println("=================");
-        }
-		
 		// FIRE THE SEARCH
 		
 		searchedNodes = 0;
@@ -69,8 +61,6 @@ public class DFS2Agent extends ArtificialAgent {
         }
 		
 		if (result.size() == 0) {
-            if (verbose)
-                System.out.println("FAILED TO SOLVE THE BOARD...");
             return null;
 		}
 				

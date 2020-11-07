@@ -28,8 +28,8 @@ public class MyAgent extends ArtificialAgent {
         
         if (verbose) {
             out.println("Nodes visited: " + searchedNodes);
-            out.println("Performance:   " +
-                        ((double)searchedNodes / (double)searchTime * 1000) + " nodes/sec");
+            out.printf("Performance: %.1f nodes/sec\n",
+                        ((double)searchedNodes / (double)searchTime * 1000));
         }
 		
 		return result.isEmpty() ? null : result;

@@ -269,7 +269,9 @@ public class Sokoban {
 	private void runSimulation() {
 		// PREREQS
 		validateConfig();
-		initBoard();		
+        Board board = initBoard();
+        if (config.verbose)
+            board.debugPrint();
 		// IMPL
 		
 		// START GAME W/O VISUALIZATION
@@ -380,7 +382,10 @@ public static File findFile(String path) {
 	 * @param agent
 	 * @return
 	 */
-	public static SokobanResult simAgentLevel(String id, String levelFilePath, ELevelFormat levelFormat, int levelNumber, int timeoutMillis, IAgent agent) {
+	public static SokobanResult simAgentLevel(
+        String id, String levelFilePath, ELevelFormat levelFormat, int levelNumber,
+        int timeoutMillis, IAgent agent, boolean verbose) {
+
 		// CREATE CONFIG
 		SokobanConfig config = new SokobanConfig();
 		if (id == null) id = determineId(agent);
@@ -388,12 +393,14 @@ public static File findFile(String path) {
 		config.agent = agent;
 		config.level = findFile(levelFilePath);
 		if (!config.level.exists() || !config.level.isFile())
-			throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() + "'\nResolved from: " + levelFilePath);
+            throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() +
+                                       "'\nResolved from: " + levelFilePath);
 		if (levelFormat == null) levelFormat = determineLevelFormat(config.level.getName());
 		config.levelFormat = levelFormat;
 		config.levelNumber = levelNumber;		
 		config.visualization = false;
-		config.timeoutMillis = timeoutMillis;
+        config.timeoutMillis = timeoutMillis;
+        config.verbose = verbose;
 		
 		return runAgentLevel(config);
 	}
@@ -409,20 +416,10 @@ public static File findFile(String path) {
 	 * @param agent
 	 * @return
 	 */
-	public static SokobanResult simAgentLevel(String id, String levelFilePath, int levelNumber, int timeoutMillis, IAgent agent) {
-		return simAgentLevel(id, levelFilePath, null, levelNumber, timeoutMillis, agent);
-	}
-	
-	/**
-	 * 'agent' will play (headless == simulation only) the given level number from the file on 'levelFilePath'.
-	 * 
-	 * @param levelFilePath file to load
-	 * @param levelNumber
-	 * @param agent
-	 * @return
-	 */
-	public static SokobanResult simAgentLevel(String levelFilePath, int levelNumber, IAgent agent) {
-		return simAgentLevel(determineId(agent), levelFilePath, null, levelNumber, 0, agent);
+	public static SokobanResult simAgentLevel(
+        String id, String levelFilePath, int levelNumber, int timeoutMillis, IAgent agent, boolean verbose) {
+
+		return simAgentLevel(id, levelFilePath, null, levelNumber, timeoutMillis, agent, verbose);
 	}
 	
 	// ----------------------

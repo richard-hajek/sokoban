@@ -82,13 +82,6 @@ public class RunSokobanLevels {
             if (verbose)
                 args.add("-v");
             
-            if (verbose) {
-                System.out.println("");
-                System.out.println("===============================================");
-                System.out.println("RUNNING " + (i+1) + " / " + levels.levels.size() + " FOR " + agentClass);
-                System.out.println("===============================================");
-            }
-            
             ProcessBuilder pb = new ProcessBuilder(args);
             pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
             pb.redirectErrorStream(true);
@@ -99,18 +92,12 @@ public class RunSokobanLevels {
                 p = pb.start();
                 p.waitFor();
             } catch (Exception e) { throw new RuntimeException(e); }
-			
-	    	if (p.exitValue() > 0) {
-                if (verbose) {
-                    System.out.println("========================================================");
-                    System.out.println("AGENT FAILED TO SOLVE LEVEL " + (i+1));
-                    System.out.println(level.file.getName() + " / " + level.levelNumber);
-                    System.out.println("Exit code: " + p.exitValue() + " ~ " + SokobanResultType.getForExitValue(p.exitValue()));
-                    System.out.println("========================================================");
-                }
-	    		if (++failed == maxFail)
-	    		    break;
-	    	}
+            
+            boolean success = p.exitValue() == 0;
+            if (verbose)
+                System.out.println(success ? "Level solved" : "FAILED to solve level!");
+            if (!success && ++failed == maxFail)
+	    		break;
 		}
 		
 	}

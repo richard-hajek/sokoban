@@ -19,10 +19,13 @@ public class Main {
         IAgent agent = (IAgent) Class.forName(agentName).getConstructor().newInstance();
         agent.init(verbose);
 
-        if (!verbose)
-            System.out.printf("solving level %d... ", level);
+        if (verbose)
+            System.out.println("====================");
+        System.out.printf("solving level %d... ", level);
+        if (verbose)
+            System.out.println();
 
-        SokobanResult result = Sokoban.simAgentLevel(null, levelset, level, timeout, agent);
+        SokobanResult result = Sokoban.simAgentLevel(null, levelset, level, timeout, agent, verbose);
 
         if (!verbose) {
             System.out.printf("%s in %.1f ms",
@@ -42,6 +45,7 @@ public class Main {
     static void runLevelSet(String agentName, String levelset, int maxFail, String resultFile,
                             int timeout, boolean verbose) {
         SokobanLevels levels = SokobanLevels.fromString(levelset + ";all");
+        System.out.printf("Running %s on levels in %s\n", agentName, levelset);
         SokobanConfig config = new SokobanConfig();
         config.timeoutMillis = timeout;
         RunSokobanLevels run = new RunSokobanLevels(

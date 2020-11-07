@@ -45,7 +45,9 @@ public class SokobanConfig {
 	 * Instance of the agent that should play the game.
 	 */
 	public IAgent agent;
-		
+    
+    public boolean verbose = false;
+
 	/**
 	 * Validates the configuration; throws {@link RuntimeException} if config is found invalid. 
 	 */

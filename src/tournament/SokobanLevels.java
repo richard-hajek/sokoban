@@ -20,17 +20,16 @@ public class SokobanLevels {
 		String[] parts = string.split(";");
 		
 		if (parts.length % 2 != 0) {
-			throw new RuntimeException("Level list string has invalid format; there is odd number of parts (should be even): " + parts.length);
+			throw new RuntimeException(
+                "Level list string has invalid format; " +
+                "there is odd number of parts (should be even): " + parts.length);
 		}
 		
 		int index = 0;
 		
 		while (index < parts.length) {
-			
 			String fileString = parts[index];
-			
 			File file = Sokoban.findFile(fileString);
-			
 			String level = parts[index + 1];
 			
 			if (level.toLowerCase().equals("all")) {
