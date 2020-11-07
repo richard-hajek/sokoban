@@ -31,7 +31,9 @@ public class Board implements Cloneable {
 	
 	public PlayerEntity player;
 	
-	public List<BoxEntity> boxes;
+    public List<BoxEntity> boxes;
+    
+    public int minMoves;
 	
 	public Board(int width, int height) {
 		this.width = width;
@@ -360,7 +362,13 @@ public class Board implements Cloneable {
 			}
 		}
 			
-		board.initEntities();
+        board.initEntities();
+        
+        for (String comment : level.getComments()) {
+            String[] a = comment.split(":");
+            if (a[0].trim().equals("Moves") && a.length > 1)
+                board.minMoves = Integer.parseInt(a[1].trim());
+        }
 			
 		return board;
 	}

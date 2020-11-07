@@ -56,7 +56,6 @@ public class Sokoban {
 	
 	/**
 	 * Current game that is running if any.
-	 * @return
 	 */
 	public ISokobanGame getGame() {
 		return game;
@@ -64,7 +63,6 @@ public class Sokoban {
 	
 	/**
 	 * Results this instance have aggregated so far.
-	 * @return
 	 */
 	public List<SokobanResult> getResults() {
 		return results;
@@ -72,7 +70,6 @@ public class Sokoban {
 	
 	/**
 	 * Returns first result from {@link #getResults()} if any.
-	 * @return
 	 */
 	public SokobanResult getResult() {
 		if (results == null || results.size() == 0) return null;
@@ -81,7 +78,6 @@ public class Sokoban {
 	
 	/**
 	 * Returns last result from {@link #getResults()} if any.
-	 * @return
 	 */
 	public SokobanResult getLastResult() {
 		if (results == null || results.size() == 0) return null;
@@ -89,7 +85,8 @@ public class Sokoban {
 	}
 	
 	private void validateConfig() {
-		if (config == null) throw new RuntimeException("Config is null! Have you forget to setConfig()?");
+        if (config == null)
+            throw new RuntimeException("Config is null! Have you forget to setConfig()?");
 		config.validate();
 	}
 	
@@ -157,7 +154,8 @@ public class Sokoban {
 	 */
 	public void run(SokobanConfig config) {
 		if (game != null) {
-			throw new RuntimeException("Cannot run game as the game instance already exists; did you forget to reset()?");
+			throw new RuntimeException(
+                "Cannot run game as the game instance already exists; did you forget to reset()?");
 		}
 		
 		setConfig(config);
@@ -272,17 +270,15 @@ public class Sokoban {
         Board board = initBoard();
         if (config.verbose)
             board.debugPrint();
-		// IMPL
 		
 		// START GAME W/O VISUALIZATION
-		runGame(new SokobanSim(config.id, board, config.agent, config.timeoutMillis));		
+		runGame(new SokobanSim(config, board));		
 	}
 	
 	private void runVisualization() {
 		// PREREQS
 		validateConfig();
 		initFrame();
-		// IMPL
 		
 		// OPEN FRAME
 		view.renderLater();
@@ -313,7 +309,7 @@ public class Sokoban {
 	// STATIC METHODS FOR EASY START-UP 
 	// ================================
 	
-public static File findFile(String path) {
+    public static File findFile(String path) {
 		String[] dirs = { ".", "levels" };
 
 		for (String d : dirs) {
@@ -343,9 +339,6 @@ public static File findFile(String path) {
 
 	/**
 	 * Runs Sokoban game according to the 'config'; method assumes the configuration is going to play single level only.
-	 * 
-	 * @param config
-	 * @return
 	 */
 	public static SokobanResult runAgentLevel(SokobanConfig config) {
 		Sokoban sokoban = new Sokoban();
@@ -356,9 +349,6 @@ public static File findFile(String path) {
 	/**
 	 * Runs Sokoban game according to the 'config'; method assumes the configuration is going to play one or more levels.
 	 * If there are multiple levels to be played, the run will stop when agent fails to solve the level.
-	 * 
-	 * @param config
-	 * @return
 	 */
 	public static List<SokobanResult> runAgentLevels(SokobanConfig config) {
 		Sokoban sokoban = new Sokoban();
@@ -383,8 +373,8 @@ public static File findFile(String path) {
 	 * @return
 	 */
 	public static SokobanResult simAgentLevel(
-        String id, String levelFilePath, ELevelFormat levelFormat, int levelNumber,
-        int timeoutMillis, IAgent agent, boolean verbose) {
+        String id, String levelFilePath, int levelNumber,
+        int timeoutMillis, IAgent agent, boolean verbose, boolean optimal) {
 
 		// CREATE CONFIG
 		SokobanConfig config = new SokobanConfig();
@@ -395,31 +385,14 @@ public static File findFile(String path) {
 		if (!config.level.exists() || !config.level.isFile())
             throw new RuntimeException("Not a level file at '" + config.level.getAbsolutePath() +
                                        "'\nResolved from: " + levelFilePath);
-		if (levelFormat == null) levelFormat = determineLevelFormat(config.level.getName());
-		config.levelFormat = levelFormat;
+        config.levelFormat = determineLevelFormat(config.level.getName());
 		config.levelNumber = levelNumber;		
 		config.visualization = false;
         config.timeoutMillis = timeoutMillis;
         config.verbose = verbose;
+        config.requireOptimal = optimal;
 		
 		return runAgentLevel(config);
-	}
-	
-	/**
-	 * 'agent' will play (headless == simulation only) 'levelNumber' (1-based) level from file on 'levelFilePath'.
-	 * An agent will be given 'timeoutMillis' time to solve the level.
-	 * 
-	 * @param id id to be given to the config; may be null
-	 * @param levelFilePath file to load the level from
-	 * @param levelNumber 1-based; a level to be played
-	 * @param timeoutMillis time given to the agent to solve every level; non-positive number == no timeout
-	 * @param agent
-	 * @return
-	 */
-	public static SokobanResult simAgentLevel(
-        String id, String levelFilePath, int levelNumber, int timeoutMillis, IAgent agent, boolean verbose) {
-
-		return simAgentLevel(id, levelFilePath, null, levelNumber, timeoutMillis, agent, verbose);
 	}
 	
 	// ----------------------

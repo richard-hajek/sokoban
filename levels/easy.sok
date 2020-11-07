@@ -5,6 +5,7 @@
 #  .#
 #####
 Title: Easy 1
+Moves: 5
 
 2
 ########
@@ -16,6 +17,7 @@ Title: Easy 1
 ##@  ###
 ########
 Title: Easy 2
+Moves: 13
 
 3
 ########
@@ -27,6 +29,7 @@ Title: Easy 2
 ##@  ###
 ########
 Title: Easy 3
+Moves: 25
 
 4
 ########
@@ -38,6 +41,7 @@ Title: Easy 3
 ##@  ###
 ########
 Title: Easy 4
+Moves: 37
 
 5
 ########
@@ -49,6 +53,7 @@ Title: Easy 4
 ##@  ###
 ########
 Title: Easy 5
+Moves: 60
 
 6
 ########
@@ -60,6 +65,7 @@ Title: Easy 5
 ##@  ###
 ########
 Title: Easy 6
+Moves: 69
 
 7
 ########
@@ -72,6 +78,7 @@ Title: Easy 6
 #  #####
 ########
 Title: Easy 7
+Moves: 71
 
 8
 ########
@@ -84,6 +91,7 @@ Title: Easy 7
 #  #####
 ########
 Title: Easy 8
+Moves: 104
 
 9
 ########
@@ -96,6 +104,7 @@ Title: Easy 8
 #  #####
 ########
 Title: Easy 9
+Moves: 99
 
 10
 ########
@@ -108,3 +117,4 @@ Title: Easy 9
 ###   ##
 ########
 Title: Easy 10
+Moves: 93

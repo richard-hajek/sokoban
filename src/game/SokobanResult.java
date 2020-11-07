@@ -3,7 +3,6 @@ package game;
 import java.io.*;
 
 public class SokobanResult {
-	
 	private String id = null;
 	
 	private IAgent agent = null;
@@ -17,13 +16,14 @@ public class SokobanResult {
 	private int steps = 0;
 	
 	private long simStartMillis = 0, simEndMillis = 0;
-	
+    
+    public String message;
+
 	public SokobanResult() {		
 	}
 
 	/**
 	 * Assigned ID given to this simulation.
-	 * @return
 	 */
 	public String getId() {
 		return id;
@@ -35,7 +35,6 @@ public class SokobanResult {
 
 	/**
 	 * Agent that was running in simulation.
-	 * @return
 	 */
 	public IAgent getAgent() {
 		return agent;
@@ -55,7 +54,6 @@ public class SokobanResult {
 
 	/**
 	 * Result of the simulation.
-	 * @return
 	 */
 	public SokobanResultType getResult() {
 		return result;
@@ -67,7 +65,6 @@ public class SokobanResult {
 
 	/**
 	 * How many steps an agent performed.
-	 * @return
 	 */
 	public int getSteps() {
 		return steps;
@@ -79,7 +76,6 @@ public class SokobanResult {
 
 	/**
 	 * Time the simulation started in milliseconds (obtained via {@link System#currentTimeMillis()}.
-	 * @return
 	 */
 	public long getSimStartMillis() {
 		return simStartMillis;
@@ -89,21 +85,12 @@ public class SokobanResult {
 		this.simStartMillis = simStartMillis;
 	}
 
-	/**
-	 * Time the simulation ended in milliseconds (obtained via {@link System#currentTimeMillis()}.
-	 * @return
-	 */
-	public long getSimEndMillis() {
-		return simEndMillis;
-	}
-
 	public void setSimEndMillis(long simEndMillis) {
 		this.simEndMillis = simEndMillis;
 	}
 	
 	/**
 	 * How long the simulation run in milliseconds.
-	 * @return
 	 */
 	public long getSimDurationMillis() {
 		return simEndMillis - simStartMillis;
@@ -112,7 +99,6 @@ public class SokobanResult {
 	/**
 	 * Exception caught during the simulation; 
 	 * filled in case of {@link #getResult()} == {@link SokobanResultType#AGENT_EXCEPTION} or {@link SokobanResultType#SIMULATION_EXCEPTION}.  
-	 * @return
 	 */
 	public Throwable getException() {
 		return exception;

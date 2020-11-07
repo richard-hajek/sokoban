@@ -48,6 +48,8 @@ public class SokobanConfig {
     
     public boolean verbose = false;
 
+    public boolean requireOptimal = false;
+
 	/**
 	 * Validates the configuration; throws {@link RuntimeException} if config is found invalid. 
 	 */

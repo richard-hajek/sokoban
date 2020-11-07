@@ -6,14 +6,9 @@ import game.board.compact.BoardCompact;
 import game.board.oop.Board;
 
 public class SokobanSim implements ISokobanGame, Runnable {
-
-	// SETUP
-	
+	private SokobanConfig config;
 	private Board board;
 	private IAgent agent;
-	private long timeoutMillis;
-	
-	// THREAD
 	
 	private Thread gameThread;
 	
@@ -33,22 +28,13 @@ public class SokobanSim implements ISokobanGame, Runnable {
 	
 	private int steps = 0;
 	
-	/**
-	 * @param timeoutMillis negative number or zero == no time; in milliseconds
-	 */
-	public SokobanSim(String id, Board board, IAgent agent, long timeoutMillis) {
-		// SETUP
-		
-		if (id == null) id = "SokobanSim";		
+	public SokobanSim(SokobanConfig config, Board board) {
+		this.config = config;
+		String id = config.id == null ? "SokobanSim" : config.id;
 		this.board = board;
-		this.agent = agent;
-		this.timeoutMillis = timeoutMillis;
-		
-		// RUNTIME
+		this.agent = config.agent;
 		
 		this.state = SokobanGameState.INIT;
-		
-		// RESULT
 		
 		result.setId(id);
 		result.setAgent(agent);
@@ -102,9 +88,9 @@ public class SokobanSim implements ISokobanGame, Runnable {
 			while (shouldRun && !Thread.interrupted()) {
 
 				// TIMEOUT?
-				if (timeoutMillis > 0) {
+				if (config.timeoutMillis > 0) {
 					long now = System.currentTimeMillis();
-					long timeLeftMillis = timeoutMillis - (now - result.getSimStartMillis());
+					long timeLeftMillis = config.timeoutMillis - (now - result.getSimStartMillis());
 					if (timeLeftMillis <= 0) {						
 						onTimeout();
 						return;
@@ -178,9 +164,26 @@ public class SokobanSim implements ISokobanGame, Runnable {
 	}
 
 	private void onVictory() {
-		result.setSimEndMillis(System.currentTimeMillis());
-		result.setResult(SokobanResultType.VICTORY);
-		result.setSteps(steps);
+        result.setSimEndMillis(System.currentTimeMillis());
+
+        SokobanResultType outcome = SokobanResultType.VICTORY;
+        if (board.minMoves > 0) {
+            if (steps < board.minMoves)
+                result.message = 
+                    "warning: solution in fewer moves than supposedly optimal move count of " +
+                    board.minMoves;
+            else if (steps > board.minMoves && config.requireOptimal) {
+                result.message = String.format(
+                    "solution of %d steps exceeded optimal move count of %d",
+                    steps, board.minMoves);
+                outcome = SokobanResultType.AGENT_FAILED;
+            }
+        } else if (config.requireOptimal)
+            result.message = "warning: optimal move count is unknown";
+
+        result.setResult(outcome);
+        result.setSteps(steps);
+        
 		try {
 			agent.victory();
 		} catch (Exception e) {

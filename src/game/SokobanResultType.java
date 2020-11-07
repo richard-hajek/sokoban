@@ -27,7 +27,7 @@ public enum SokobanResultType {
 	 */
     TERMINATED(4),
     
-    /* The agent failed to return a solution or legal move. */
+    /* The agent failed to return a valid solution or legal move. */
     AGENT_FAILED(5);
 	
 	private int exitValue;

@@ -15,22 +15,19 @@ import game.*;
  * @author Jimmy
  */
 public class RunSokobanLevels {
-	
 	private SokobanLevels levels;
 	private String agentClass;
 	private File resultFile;
 	private SokobanConfig config;
     private int maxFail;
-    private boolean verbose;
 	
 	public RunSokobanLevels(SokobanConfig config, String agentClass, SokobanLevels levels,
-			                File resultFile, int maxFail, boolean verbose) {
+			                File resultFile, int maxFail) {
 		this.config = config;
 		this.agentClass = agentClass;
 		this.levels = levels;
 		this.resultFile = resultFile;
         this.maxFail = maxFail;
-        this.verbose = verbose;
 	}
 
 	public void run() {
@@ -74,12 +71,15 @@ public class RunSokobanLevels {
                 args.add(resultFile.getAbsolutePath());
             }
 
+            if (config.requireOptimal)
+                args.add("-optimal");
+
             if (config.timeoutMillis > 0) {
                 args.add("-timeout");
                 args.add("" + config.timeoutMillis);
             }
 
-            if (verbose)
+            if (config.verbose)
                 args.add("-v");
             
             ProcessBuilder pb = new ProcessBuilder(args);
@@ -93,10 +93,7 @@ public class RunSokobanLevels {
                 p.waitFor();
             } catch (Exception e) { throw new RuntimeException(e); }
             
-            boolean success = p.exitValue() == 0;
-            if (verbose)
-                System.out.println(success ? "Level solved" : "FAILED to solve level!");
-            if (!success && ++failed == maxFail)
+            if (p.exitValue() != 0 && ++failed == maxFail)
 	    		break;
 		}
 		
