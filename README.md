@@ -35,7 +35,7 @@ Use the arrow keys or the W/S/A/D keys to move.  Press Z to undo your last move.
 
 ## Writing an agent
 
-You can write an agent using the [Sokoban API](doc/sokoban_api.html).
+You can write an agent using the [Sokoban API](https://ksvi.mff.cuni.cz/~dingle/2020-1/ai_1/sokoban/sokoban_api.html).
 
 Use src/MyAgent.java as a starting point.  This class contains a simple depth-first search implementation that you can delete and replace with your own solver.
 
