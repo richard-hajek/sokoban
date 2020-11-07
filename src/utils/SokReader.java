@@ -84,31 +84,30 @@ public class SokReader {
 	/**
 	 * Parses next level within the reader.
 	 * Once there are no levels, it returns NULL.
-	 * @return
 	 */
 	public TextLevelS4JL readNext() {
-		try {
-			String line = null;
+        String line = null;
 
-			lines.clear();
-			line = reader.readLine();
-			if (line == null) {
-				return null;
-			}
-			while (reader.ready() && (line.length() == 0 || NUMBERS.indexOf(line.substring(0, 1)) < 0)) {					
-				lines.add(line);
-				line = reader.readLine();
-			}
-				
-			TextLevelS4JL result = transform(lines);
-				
-			++nextLevelNumber;
-				
-			return result;			
-		} catch (Exception e) {
-			close();
-			return null;
-		}
+        lines.clear();
+        
+        while (true) {
+            try {
+                line = reader.readLine();
+            } catch (IOException e) { throw new RuntimeException(e); }
+
+            if (line == null || !line.isEmpty() && Character.isDigit(line.charAt(0)))
+                break;
+
+            lines.add(line);
+        }
+
+        if (lines.isEmpty())
+            return null;
+        else {
+            TextLevelS4JL result = transform(lines);
+            ++nextLevelNumber;
+            return result;			
+        }
 	}
 	
 	private TextLevelS4JL transform(List<String> lines) {		
