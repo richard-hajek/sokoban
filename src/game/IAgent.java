@@ -4,7 +4,7 @@ import game.actions.EDirection;
 import game.board.compact.BoardCompact;
 
 public interface IAgent {
-    public void init(boolean verbose);
+    public void init(boolean optimal, boolean verbose);
 
 	/**
 	 * Agent got into a new level.

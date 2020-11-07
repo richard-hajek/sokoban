@@ -13,7 +13,7 @@ public class HumanAgent implements IAgent, KeyListener {
 	EDirection direction = EDirection.NONE;
     
     @Override
-    public void init(boolean verbose) { }
+    public void init(boolean optimal, boolean verbose) { }
 
 	@Override
 	public void newLevel() {

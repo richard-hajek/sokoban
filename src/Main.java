@@ -19,7 +19,7 @@ public class Main {
         String resultFile, int timeout, boolean verbose, boolean optimal) throws Exception {
 
         IAgent agent = (IAgent) Class.forName(agentName).getConstructor().newInstance();
-        agent.init(verbose);
+        agent.init(optimal, verbose);
 
         if (verbose)
             System.out.println("====================");

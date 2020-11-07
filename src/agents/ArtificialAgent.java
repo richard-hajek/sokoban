@@ -18,10 +18,13 @@ public abstract class ArtificialAgent implements IAgent {
 	
     private RuntimeException agentException;
     
-    protected boolean verbose;
+    protected boolean optimal, verbose;
 
     @Override
-    public void init(boolean verbose) { this.verbose = verbose; }
+    public void init(boolean optimal, boolean verbose) {
+        this.optimal = optimal;
+        this.verbose = verbose;
+    }
 
 	@Override
 	public void newLevel() {
