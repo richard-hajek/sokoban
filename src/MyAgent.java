@@ -1,114 +1,257 @@
-import static java.lang.System.out;
-
 import java.util.*;
 
 import agents.ArtificialAgent;
 import game.actions.EDirection;
 import game.actions.compact.*;
 import game.board.compact.BoardCompact;
+import game.board.oop.EEntity;
 import game.board.oop.EPlace;
 import game.board.oop.ESpace;
 
-class Pair<A, B>{
-	A x;
-	B y;
+import search.HeuristicProblem;
+import search.Solution;
 
-	Pair(A a, B b){
-		x = a;
-		y = b;
-	}
+class Pos {
+    Integer x;
+    Integer y;
 
+    Pos(Integer a, Integer b) {
+        x = a;
+        y = b;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof Pair))
-			return false;
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Pos))
+            return false;
 
-		Pair q = (Pair) o;
-		return x == q.x && y == q.y;
-	}
+        Pos q = (Pos) o;
+        return x.equals(q.x) && y.equals(q.y);
+    }
 
-	@Override
-	public int hashCode() { return x.hashCode() ^ y.hashCode(); }
+    @Override
+    public int hashCode() {
+        return x.hashCode() ^ y.hashCode();
+    }
+
+    public int ManhattanDistance(Pos b){
+        return Math.abs(x - b.x) + Math.abs(y - b.y);
+    }
+
+    public double EuclideanDistance(Pos b){
+        return Math.sqrt(Math.pow(b.x - x, 2) + Math.pow(b.y - y, 2));
+    }
 }
 
-class DeadSquareDetector{
+class DeadSquareDetector {
 
-	private static boolean IsSpace(BoardCompact b, int x, int y){
-		int wall_mask = ESpace.WALL.getFlag();
-		return (b.tiles[x][y] & wall_mask) == 0;
-	}
+    static boolean IsSpace(BoardCompact b, int x, int y) {
+        return (b.tiles[x][y] & ESpace.WALL.getFlag()) == 0;
+    }
 
-	public static boolean[][] detect(BoardCompact board){
-		int width = board.width();
-		int height = board.height();
+    static boolean IsWall(BoardCompact b, int x, int y) {
+        return !IsSpace(b, x, y);
+    }
 
-		boolean[][] deadTiles = new boolean[width][height];
+    static boolean IsGoal(BoardCompact b, int x, int y){
+        return (b.tiles[x][y] & EPlace.SOME_BOX_PLACE_FLAG) != 0;
+    }
 
-		for (boolean[] array : deadTiles)
-			Arrays.fill(array, true);
+    static boolean IsBox(BoardCompact b, int x, int y){
+        return (b.tiles[x][y] & EEntity.SOME_BOX_FLAG) != 0;
+    }
 
-		HashSet<Pair<Integer, Integer>> explored = new HashSet<>();
-		Queue<Pair<Integer, Integer>> frontier = new LinkedList<Pair<Integer, Integer>>();
+    public static boolean[][] detect(BoardCompact board) {
+        int width = board.width();
+        int height = board.height();
 
-		for(int x = 0; x < width; x++){
-			for (int y = 0; y < width; y++){
-				int mask = EPlace.SOME_BOX_PLACE_FLAG;
-				if ((board.tiles[x][y] & mask) != 0)
-					frontier.add(new Pair<>(x, y));
-			}
-		}
+        boolean[][] deadTiles = new boolean[width][height];
 
-		while ( ! frontier.isEmpty()) {
-			Pair<Integer, Integer> tile = frontier.poll();
+        for (boolean[] array : deadTiles)
+            Arrays.fill(array, true);
 
-			if (explored.contains(tile))
-				continue;
+        HashSet<Pos> explored = new HashSet<>();
+        Queue<Pos> frontier = new LinkedList<>();
 
-			deadTiles[tile.x][tile.y] = false;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (IsGoal(board, x, y))
+                    frontier.add(new Pos(x, y));
+            }
+        }
 
-			for (int dx = -1; dx <= 1; dx++){
-				for (int dy = -1; dy <= 1; dy++){
+        while (!frontier.isEmpty()) {
+            Pos tile = frontier.poll();
 
-					if (dx != 0 && dy != 0)
-						continue;
+            if (explored.contains(tile))
+                continue;
 
-					if (! IsSpace(board, tile.x + dx, tile.y + dy) || ! IsSpace(board, tile.x + dx*2, tile.y + dy*2)){
-						continue;
-					}
+            deadTiles[tile.x][tile.y] = false;
 
-					frontier.add(new Pair<>(tile.x + dx, tile.y + dy));
-				}
-			}
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
 
-			explored.add(tile);
-		}
+                    if (dx != 0 && dy != 0)
+                        continue;
 
-		return deadTiles;
-	}
+                    if (!IsSpace(board, tile.x + dx, tile.y + dy) || !IsSpace(board, tile.x + dx * 2, tile.y + dy * 2)) {
+                        continue;
+                    }
+
+                    frontier.add(new Pos(tile.x + dx, tile.y + dy));
+                }
+            }
+
+            explored.add(tile);
+        }
+
+        return deadTiles;
+    }
+}
+
+class SokobanProblem implements HeuristicProblem<BoardCompact, EDirection> {
+
+    BoardCompact initial;
+    boolean[][] deadSquares;
+
+    SokobanProblem(BoardCompact initial) {
+        this.initial = initial;
+        this.deadSquares = DeadSquareDetector.detect(initial);
+    }
+
+    @Override
+    public double estimate(BoardCompact b) {
+        List<Pos> goals = new ArrayList<>();
+        double total = 0;
+
+        for(int x = 0; x < b.width(); x++){
+            for(int y = 0; y < b.height(); y++){
+                if (DeadSquareDetector.IsGoal(b, x, y))
+                    goals.add(new Pos(x, y));
+            }
+        }
+
+        for(int x = 0; x < b.width(); x++){
+            for(int y = 0; y < b.height(); y++){
+                double shortest = Double.POSITIVE_INFINITY;
+                if (DeadSquareDetector.IsBox(b, x, y)){
+                    for(Pos g : goals){
+                        if (g.ManhattanDistance(new Pos(x, y)) < shortest){
+                            shortest = g.ManhattanDistance(new Pos(x, y));
+                        }
+                    }
+                }
+                total += shortest;
+            }
+        }
+
+        return (int) total;
+    }
+
+    @Override
+    public BoardCompact initialState() {
+        return initial;
+    }
+
+    boolean safeState(BoardCompact b){
+        for(int cx = 0; cx < b.width(); cx++){
+            for(int cy = 0; cy < b.height(); cy++){
+                if (deadSquares[cx][cy] && DeadSquareDetector.IsBox(b, cx, cy)){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public List<EDirection> actions(BoardCompact b) {
+        List<EDirection> l = new ArrayList<>();
+
+//        System.out.println("\n\n\n");
+//        System.out.println("ACTION SCANNING");
+//        System.out.println("For board: " + b);
+//        System.out.println("Found : ");
+
+        for(EDirection eDirection : EDirection.arrows()){
+
+            CMove move = new CMove(eDirection);
+            CPush push = new CPush(eDirection);
+
+            if (move.isPossible(b) || push.isPossible(b)){
+
+                if (push.isPossible(b)){
+                    BoardCompact test = b.clone();
+                    push.perform(test);
+
+                    if (! safeState(test))
+                        continue;
+                }
+
+                l.add(eDirection);
+//                System.out.println("Action: " + eDirection);
+            }
+        }
+//        System.out.println("\n\n\n");
+
+        return l;
+    }
+
+    @Override
+    public BoardCompact result(BoardCompact boardCompact, EDirection eDirection) {
+        BoardCompact next = boardCompact.clone();
+
+//        System.out.println("\n\n\n\n");
+//        System.out.println(next);
+
+        CMove move = new CMove(eDirection);
+        CPush push = new CPush(eDirection);
+
+        if (! move.isPossible(next) && ! push.isPossible(next)){
+            //System.out.println("[MEOW] AGENT ATTEMPTED INVALID MOVE(" + move + ", " + push + "), refusing to change state");
+//            System.out.println("[MEOW] Err agent attempted invalid move " + eDirection);
+            return next;
+        }
+
+        if (move.isPossible(next)){
+            move.perform(next);
+        }
+        else if (push.isPossible(next)){
+            push.perform(next);
+        }
+
+//        System.out.println("Successfuly moved in direction " +  eDirection +  " to:");
+//        System.out.println(next);
+//        System.out.println("\n\n\n\n");
+
+        return next;
+    }
+
+    @Override
+    public boolean isGoal(BoardCompact boardCompact) {
+        return boardCompact.boxInPlaceCount == boardCompact.boxCount;
+    }
+
+    @Override
+    public double cost(BoardCompact boardCompact, EDirection eDirection) {
+        return 1;
+    }
 }
 
 /**
  * The simplest Tree-DFS agent.
+ *
  * @author Jimmy
  */
 public class MyAgent extends ArtificialAgent {
-	protected BoardCompact board;
-	protected int searchedNodes;
-	
-	@Override
-	protected List<EDirection> think(BoardCompact board) {
-		this.board = board.clone();
+    protected BoardCompact board;
 
-		boolean[][] dead = DeadSquareDetector.detect(board);
-
-		for(int x = 0; x < board.width(); x ++){
-			for(int y = 0; y < board.width(); y++){
-				System.out.print(dead[x][y] ? '0' : '1');
-			}
-			System.out.println();
-		}
-
-		return null;
-	}
+    @Override
+    protected List<EDirection> think(BoardCompact board) {
+        this.board = board.clone();
+        SokobanProblem problem = new SokobanProblem(this.board);
+        Solution<BoardCompact, EDirection> solution = AStar.search(problem);
+        return solution.actions;
+    }
 }

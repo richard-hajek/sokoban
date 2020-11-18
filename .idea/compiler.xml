@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="sokoban4j" target="1.11" />
+      <module name="sokoban4j" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
