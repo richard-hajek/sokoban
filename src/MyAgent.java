@@ -126,8 +126,8 @@ class DeadSquareDetector {
 
     static ArrayList<InstaBoxPushAction> FindReachableBoxes(BoardCompact b, int x, int y, boolean[][] deadSquares){
 
-       System.out.println("On ");
-       PrintBoardCompact(b, x, y);
+//       System.out.println("On ");
+//       PrintBoardCompact(b, x, y);
 
         ArrayList<InstaBoxPushAction> boxes = new ArrayList<>();
 
@@ -169,18 +169,18 @@ class DeadSquareDetector {
             explored.add(tile.pos);
         }
 
-        System.out.println("Found reachable boxes:");
-
-        for (InstaBoxPushAction box : boxes){
-            System.out.print("x: " + box.pos.x + ", y: " + box.pos.y + ", with cost: " + box.cost + ", with path: ");
-
-            for(EDirection dir : box.steps){
-                System.out.print(", " + dir.name());
-            }
-            System.out.println();
-
-            System.out.println(" and push dir: " + box.pushDir);
-        }
+//        System.out.println("Found reachable boxes:");
+//
+//        for (InstaBoxPushAction box : boxes){
+//            System.out.print("x: " + box.pos.x + ", y: " + box.pos.y + ", with cost: " + box.cost + ", with path: ");
+//
+//            for(EDirection dir : box.steps){
+//                System.out.print(", " + dir.name());
+//            }
+//            System.out.println();
+//
+//            System.out.println(" and push dir: " + box.pushDir);
+//        }
 
         return boxes;
     }
@@ -304,12 +304,12 @@ class SokobanProblem implements HeuristicProblem<BoardCompact, InstaBoxPushActio
     public BoardCompact result(BoardCompact boardCompact, InstaBoxPushAction action) {
         BoardCompact next = boardCompact.clone();
 
-        System.out.println("Moving to: x: " + action.pos.x + ", y: " + action.pos.y + ", and pushing to: " + action.pushDir);
 
         next.movePlayer(next.playerX, next.playerY, action.pos.x, action.pos.y);
 
-        System.out.println("At: ");
-        DeadSquareDetector.PrintBoardCompact(next, next.playerX, next.playerY);
+//        System.out.println("Moving to: x: " + action.pos.x + ", y: " + action.pos.y + ", and pushing to: " + action.pushDir);
+//        System.out.println("At: ");
+//        DeadSquareDetector.PrintBoardCompact(next, next.playerX, next.playerY);
 
         CPush push = new CPush(action.pushDir);
 
@@ -320,8 +320,8 @@ class SokobanProblem implements HeuristicProblem<BoardCompact, InstaBoxPushActio
 
         push.perform(next);
 
-        System.out.println("Returning ");
-        DeadSquareDetector.PrintBoardCompact(next, next.playerX, next.playerY);
+//        System.out.println("Returning ");
+//        DeadSquareDetector.PrintBoardCompact(next, next.playerX, next.playerY);
 
         return next;
     }
