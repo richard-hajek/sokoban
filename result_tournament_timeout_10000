@@ -1,0 +1,13 @@
+Running MyAgent on levels in Aymeric_Hard.sok
+Picked up _JAVA_OPTIONS: -Djava.util.prefs.userRoot=/home/meowxiik/.config/java
+solving level 1... solved in 7141.0 ms (119 steps)
+Picked up _JAVA_OPTIONS: -Djava.util.prefs.userRoot=/home/meowxiik/.config/java
+solving level 2... solved in 5384.0 ms (262 steps)
+Picked up _JAVA_OPTIONS: -Djava.util.prefs.userRoot=/home/meowxiik/.config/java
+solving level 3... TIMEOUT in 10000.0 ms
+Picked up _JAVA_OPTIONS: -Djava.util.prefs.userRoot=/home/meowxiik/.config/java
+solving level 4... TIMEOUT in 10000.0 ms
+Picked up _JAVA_OPTIONS: -Djava.util.prefs.userRoot=/home/meowxiik/.config/java
+solving level 5... solved in 7332.0 ms (245 steps)
+Picked up _JAVA_OPTIONS: -Djava.util.prefs.userRoot=/home/meowxiik/.config/java
+solving level 6... TIMEOUT in 10000.0 ms
