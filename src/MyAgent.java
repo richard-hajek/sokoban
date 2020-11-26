@@ -240,9 +240,6 @@ class SokobanProblem implements HeuristicProblem<BoardCompact, InstaBoxPushActio
 
     SokobanProblem(BoardCompact initial) {
         this.initial = initial;
-
-        //initial.tiles[initial.playerX][initial.playerY] ^= (EEntity.PLAYER.getFlag()); // remove player flag from board bcuz it sux and i hate it
-
         this.deadSquares = DeadSquareDetector.detect(initial);
     }
 
@@ -279,25 +276,10 @@ class SokobanProblem implements HeuristicProblem<BoardCompact, InstaBoxPushActio
     public BoardCompact initialState() {
         return initial;
     }
-//
-//    boolean safeState(BoardCompact b){
-//        for(int cx = 0; cx < b.width(); cx++){
-//            for(int cy = 0; cy < b.height(); cy++){
-//                if (deadSquares[cx][cy] && DeadSquareDetector.IsBox(b, cx, cy)){
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
 
     @Override
     public List<InstaBoxPushAction> actions(BoardCompact b) {
-        List<InstaBoxPushAction> l = DeadSquareDetector.FindReachableBoxes(b, b.playerX, b.playerY, deadSquares);
-
-
-
-        return l;
+        return DeadSquareDetector.FindReachableBoxes(b, b.playerX, b.playerY, deadSquares);
     }
 
     @Override
@@ -328,7 +310,7 @@ class SokobanProblem implements HeuristicProblem<BoardCompact, InstaBoxPushActio
 
     @Override
     public boolean isGoal(BoardCompact boardCompact) {
-        return boardCompact.boxInPlaceCount == boardCompact.boxCount;
+        return boardCompact.isVictory();
     }
 
     @Override
