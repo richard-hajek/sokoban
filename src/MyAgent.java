@@ -2,25 +2,30 @@ import java.util.*;
 
 import agents.ArtificialAgent;
 import game.actions.EDirection;
+import game.actions.compact.CPush;
 import game.board.compact.BoardCompact;
+import game.board.compact.CTile;
+import game.board.minimal.StateMinimal;
 import game.board.oop.*;
 
 import search.HeuristicProblem;
 import search.Solution;
 
+import javax.swing.plaf.nimbus.State;
+
 class Position {
     Integer x;
     Integer y;
-    int value = 0;
+    int cost = 0; // a helper variable used in the BFS
 
     Position(Integer a, Integer b) {
         x = a;
         y = b;
     }
 
-    Position(Integer a, Integer b, int value){
+    Position(Integer a, Integer b, int cost){
         this(a, b);
-        this.value = value;
+        this.cost = cost;
     }
 
     @Override
@@ -39,7 +44,7 @@ class Position {
 
     @Override
     public String toString() {
-        return "Pos{" +  "x=" + x +  ", y=" + y + ", value=" + value + '}';
+        return "Pos{" +  "x=" + x +  ", y=" + y + ", value=" + cost + '}';
     }
 
     public int ManhattanDistance(Position b){
@@ -100,17 +105,16 @@ public class MyAgent extends ArtificialAgent {
 
     @Override
     protected List<EDirection> think(BoardCompact board) {
-//        BoardState st = new BoardState(board);
-//        DeadSquareDetector.FindReachableBoxes(board, st, board.playerX, board.playerY, DeadSquareDetector.detect(board));
+//        Utils.FindReachableBoxes(board, new StateMinimal(board), board.playerX, board.playerY, DeadSquareDetector.detect(board));
 //        if ( 1 == 1) return null;
         SokobanProblem problem = new SokobanProblem(board);
-        Solution<BoardState, BoxPushAction> solution = AStar.search(problem);
+        Solution<StateMinimal, BoxPushAction> solution = AStar.search(problem);
         System.out.println("BFS took " + (problem.bfstime / 1000000) + "ms");
         return SokobanProblem.Walk(solution, problem);
     }
 }
 
-class SokobanProblem implements HeuristicProblem<BoardState, BoxPushAction> {
+class SokobanProblem implements HeuristicProblem<StateMinimal, BoxPushAction> {
 
     BoardCompact board;
     Position[] goals;
@@ -137,11 +141,11 @@ class SokobanProblem implements HeuristicProblem<BoardState, BoxPushAction> {
     }
 
     @Override
-    public double estimate(BoardState b) {
+    public double estimate(StateMinimal s) {
         double total = 0;
 
-        for(int[] i : b.boxes){
-            Position box_position = new Position(i[0], i[1]);
+        for(int i = 1; i < s.positions.length; i++){
+            Position box_position = new Position(s.getX(s.positions[i]), s.getY(s.positions[i]));
 
             double shortest = Double.POSITIVE_INFINITY;
 
@@ -150,22 +154,23 @@ class SokobanProblem implements HeuristicProblem<BoardState, BoxPushAction> {
             }
 
             total += shortest;
+
         }
 
         return total;
     }
 
     @Override
-    public BoardState initialState() {
-        return new BoardState(board);
+    public StateMinimal initialState() {
+        return new StateMinimal(board);
     }
 
     long bfstime = 0;
 
     @Override
-    public List<BoxPushAction> actions(BoardState b) {
+    public List<BoxPushAction> actions(StateMinimal s) {
         long startTime = System.nanoTime();
-        List<BoxPushAction> l = Utils.FindReachableBoxes(board, b, b.playerX, b.playerY, deadSquares);
+        List<BoxPushAction> l = Utils.FindReachableBoxes(board, s, s.getX(s.positions[0]) , s.getY(s.positions[0]), deadSquares);
         long endTime = System.nanoTime();
 
         bfstime += (endTime - startTime);
@@ -173,22 +178,25 @@ class SokobanProblem implements HeuristicProblem<BoardState, BoxPushAction> {
     }
 
     @Override
-    public BoardState result(BoardState b, BoxPushAction action) {
-        return new BoardState(b, action.player.x, action.player.y, action.direction);
+    public StateMinimal result(StateMinimal s, BoxPushAction action) {
+        s.positions[0] = s.getPacked(action.player.x, action.player.y);
+
+        BoardCompact b = board.clone();
+        Utils.UniversalSetState(b, s);
+        CPush push = new CPush(action.direction);
+        push.perform(b);
+        return new StateMinimal(b);
     }
 
     @Override
-    public boolean isGoal(BoardState b) {
+    public boolean isGoal(StateMinimal s) {
         boolean[] matched = new boolean[goals.length];
 
-        for(int[] i : b.boxes){
+        for(int i = 1; i < s.positions.length; i++) {
+            Position box_position = new Position(s.getX(s.positions[i]), s.getY(s.positions[i]));
             for(int goal_i = 0; goal_i < goals.length; goal_i++){
 
-                // Check if box overlaps with a goal
-                if (goals[goal_i].x != i[0])
-                    continue;
-
-                if (goals[goal_i].y != i[1])
+                if (!box_position.equals(goals[goal_i]))
                     continue;
 
                 matched[goal_i] = true;
@@ -199,21 +207,36 @@ class SokobanProblem implements HeuristicProblem<BoardState, BoxPushAction> {
     }
 
     @Override
-    public double cost(BoardState b, BoxPushAction push) {
+    public double cost(StateMinimal s, BoxPushAction push) {
         return push.cost;
     }
 
     // Convert BoxPushActions from solution to actual path
-    static List<EDirection> Walk(Solution<BoardState, BoxPushAction> solution, SokobanProblem parent){
+    static List<EDirection> Walk(Solution<StateMinimal, BoxPushAction> solution, SokobanProblem parent){
         List<EDirection> steps = new LinkedList<>();
-        BoardState checkpoint = new BoardState(parent.board);
+        BoardCompact b = parent.board.clone();
+        StateMinimal checkpoint = new StateMinimal(b);
 
         for (BoxPushAction action : solution.actions){
-            RebuildPathProblem problem = new RebuildPathProblem(parent.board, checkpoint, new Position(checkpoint.playerX, checkpoint.playerY), action.player);
+
+            // Find path from one checkpoint to the other
+            RebuildPathProblem problem =
+                    new RebuildPathProblem(parent.board, checkpoint,
+                    new Position(checkpoint.getX(checkpoint.positions[0]), checkpoint.getY(checkpoint.positions[0])), action.player);
             Solution<Position, EDirection> s = AStar.search(problem);
+
+            // Add all steps from the path to total path
             steps.addAll(s.actions);
             steps.add(action.direction);
-            checkpoint = new BoardState(checkpoint, action.player.x, action.player.y, action.direction);
+
+            // Perform the push on our state
+            checkpoint.positions[0] = checkpoint.getPacked(action.player.x, action.player.y);
+            Utils.UniversalSetState(b, checkpoint);
+            CPush push = new CPush(action.direction);
+            push.perform(b);
+
+            // Replace checkpoint
+            checkpoint = new StateMinimal(b);
         }
 
         return steps;
@@ -227,113 +250,20 @@ class BoxPushAction {
 
     public BoxPushAction(Position player, EDirection direction) {
         this.player = player;
-        this.cost = player.value;
+        this.cost = player.cost;
         this.direction = direction;
     }
 }
 
-class BoardState {
-    int playerX;
-    int playerY;
-    int boxCount;
-    int[][] boxes;
-
-    BoardState(BoardCompact initial){
-        playerX = initial.playerX;
-        playerY = initial.playerY;
-        boxCount = initial.boxCount;
-        boxes = new int[boxCount][];
-
-        int i = 0;
-        for (int x = 0; x < initial.width(); x++){
-            for (int y = 0; y < initial.height(); y++){
-
-                if ((initial.tiles[x][y] & EEntity.SOME_BOX_FLAG) == 0) // no box
-                    continue;
-
-                boxes[i++] = new int[]{x, y};
-            }
-        }
-    }
-
-    BoardState(BoardState prev, int px, int py, EDirection pushDir){
-        boxCount = prev.boxCount;
-        boxes = Utils.cloneArray(prev.boxes);
-
-        playerX = px + pushDir.dX;
-        playerY = py + pushDir.dY;
-
-        int bx = playerX;
-        int by = playerY;
-
-        int[] expected = new int[]{bx, by};
-
-        for (int i = 0; i < boxCount; i++){
-            if (Arrays.equals(boxes[i], expected)){
-                boxes[i][0] += pushDir.dX;
-                boxes[i][1] += pushDir.dY;
-                break;
-            }
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BoardState that = (BoardState) o;
-        return playerX == that.playerX && playerY == that.playerY && Arrays.deepEquals(that.boxes, boxes);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(playerX, playerY);
-        result = 31 * result + Arrays.hashCode(boxes);
-        return result;
-    }
-
-    BoardCompact Apply(BoardCompact template){
-        BoardCompact board = template.clone();
-
-        int playerFlag = 1537;
-        int boxFlag = 0;
-
-        for (int x = 0; x < board.width(); x++){
-            for (int y = 0; y < board.height(); y++){
-
-                if ((board.tiles[x][y] & EEntity.SOME_BOX_FLAG) != 0){
-                    boxFlag = board.tiles[x][y];
-                }
-
-                board.tiles[x][y] &= EEntity.NULLIFY_ENTITY_FLAG;
-                board.tiles[x][y] |= EEntity.NONE.getFlag();
-            }
-        }
-
-        board.tiles[playerX][playerY] = playerFlag;
-
-        for(int[] b : boxes){
-            board.tiles[b[0]][b[1]] = boxFlag;
-        }
-
-        return board;
-    }
-
-    void DebugPrint(BoardCompact template){
-        BoardCompact b = Apply(template);
-        System.out.println();
-        b.debugPrint();
-    }
-}
 // A basic path search, that avoids walls and boxes and finds a way towards a goal
 class RebuildPathProblem implements HeuristicProblem<Position, EDirection>{
 
     BoardCompact template;
-    BoardState state;
+    StateMinimal state;
     Position start;
     Position goal;
 
-    public RebuildPathProblem(BoardCompact template, BoardState state, Position start, Position goal) {
+    public RebuildPathProblem(BoardCompact template, StateMinimal state, Position start, Position goal) {
         this.template = template;
         this.state = state;
         this.start = start;
@@ -397,20 +327,25 @@ class Utils {
     }
 
     // Check if a compressed board state has a box on location x and y
-    static boolean HasBox(BoardState s, int x, int y) {
-        for (int[] i : s.boxes) {
-            if (i[0] == x && i[1] == y) {
+    static boolean HasBox(StateMinimal s, int x, int y) {
+        for(int i = 1; i < s.positions.length; i++) {
+            int bx = s.getX(s.positions[i]);
+            int by = s.getY(s.positions[i]);
+
+            if (bx == x && by == y)
                 return true;
-            }
+
         }
+
         return false;
     }
 
     // Find all boxes that can be pushed from a given area on a map
-    static ArrayList<BoxPushAction> FindReachableBoxes(BoardCompact template, BoardState s, int x, int y, boolean[][] deadSquares) {
+    static ArrayList<BoxPushAction> FindReachableBoxes(BoardCompact template, StateMinimal s, int x, int y, boolean[][] deadSquares) {
 
+//        template = template.clone();
 //        System.out.println("\nSearching on: ");
-//        s.DebugPrint(template);
+//        Utils.UniversalSetState(template, s);
 
         ArrayList<BoxPushAction> boxes = new ArrayList<>();
         HashSet<Position> explored = new HashSet<>();
@@ -446,14 +381,14 @@ class Utils {
                             !deadSquares[far_x][far_y]) {
 
                         // Add to pushable boxes
-                        boxes.add(new BoxPushAction(new Position(tile.x, tile.y, tile.value + 1), dir));
+                        boxes.add(new BoxPushAction(new Position(tile.x, tile.y, tile.cost + 1), dir));
                     }
 
                     continue;
                 }
 
 
-                frontier.add(new Position(check_x, check_y, tile.value + 1));
+                frontier.add(new Position(check_x, check_y, tile.cost + 1));
             }
 
             explored.add(tile);
@@ -461,12 +396,8 @@ class Utils {
 
 //        System.out.println("Found reachable boxes:");
 //        for (BoxPushAction box : boxes) {
-//            System.out.print("x: " + box.playerPos.x + ", y: " + box.playerPos.y + ", with cost: " + box.playerPos.value);
+//            System.out.print("x: " + box.player.x + ", y: " + box.player.y + ", with cost: " + box.player.cost);
 //            System.out.println(" and push dir: " + box.direction);
-//        }
-
-//        if (!Validator.AreValidReachableBoxes(template, s, x, y, deadSquares, boxes)){
-//            throw new RuntimeException("Reachable Boxes validation failed!");
 //        }
 
         return boxes;
@@ -488,5 +419,23 @@ class Utils {
             }
         }
         return true;
+    }
+
+    public static void fixedUnsetState(BoardCompact b, StateMinimal state) {
+        b.boxInPlaceCount = 0;
+        for (int i = 1; i < state.positions.length; ++i) {
+            b.tiles[state.getX(state.positions[i])][state.getY(state.positions[i])] &= EEntity.NULLIFY_ENTITY_FLAG;
+        }
+    }
+
+    public static void UniversalSetState(BoardCompact b, StateMinimal s){
+        fixedUnsetState(b, new StateMinimal(b));
+
+        b.movePlayer(b.playerX, b.playerY, s.getX(s.positions[0]), s.getY(s.positions[0]));
+
+        for (int i = 1; i < s.positions.length; ++i) {
+            b.tiles[s.getX(s.positions[i])][s.getY(s.positions[i])] |= EEntity.BOX_1.getFlag();
+            if (CTile.forSomeBox(b.tiles[s.getX(s.positions[i])][s.getY(s.positions[i])])) ++b.boxInPlaceCount;
+        }
     }
 }
