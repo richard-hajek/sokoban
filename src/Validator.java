@@ -10,8 +10,8 @@ public class Validator {
 
             boolean foundPushingBox = false;
 
-            int bx = a.playerPos.x + a.direction.dX;
-            int by = a.playerPos.y + a.direction.dY;
+            int bx = a.player.x + a.direction.dX;
+            int by = a.player.y + a.direction.dY;
 
             int[] expected = new int[]{bx, by};
 
