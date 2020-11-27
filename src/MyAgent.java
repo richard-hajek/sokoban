@@ -73,19 +73,7 @@ class Utils {
         return (b.tiles[x][y] & EPlace.SOME_BOX_PLACE_FLAG) != 0;
     }
 
-    static EDirection FromDeltas(int dx, int dy) {
-        if (dx == -1)
-            return EDirection.LEFT;
-        if (dx == 1)
-            return EDirection.RIGHT;
-        if (dy == 1)
-            return EDirection.DOWN;
-        if (dy == -1)
-            return EDirection.UP;
-
-        throw new RuntimeException("WARNING!!!!! Direction switch failed!\n!\n!\n!\n!\n!");
-    }
-
+    // Check if a compressed board state has a box on location x and y
     static boolean HasBox(BoardState s, int x, int y) {
         for (int[] i : s.boxes) {
             if (i[0] == x && i[1] == y) {
@@ -95,7 +83,7 @@ class Utils {
         return false;
     }
 
-
+    // Find all boxes that can be pushed from a given area on a map
     static ArrayList<BoxPushAction> FindReachableBoxes(BoardCompact template, BoardState s, int x, int y, boolean[][] deadSquares) {
 
 //        System.out.println("\nSearching on: ");
@@ -110,30 +98,39 @@ class Utils {
         while (!frontier.isEmpty()) {
             Pos tile = frontier.poll();
 
-
             if (explored.contains(tile))
                 continue;
 
-            for (int dx = 1; dx >= -1; dx--) {
-                for (int dy = 1; dy >= -1; dy--) {
-                    if (dx != 0 && dy != 0) continue;
-                    if (dx == 0 && dy == 0) continue;
+            for (EDirection dir : EDirection.arrows()){
+                int dx = dir.dX;
+                int dy = dir.dY;
 
-                    int c_x = tile.x + dx;
-                    int c_y = tile.y + dy;
+                int check_x = tile.x + dx;
+                int check_y = tile.y + dy;
 
-                    if (Utils.IsWall(template, c_x, c_y))
-                        continue;
+                int far_x = tile.x + dx + dx;
+                int far_y = tile.y + dy + dy;
 
-                    if (HasBox(s, c_x, c_y)) {
-                        if (!(IsWall(template, c_x + dx, c_y + dy)) && !(HasBox(s, c_x + dx, c_y + dy)) && !deadSquares[c_x + dx][c_y + dy]) {
-                            boxes.add(new BoxPushAction(new Pos(tile.x, tile.y, tile.value + 1), FromDeltas(dx, dy)));
-                        }
-                        continue;
+                if (Utils.IsWall(template, check_x, check_y))
+                    continue;
+
+                // If we hit a box
+                if (HasBox(s, check_x, check_y)) {
+
+                    // If there is a space behind said box
+                    if (    !IsWall(template, far_x, far_y) &&
+                            !HasBox(s, far_x, far_y) &&
+                            !deadSquares[far_x][far_y]) {
+
+                        // Add to pushable boxes
+                        boxes.add(new BoxPushAction(new Pos(tile.x, tile.y, tile.value + 1), dir));
                     }
 
-                    frontier.add(new Pos(c_x, c_y, tile.value + 1));
+                    continue;
                 }
+
+
+                frontier.add(new Pos(check_x, check_y, tile.value + 1));
             }
 
             explored.add(tile);
@@ -145,9 +142,9 @@ class Utils {
 //            System.out.println(" and push dir: " + box.direction);
 //        }
 
-        if (!Validator.AreValidReachableBoxes(template, s, x, y, deadSquares, boxes)){
-            throw new RuntimeException("Reachable Boxes validation failed!");
-        }
+//        if (!Validator.AreValidReachableBoxes(template, s, x, y, deadSquares, boxes)){
+//            throw new RuntimeException("Reachable Boxes validation failed!");
+//        }
 
         return boxes;
     }
@@ -162,6 +159,7 @@ class Utils {
     }
 }
 
+// A basic path search, that avoids walls and boxes and finds a way towards a goal
 class RebuildPathProblem implements HeuristicProblem<Pos, EDirection>{
 
     BoardCompact template;
@@ -189,9 +187,6 @@ class RebuildPathProblem implements HeuristicProblem<Pos, EDirection>{
     @Override
     public List<EDirection> actions(Pos pos) {
         ArrayList<EDirection> sides = new ArrayList<>();
-
-        System.out.println("Searching on: ");
-        state.DebugPrint(template);
 
         for(EDirection dir : EDirection.arrows()){
             int x = dir.dX + pos.x;
@@ -457,10 +452,7 @@ class SokobanProblem implements HeuristicProblem<BoardState, BoxPushAction> {
 
     static List<EDirection> Walk(Solution<BoardState, BoxPushAction> solution, SokobanProblem parent){
 
-        System.out.println("BEGIN WALK");
-
         List<EDirection> steps = new LinkedList<>();
-
         BoardState checkpoint = new BoardState(parent.template);
 
         for (BoxPushAction action : solution.actions){
